@@ -1,141 +1,167 @@
+"use client";
+
 import Link from "next/link";
-
-const navigateLinks = [
-  { label: "Platform", href: "/platform" },
-  { label: "Company", href: "/company" },
-  { label: "Newsroom", href: "/newsroom" },
-  { label: "Careers", href: "/careers" },
-];
-
-const legalLinks = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms of Service", href: "/terms" },
-];
+import { Inview } from "./Reveal";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#fafaf8] border-t border-black/[0.05] px-6 md:px-10 py-16 md:py-20">
-      <div className="mx-auto max-w-[1524px]">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 lg:gap-16 mb-16">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5 mb-5">
-              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#1a2b2c] text-white text-[10px] font-semibold tracking-wide">
-                iA
-              </span>
-              <span className="text-[#1a2b2c] text-[14px] font-medium tracking-[-0.2px]">
-                InferraAI
-              </span>
-            </Link>
-            <p className="text-[13px] text-[#1a2b2c]/40 font-light leading-[1.6]">
-              AI infrastructure intelligence
+    <footer
+      style={{
+        backgroundColor: "#000",
+        color: "#fff",
+        minHeight: "calc(100vh - 120px)",
+      }}
+    >
+      <div
+        className="mx-auto max-w-[1524px] px-[clamp(30px,5vw,50px)] flex flex-col"
+        style={{
+          paddingTop: "40px",
+          paddingBottom: "24px",
+          minHeight: "inherit",
+        }}
+      >
+        {/* Main footer content */}
+        <div
+          className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,634px)] gap-12 lg:gap-8"
+          style={{ paddingBottom: "clamp(50px, 8vw, 100px)" }}
+        >
+          {/* Left — heading */}
+          <Inview>
+            <h2
+              style={{
+                fontSize:
+                  "clamp(1.75rem, calc(1.75rem + 1vw), 2.625rem)",
+                letterSpacing: "-0.02em",
+                lineHeight: "1.1em",
+                fontWeight: 400,
+                color: "#fff",
+              }}
+            >
+              A directional lens for
               <br />
-              for the African continent.
+              AI infrastructure in Africa.
+            </h2>
+            <p
+              className="mt-4 font-light"
+              style={{
+                fontSize: "0.9375rem",
+                color: "rgba(255,255,255,0.4)",
+              }}
+            >
+              Developed by Project Future
             </p>
-          </div>
+          </Inview>
 
-          {/* Navigate */}
-          <div>
-            <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-[#1a2b2c]/40 mb-5">
-              Navigate
-            </p>
-            <ul className="flex flex-col gap-3">
-              {navigateLinks.map((link) => (
-                <li key={link.href}>
+          {/* Right — info columns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-10">
+            {/* Navigation */}
+            <div
+              className="pl-6"
+              style={{ borderLeft: "1px solid rgba(255,255,255,0.2)" }}
+            >
+              <p
+                className="uppercase mb-5"
+                style={{
+                  fontSize: "clamp(0.8125rem, calc(0.8125rem + 0.05vw), 0.875rem)",
+                  letterSpacing: "-0.02em",
+                  color: "rgba(255,255,255,0.5)",
+                }}
+              >
+                Navigate
+              </p>
+              <ul className="flex flex-col gap-3">
+                <li>
                   <Link
-                    href={link.href}
-                    className="text-[14px] font-light text-[#1a2b2c]/60 hover:text-[#1a2b2c] transition-colors"
+                    href="/dashboard"
+                    className="text-white font-light transition-opacity duration-300 hover:opacity-60"
+                    style={{
+                      fontSize: "clamp(1rem, calc(1rem + 0.15vw), 1.125rem)",
+                      letterSpacing: "-0.02em",
+                    }}
                   >
-                    {link.label}
+                    Dashboard
                   </Link>
                 </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Connect */}
-          <div>
-            <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-[#1a2b2c]/40 mb-5">
-              Connect
-            </p>
-            <ul className="flex flex-col gap-3">
-              <li>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[14px] font-light text-[#1a2b2c]/60 hover:text-[#1a2b2c] transition-colors inline-flex items-center gap-2"
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                    <rect width="4" height="12" x="2" y="9" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://x.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[14px] font-light text-[#1a2b2c]/60 hover:text-[#1a2b2c] transition-colors inline-flex items-center gap-2"
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                  X / Twitter
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:hello@inferraai.com"
-                  className="text-[14px] font-light text-[#1a2b2c]/60 hover:text-[#1a2b2c] transition-colors"
-                >
-                  hello@inferraai.com
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-[#1a2b2c]/40 mb-5">
-              Legal
-            </p>
-            <ul className="flex flex-col gap-3">
-              {legalLinks.map((link) => (
-                <li key={link.href}>
+                <li>
                   <Link
-                    href={link.href}
-                    className="text-[14px] font-light text-[#1a2b2c]/60 hover:text-[#1a2b2c] transition-colors"
+                    href="/login"
+                    className="text-white font-light transition-opacity duration-300 hover:opacity-60"
+                    style={{
+                      fontSize: "clamp(1rem, calc(1rem + 0.15vw), 1.125rem)",
+                      letterSpacing: "-0.02em",
+                    }}
                   >
-                    {link.label}
+                    Log in
                   </Link>
                 </li>
-              ))}
-            </ul>
+                <li>
+                  <Link
+                    href="/signup"
+                    className="text-white font-light transition-opacity duration-300 hover:opacity-60"
+                    style={{
+                      fontSize: "clamp(1rem, calc(1rem + 0.15vw), 1.125rem)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    Sign up
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div
+              className="pl-6"
+              style={{ borderLeft: "1px solid rgba(255,255,255,0.2)" }}
+            >
+              <p
+                className="uppercase mb-5"
+                style={{
+                  fontSize: "clamp(0.8125rem, calc(0.8125rem + 0.05vw), 0.875rem)",
+                  letterSpacing: "-0.02em",
+                  color: "rgba(255,255,255,0.5)",
+                }}
+              >
+                Contact
+              </p>
+              <ul className="flex flex-col gap-3">
+                <li>
+                  <a
+                    href="mailto:rajveer@projectfuture.co.za"
+                    className="text-white font-light transition-opacity duration-300 hover:opacity-60"
+                    style={{
+                      fontSize: "clamp(1rem, calc(1rem + 0.15vw), 1.125rem)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    rajveer@projectfuture.co.za
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-black/[0.05]">
-          <p className="text-[12px] text-[#1a2b2c]/35 font-light">
-            &copy; 2026 Inferra AI. All rights reserved.
+        <div
+          className="pt-6 flex items-center justify-between"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
+        >
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-white text-[#222f30] text-[8px] font-semibold tracking-wide">
+              iA
+            </span>
+          </Link>
+
+          <p
+            className="font-light"
+            style={{
+              fontSize: "0.875rem",
+              color: "rgba(255,255,255,0.4)",
+            }}
+          >
+            &copy; 2026 Inferra AI &middot; A Project Future initiative
           </p>
         </div>
       </div>

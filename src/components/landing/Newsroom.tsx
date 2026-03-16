@@ -1,96 +1,152 @@
+"use client";
+
 import Link from "next/link";
+import { Inview, TextReveal } from "./Reveal";
 
 const articles = [
   {
-    category: "News",
-    date: "Mar 4, 2026",
-    title: "Equinix announces 40MW expansion in Johannesburg campus",
+    category: "Infrastructure",
+    date: "Feb 2026",
+    title: "Africa Data Centres expands with new facilities in Ghana and South Africa",
     slug: "#",
+    bg: "transparent",
+    textDark: true,
+    hasImage: true,
   },
   {
-    category: "Report",
-    date: "Feb 18, 2026",
-    title: "Q4 2025 Africa AI Readiness Index: West Africa leads growth",
+    category: "Connectivity",
+    date: "Jan 2026",
+    title: "2Africa subsea cable system nears completion, promising lower latency across the continent",
     slug: "#",
+    bg: "#222f30",
+    textDark: false,
+    hasImage: false,
   },
   {
-    category: "Analysis",
-    date: "Feb 3, 2026",
-    title: "How new subsea cables are reshaping East African latency maps",
+    category: "Policy",
+    date: "Dec 2025",
+    title: "Kenya and Rwanda lead Africa\u2019s push for national AI strategies and data sovereignty frameworks",
     slug: "#",
+    bg: "#445e5f",
+    textDark: false,
+    hasImage: false,
   },
 ];
 
-const categoryColors: Record<string, string> = {
-  News: "bg-[#10b981]/10 text-[#10b981]",
-  Report: "bg-[#1a2b2c]/8 text-[#1a2b2c]/70",
-  Analysis: "bg-amber-50 text-amber-700",
-};
-
 export default function Newsroom() {
   return (
-    <section className="bg-[#fafaf8] px-6 md:px-10 py-24 md:py-32 lg:py-40">
-      <div className="mx-auto max-w-[1524px]">
+    <section
+      className="-round-block"
+      style={{
+        backgroundColor: "#eeeeee",
+        borderRadius: "20px 20px 0 0",
+      }}
+    >
+      <div
+        className="mx-auto max-w-[1524px] px-[clamp(30px,5vw,50px)]"
+        style={{
+          paddingTop: "clamp(60px, calc(60px + 6vw), 120px)",
+          paddingBottom: "clamp(80px, calc(80px + 6vw), 140px)",
+        }}
+      >
         {/* Header */}
-        <div className="flex items-end justify-between mb-14">
-          <h2
-            className="text-[#1a2b2c] font-normal tracking-[-0.03em]"
+        <div className="flex items-end justify-between mb-12">
+          <TextReveal
             style={{
-              fontSize: "clamp(1.5rem, 1.25rem + 1vw, 2.25rem)",
+              fontSize:
+                "clamp(3rem, calc(3rem + 2.9vw), 5.625rem)",
+              letterSpacing: "-0.02em",
+              lineHeight: "1em",
+              fontWeight: 400,
+              color: "#222f30",
             }}
           >
-            Newsroom
-          </h2>
-          <Link
-            href="/newsroom"
-            className="hidden sm:inline-flex text-[14px] font-medium text-[#1a2b2c] hover:text-[#10b981] transition-colors tracking-[-0.1px]"
-          >
-            View all articles&nbsp;&rarr;
-          </Link>
+            Signals
+          </TextReveal>
+
+          <Inview className="hidden sm:block">
+            <span
+              className="text-[14px] font-light"
+              style={{ color: "rgba(34, 47, 48, 0.5)" }}
+            >
+              What we&apos;re watching
+            </span>
+          </Inview>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {articles.map((article) => (
-            <article key={article.title} className="group">
-              {/* Thumbnail placeholder */}
-              <div className="aspect-[16/10] w-full rounded-xl bg-gradient-to-br from-[#1a2b2c]/[0.04] to-[#10b981]/[0.06] mb-5 overflow-hidden transition-transform duration-300 group-hover:scale-[1.01]" />
-
-              <div className="flex items-center gap-3 mb-3">
-                <span
-                  className={`text-[11px] font-medium px-2.5 py-1 rounded-full ${
-                    categoryColors[article.category] ?? ""
-                  }`}
-                >
-                  {article.category}
-                </span>
-                <span className="text-[12px] text-[#1a2b2c]/35 font-light">
-                  {article.date}
-                </span>
-              </div>
-
-              <h3 className="text-[#1a2b2c] text-[16px] font-normal leading-[1.45] tracking-[-0.02em] mb-3">
-                {article.title}
-              </h3>
-
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--gap,20px)]">
+          {articles.map((article, i) => (
+            <Inview key={article.title} delay={i * 0.1}>
               <Link
                 href={article.slug}
-                className="text-[13px] font-medium text-[#1a2b2c]/60 hover:text-[#10b981] transition-colors"
+                className="group block overflow-hidden"
+                style={{
+                  backgroundColor: article.bg,
+                  borderRadius: "12px",
+                  color: article.textDark ? "#222f30" : "#fff",
+                  minHeight: "clamp(280px, 35vw, 400px)",
+                }}
               >
-                Read article&nbsp;&rarr;
-              </Link>
-            </article>
-          ))}
-        </div>
+                <article className="flex flex-col justify-between h-full p-6 lg:p-8">
+                  {/* Image placeholder for first article */}
+                  {article.hasImage && (
+                    <div
+                      className="w-full rounded-lg overflow-hidden mb-6 relative"
+                      style={{
+                        aspectRatio: "16/10",
+                        backgroundColor: "rgba(34, 47, 48, 0.06)",
+                      }}
+                    >
+                      <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105" />
+                    </div>
+                  )}
 
-        {/* Mobile "View all" */}
-        <div className="mt-10 sm:hidden">
-          <Link
-            href="/newsroom"
-            className="text-[14px] font-medium text-[#1a2b2c] hover:text-[#10b981] transition-colors"
-          >
-            View all articles&nbsp;&rarr;
-          </Link>
+                  {!article.hasImage && <div className="flex-1" />}
+
+                  <div>
+                    {/* Category + date */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <span
+                        className="text-[11px] font-medium px-2.5 py-1 rounded-full uppercase"
+                        style={{
+                          backgroundColor: article.textDark
+                            ? "rgba(34, 47, 48, 0.08)"
+                            : "rgba(255, 255, 255, 0.15)",
+                          color: article.textDark
+                            ? "rgba(34, 47, 48, 0.7)"
+                            : "rgba(255, 255, 255, 0.8)",
+                        }}
+                      >
+                        {article.category}
+                      </span>
+                      <span
+                        className="text-[12px] font-light"
+                        style={{
+                          color: article.textDark
+                            ? "rgba(34, 47, 48, 0.4)"
+                            : "rgba(255, 255, 255, 0.5)",
+                        }}
+                      >
+                        {article.date}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3
+                      className="font-normal leading-[1.3] tracking-[-0.02em]"
+                      style={{
+                        fontSize:
+                          "clamp(1.125rem, calc(1.125rem + 0.3vw), 1.375rem)",
+                      }}
+                    >
+                      {article.title}
+                    </h3>
+                  </div>
+                </article>
+              </Link>
+            </Inview>
+          ))}
         </div>
       </div>
     </section>

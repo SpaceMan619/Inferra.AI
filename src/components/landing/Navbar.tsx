@@ -1,103 +1,163 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Platform", href: "/platform" },
-  { label: "Company", href: "/company" },
-  { label: "Newsroom", href: "/newsroom" },
+  { label: "Dashboard", href: "/dashboard" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#fafaf8]/80 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.04)]"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto max-w-[1524px] px-6 md:px-10">
-        <div className="flex h-[72px] items-center justify-between">
+    <>
+      <nav
+        ref={navRef}
+        className="fixed top-3 lg:top-5 left-0 right-0 z-[100] px-5 lg:px-0"
+      >
+        <div
+          className="mx-auto flex items-center justify-between transition-all duration-600"
+          style={{
+            maxWidth: "calc(100% - 40px)",
+            height: "54px",
+            padding: "0 12px 0 16px",
+            backgroundColor: scrolled ? "rgba(255,255,255,0.8)" : "transparent",
+            backdropFilter: scrolled ? "blur(8px)" : "none",
+            WebkitBackdropFilter: scrolled ? "blur(8px)" : "none",
+            borderRadius: scrolled ? "27px" : "0",
+          }}
+        >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1a2b2c] text-white text-xs font-semibold tracking-wide">
+          <Link href="/" className="flex items-center gap-2 group">
+            <span
+              className="flex h-7 w-7 items-center justify-center rounded-md text-[10px] font-semibold tracking-wide transition-transform duration-300 group-hover:scale-95"
+              style={{
+                backgroundColor: scrolled ? "#222f30" : "#fff",
+                color: scrolled ? "#fff" : "#222f30",
+              }}
+            >
               iA
             </span>
-            <span className="text-[#1a2b2c] text-[15px] font-medium tracking-[-0.2px]">
+            <span
+              className="text-[14px] font-medium tracking-[-0.5px] transition-colors duration-300"
+              style={{ color: scrolled ? "#222f30" : "#fff" }}
+            >
               InferraAI
             </span>
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[14px] font-light text-[#1a2b2c]/70 hover:text-[#1a2b2c] transition-colors tracking-[-0.1px]"
+                className="relative px-[17px] py-2 text-[14px] font-light transition-all duration-300 rounded-full hover:bg-black/5"
+                style={{
+                  color: scrolled ? "#222f30" : "#fff",
+                  height: "39px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                }}
               >
                 {link.label}
               </Link>
             ))}
-          </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:block">
             <Link
-              href="/dashboard"
-              className="inline-flex items-center rounded-full bg-[#1a2b2c] px-7 py-2.5 text-[13px] font-medium text-white hover:opacity-85 transition-opacity"
+              href="/login"
+              className="relative px-[17px] py-2 text-[14px] font-light transition-all duration-300 rounded-full hover:bg-black/5"
+              style={{
+                color: scrolled ? "#222f30" : "#fff",
+                height: "39px",
+                display: "inline-flex",
+                alignItems: "center",
+              }}
             >
-              Dashboard
+              Log in
+            </Link>
+
+            <Link
+              href="/signup"
+              className="ml-1 px-5 py-2 text-[13px] font-medium rounded-full transition-all duration-300"
+              style={{
+                backgroundColor: scrolled ? "#222f30" : "#fff",
+                color: scrolled ? "#fff" : "#222f30",
+                height: "39px",
+                display: "inline-flex",
+                alignItems: "center",
+              }}
+            >
+              Sign up
             </Link>
           </div>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-[#1a2b2c]"
+            className="lg:hidden flex items-center justify-center w-12 h-12 rounded-full transition-colors"
+            style={{
+              backgroundColor: scrolled ? "rgba(34,47,48,0.05)" : "rgba(255,255,255,0.1)",
+            }}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            <div className="relative w-5 h-3 flex flex-col justify-between">
+              <span
+                className="block h-[1.5px] w-full rounded-full transition-all duration-300"
+                style={{
+                  backgroundColor: scrolled ? "#222f30" : "#fff",
+                  transform: mobileOpen ? "rotate(45deg) translate(4px, 4px)" : "none",
+                }}
+              />
+              <span
+                className="block h-[1.5px] w-full rounded-full transition-all duration-300"
+                style={{
+                  backgroundColor: scrolled ? "#222f30" : "#fff",
+                  transform: mobileOpen ? "rotate(-45deg) translate(4px, -4px)" : "none",
+                }}
+              />
+            </div>
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile fullscreen menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#fafaf8]/95 backdrop-blur-xl border-t border-black/[0.04]">
-          <div className="px-6 py-6 flex flex-col gap-5">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-[15px] font-light text-[#1a2b2c]/70 hover:text-[#1a2b2c] transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+        <div className="fixed inset-0 z-[99] bg-[#222f30] flex flex-col justify-center px-10">
+          <div className="flex flex-col gap-6">
             <Link
               href="/dashboard"
               onClick={() => setMobileOpen(false)}
-              className="inline-flex w-fit items-center rounded-full bg-[#1a2b2c] px-7 py-2.5 text-[13px] font-medium text-white hover:opacity-85 transition-opacity mt-2"
+              className="text-white text-[2.875rem] font-light tracking-[-0.02em] leading-[1.1] hover:opacity-70 transition-opacity"
             >
               Dashboard
+            </Link>
+            <Link
+              href="/login"
+              onClick={() => setMobileOpen(false)}
+              className="text-white text-[2.875rem] font-light tracking-[-0.02em] leading-[1.1] hover:opacity-70 transition-opacity"
+            >
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              onClick={() => setMobileOpen(false)}
+              className="text-white text-[2.875rem] font-light tracking-[-0.02em] leading-[1.1] hover:opacity-70 transition-opacity"
+            >
+              Sign up
             </Link>
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
