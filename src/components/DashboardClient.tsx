@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DashboardSidebar from "./DashboardSidebar";
-import RotatingGlobe from "./RotatingGlobe";
+import GlobeView from "./GlobeView";
 import MapView from "./MapView";
 import CountryPanel from "./CountryPanel";
 import CountryList from "./CountryList";
@@ -112,22 +112,23 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
               >
                 {/* Globe */}
                 <div
-                  className="rounded-2xl overflow-hidden flex-1 relative flex items-center justify-center"
+                  className="rounded-2xl overflow-hidden flex-1 relative"
                   style={{
                     backgroundColor: "#0a0c10",
                     border: "1px solid rgba(34, 47, 48, 0.08)",
-                    minHeight: "min(520px, 60vh)",
+                    minHeight: "min(480px, 58vh)",
                   }}
                 >
-                  <RotatingGlobe
+                  <GlobeView
                     selectedCountry={selectedCountry}
                     countries={countries}
+                    onSelectCountry={setSelectedCountry}
                   />
                   {/* Selected country overlay */}
                   <div
-                    className="absolute bottom-4 left-4 px-4 py-2.5 rounded-xl pointer-events-none"
+                    className="absolute bottom-4 left-4 px-4 py-2.5 rounded-xl pointer-events-none z-10"
                     style={{
-                      backgroundColor: "rgba(10, 12, 16, 0.75)",
+                      backgroundColor: "rgba(6, 8, 18, 0.75)",
                       backdropFilter: "blur(10px)",
                       border: "1px solid rgba(255,255,255,0.1)",
                     }}
