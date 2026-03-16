@@ -31,7 +31,8 @@ export default function ToolSection({ countries }: ToolSectionProps) {
       {/* Section header */}
       <div className="text-center mb-10">
         <h2
-          className="font-serif text-3xl md:text-4xl font-light mb-3"
+          className="text-3xl md:text-4xl font-bold mb-3"
+          id="explore"
           style={{ color: "var(--text-primary)" }}
         >
           Explore the Map

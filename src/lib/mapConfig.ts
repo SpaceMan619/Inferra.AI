@@ -1,13 +1,13 @@
 export const FOUNDER_COLORS: Record<string, [number, number, number, number]> = {
-  "Viable": [61, 107, 79, 220],
-  "Emerging": [212, 163, 74, 200],
-  "Emerging (Early)": [192, 90, 46, 180],
+  "Viable": [0, 201, 167, 230],
+  "Emerging": [255, 209, 102, 210],
+  "Emerging (Early)": [255, 107, 53, 190],
 };
 
 export const POLICY_COLORS: Record<string, [number, number, number, number]> = {
-  "Strong": [200, 132, 58, 230],
-  "Emerging": [168, 148, 120, 180],
-  "Unclear": [107, 90, 69, 140],
+  "Strong": [0, 201, 167, 230],
+  "Emerging": [255, 209, 102, 190],
+  "Unclear": [106, 106, 128, 150],
 };
 
 export const RADIUS_MAP: Record<string, number> = {

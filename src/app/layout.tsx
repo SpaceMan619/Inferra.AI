@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Outfit } from "next/font/google";
+import { Space_Grotesk, Outfit } from "next/font/google";
 import "./globals.css";
 
-const heading = Cormorant_Garamond({
+const heading = Space_Grotesk({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -34,9 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${heading.variable} ${body.variable} font-sans antialiased grain-overlay`}
-      >
+      <body className={`${heading.variable} ${body.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

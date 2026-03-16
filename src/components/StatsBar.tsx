@@ -11,24 +11,23 @@ interface StatsBarProps {
 interface StatItemProps {
   value: number;
   label: string;
-  suffix?: string;
+  color: string;
 }
 
-function StatItem({ value, label, suffix }: StatItemProps) {
+function StatItem({ value, label, color }: StatItemProps) {
   const { ref, count } = useCountUp(value, 1800);
 
   return (
-    <div className="flex flex-col items-center gap-1 px-6 py-3">
+    <div className="flex flex-col items-center gap-1 px-6 py-4">
       <span
         ref={ref}
-        className="font-serif text-3xl md:text-4xl font-light"
-        style={{ color: "var(--primary-light)" }}
+        className="text-4xl md:text-5xl font-bold tabular-nums"
+        style={{ color }}
       >
         {count}
-        {suffix}
       </span>
       <span
-        className="text-xs tracking-[0.15em] uppercase"
+        className="text-xs tracking-[0.15em] uppercase font-medium"
         style={{ color: "var(--text-muted)" }}
       >
         {label}
@@ -40,7 +39,7 @@ function StatItem({ value, label, suffix }: StatItemProps) {
 function Separator() {
   return (
     <div
-      className="hidden md:block w-px h-10 self-center"
+      className="hidden md:block w-px h-12 self-center"
       style={{ background: "var(--glass-border)" }}
     />
   );
@@ -67,13 +66,13 @@ export default function StatsBar({ countries }: StatsBarProps) {
       className="relative z-10 mx-auto max-w-4xl px-4 -mt-8"
     >
       <div className="glass-panel flex flex-wrap justify-center md:justify-between items-center">
-        <StatItem value={totalMarkets} label="Markets Tracked" />
+        <StatItem value={totalMarkets} label="Markets Tracked" color="var(--text-primary)" />
         <Separator />
-        <StatItem value={viableHubs} label="Viable Hubs" />
+        <StatItem value={viableHubs} label="Viable Hubs" color="var(--secondary)" />
         <Separator />
-        <StatItem value={gpuMarkets} label="GPU Available" />
+        <StatItem value={gpuMarkets} label="GPU Available" color="var(--primary)" />
         <Separator />
-        <StatItem value={strongPolicy} label="Strong Policy" />
+        <StatItem value={strongPolicy} label="Strong Policy" color="var(--accent)" />
       </div>
     </motion.section>
   );

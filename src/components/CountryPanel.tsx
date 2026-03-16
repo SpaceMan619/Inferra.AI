@@ -77,7 +77,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
               >
                 {country.region}
               </p>
-              <h2 className="font-serif text-3xl font-light" style={{ color: "var(--text-primary)" }}>
+              <h2 className="text-3xl font-bold" style={{ color: "var(--text-primary)" }}>
                 {country.country}
               </h2>
             </div>
@@ -130,7 +130,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           <div
             className="rounded-xl p-4"
             style={{
-              background: "rgba(200, 132, 58, 0.04)",
+              background: "rgba(255, 107, 53, 0.04)",
               borderLeft: "3px solid var(--primary)",
             }}
           >

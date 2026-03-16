@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="max-w-4xl mx-auto px-6 flex flex-col items-center text-center gap-4">
         {/* Wordmark */}
         <h3
-          className="font-serif text-2xl font-light tracking-wide"
+          className="text-2xl font-bold tracking-wide"
           style={{ color: "var(--text-primary)" }}
         >
           Inferra<span style={{ color: "var(--primary)" }}>AI</span>
