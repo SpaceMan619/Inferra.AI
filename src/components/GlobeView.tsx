@@ -62,7 +62,8 @@ export default function GlobeView({ selectedCountry, countries, onSelectCountry 
     });
   }, [stopRotation]);
 
-  // Fly to selected country
+  // Fly to selected country, centering it in the visible portion of the map
+  // container rather than the container's geometric center (which may be off-screen)
   useEffect(() => {
     if (!selectedCountry || !countries) return;
     const country = countries.find((c) => c.country === selectedCountry);
@@ -70,11 +71,26 @@ export default function GlobeView({ selectedCountry, countries, onSelectCountry 
     const map = mapRef.current?.getMap();
     if (!map) return;
     stopRotation();
+
+    // Calculate the vertical offset needed so the country lands at the
+    // centre of the viewport-visible slice of the map container.
+    const rect = map.getContainer().getBoundingClientRect();
+    const visibleTop = Math.max(rect.top, 0);
+    const visibleBottom = Math.min(rect.bottom, window.innerHeight);
+    const visibleHeight = Math.max(visibleBottom - visibleTop, 0);
+    // Centre of the visible slice in container-local coordinates
+    const visibleCenterY = visibleTop - rect.top + visibleHeight / 2;
+    // Container's geometric centre
+    const containerCenterY = rect.height / 2;
+    // Negative offset = shift target point upward (toward visible area)
+    const offsetY = visibleCenterY - containerCenterY;
+
     map.flyTo({
       center: [country.longitude, country.latitude],
       zoom: 3.5,
       duration: 1800,
       essential: true,
+      offset: [0, offsetY],
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCountry]);

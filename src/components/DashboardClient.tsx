@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import DashboardSidebar from "./DashboardSidebar";
 import CountryPanel from "./CountryPanel";
 import CountryList from "./CountryList";
+import CountryCombobox from "./CountryCombobox";
 import ModeToggle from "./ModeToggle";
 import InsightsDashboard from "./InsightsDashboard";
 import CompareClient from "./CompareClient";
@@ -150,17 +151,28 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
                   </div>
                 </div>
 
-                {/* Country list */}
-                <div className="w-full xl:w-[200px] flex-shrink-0">
+                {/* Mobile country list — fixed height so inner flex-1 scrolls, hidden on desktop */}
+                <div
+                  className="xl:hidden flex flex-col"
+                  style={{ height: "220px" }}
+                >
                   <CountryList
                     countries={countries}
                     selected={selectedCountry}
                     onSelect={setSelectedCountry}
+                    fill
                   />
                 </div>
 
-                {/* Detail panel */}
+                {/* Detail panel — on desktop gets the combobox selector above it */}
                 <div className="w-full xl:w-[360px] flex-shrink-0">
+                  <div className="hidden xl:block">
+                    <CountryCombobox
+                      countries={countries}
+                      selected={selectedCountry}
+                      onSelect={setSelectedCountry}
+                    />
+                  </div>
                   <CountryPanel country={countryData} mode={mode} />
                 </div>
               </motion.div>

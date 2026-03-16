@@ -8,6 +8,7 @@ interface CountryListProps {
   selected: string;
   onSelect: (name: string) => void;
   height?: number;
+  fill?: boolean;
 }
 
 function tierDot(score: number) {
@@ -21,6 +22,7 @@ export default function CountryList({
   selected,
   onSelect,
   height,
+  fill,
 }: CountryListProps) {
   const [query, setQuery] = useState("");
 
@@ -33,12 +35,12 @@ export default function CountryList({
 
   return (
     <div
-      className="rounded-2xl overflow-hidden flex flex-col"
+      className={`rounded-2xl overflow-hidden flex flex-col ${fill ? "flex-1 min-h-0" : ""}`}
       style={{
         backgroundColor: "#fff",
         border: "1px solid rgba(34, 47, 48, 0.08)",
-        height: height ?? "auto",
-        maxHeight: height ?? "min(520px, 50vh)",
+        height: height ?? (fill ? "100%" : "auto"),
+        maxHeight: height ?? (fill ? undefined : "min(520px, 50vh)"),
       }}
     >
       {/* Header + search */}
