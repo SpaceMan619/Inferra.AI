@@ -22,7 +22,7 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
-        className="fixed top-3 lg:top-5 left-0 right-0 z-[100] px-5 lg:px-0"
+        className="fixed top-5 lg:top-5 left-0 right-0 z-[100] px-5 lg:px-0"
       >
         <div
           className="mx-auto flex items-center justify-between transition-all duration-600"
@@ -130,34 +130,107 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile fullscreen menu */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-[99] bg-[#222f30] flex flex-col justify-center px-10">
-          <div className="flex flex-col gap-6">
-            <Link
-              href="/dashboard"
-              onClick={() => setMobileOpen(false)}
-              className="text-white text-[2.875rem] font-light tracking-[-0.02em] leading-[1.1] hover:opacity-70 transition-opacity"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/login"
-              onClick={() => setMobileOpen(false)}
-              className="text-white text-[2.875rem] font-light tracking-[-0.02em] leading-[1.1] hover:opacity-70 transition-opacity"
-            >
-              Log in
-            </Link>
-            <Link
-              href="/signup"
-              onClick={() => setMobileOpen(false)}
-              className="text-white text-[2.875rem] font-light tracking-[-0.02em] leading-[1.1] hover:opacity-70 transition-opacity"
-            >
-              Sign up
-            </Link>
+      {/* Backdrop scrim */}
+      <div
+        className="fixed inset-0 lg:hidden transition-all duration-400"
+        style={{
+          backgroundColor: "rgba(0,0,0,0.45)",
+          backdropFilter: mobileOpen ? "blur(6px)" : "blur(0px)",
+          WebkitBackdropFilter: mobileOpen ? "blur(6px)" : "blur(0px)",
+          opacity: mobileOpen ? 1 : 0,
+          pointerEvents: mobileOpen ? "auto" : "none",
+          zIndex: 97,
+        }}
+        onClick={() => setMobileOpen(false)}
+      />
+
+      {/* iOS 26-style slide-up glass sheet */}
+      <div
+        className="fixed left-3 right-3 lg:hidden"
+        style={{
+          bottom: "calc(16px + env(safe-area-inset-bottom))",
+          zIndex: 98,
+          transform: mobileOpen ? "translateY(0)" : "translateY(calc(100% + 32px))",
+          transition: "transform 0.42s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.3s ease",
+          opacity: mobileOpen ? 1 : 0,
+        }}
+      >
+        {/* Gradient border wrapper */}
+        <div
+          style={{
+            background: "linear-gradient(145deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.14) 100%)",
+            borderRadius: "28px",
+            padding: "1px",
+            boxShadow: "0 24px 64px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3)",
+          }}
+        >
+          {/* Glass surface — dark enough that white text always reads */}
+          <div
+            style={{
+              background: "linear-gradient(160deg, rgba(15,15,15,0.72) 0%, rgba(10,10,10,0.82) 100%)",
+              backdropFilter: "blur(48px) saturate(160%)",
+              WebkitBackdropFilter: "blur(48px) saturate(160%)",
+              borderRadius: "27px",
+              overflow: "hidden",
+              boxShadow: [
+                "inset 0 1.5px 0 rgba(255,255,255,0.12)",
+                "inset 0 -1px 0 rgba(0,0,0,0.3)",
+              ].join(", "),
+            }}
+          >
+            {/* Drag handle */}
+            <div className="flex justify-center pt-3 pb-1">
+              <div
+                style={{
+                  width: "36px",
+                  height: "4px",
+                  borderRadius: "999px",
+                  backgroundColor: "rgba(255,255,255,0.3)",
+                }}
+              />
+            </div>
+
+            {/* Nav links */}
+            <div className="px-6 pt-4 pb-6 flex flex-col gap-1">
+              {[
+                { href: "/dashboard", label: "Dashboard", sub: "AI infrastructure readiness" },
+                { href: "/login", label: "Log in", sub: "Access your account" },
+                { href: "/signup", label: "Sign up", sub: "Join Inferra AI" },
+              ].map((link, i) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-between rounded-2xl px-4 py-3.5 transition-all duration-150"
+                  style={{
+                    backgroundColor: "rgba(255,255,255,0.07)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    animationDelay: `${i * 50}ms`,
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.12)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.07)";
+                  }}
+                >
+                  <div>
+                    <div style={{ color: "#fff", fontSize: "17px", fontWeight: 400, letterSpacing: "-0.01em", lineHeight: 1.2 }}>
+                      {link.label}
+                    </div>
+                    <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "12px", marginTop: "2px" }}>
+                      {link.sub}
+                    </div>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

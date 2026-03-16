@@ -17,7 +17,7 @@ export default function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
     >
       <button
         onClick={() => onModeChange("founder")}
-        className="relative z-10 px-5 py-2 rounded-full text-[13px] transition-all duration-300"
+        className="relative z-10 px-3 sm:px-5 py-2 rounded-full text-[12px] sm:text-[13px] transition-all duration-300"
         style={{
           color: mode === "founder" ? "#fff" : "rgba(34, 47, 48, 0.6)",
           backgroundColor: mode === "founder" ? "#222f30" : "transparent",
@@ -30,11 +30,12 @@ export default function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
           if (mode !== "founder") e.currentTarget.style.color = "rgba(34, 47, 48, 0.6)";
         }}
       >
-        Infrastructure
+        <span className="sm:hidden">Infra</span>
+        <span className="hidden sm:inline">Infrastructure</span>
       </button>
       <button
         onClick={() => onModeChange("policy")}
-        className="relative z-10 px-5 py-2 rounded-full text-[13px] transition-all duration-300"
+        className="relative z-10 px-3 sm:px-5 py-2 rounded-full text-[12px] sm:text-[13px] transition-all duration-300"
         style={{
           color: mode === "policy" ? "#fff" : "rgba(34, 47, 48, 0.6)",
           backgroundColor: mode === "policy" ? "#222f30" : "transparent",

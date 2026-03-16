@@ -57,6 +57,15 @@ export default function MapView({
         border: "1px solid rgba(34, 47, 48, 0.08)",
       }}
     >
+      {!mapboxToken && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3"
+          style={{ backgroundColor: "#f0f0ee" }}>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(34,47,48,0.25)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+          </svg>
+          <p className="text-[13px]" style={{ color: "rgba(34,47,48,0.35)" }}>Map requires Mapbox token</p>
+        </div>
+      )}
       {mapboxToken && (
         <Map
           initialViewState={INITIAL_VIEW_STATE}

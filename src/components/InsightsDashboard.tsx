@@ -99,7 +99,7 @@ export default function InsightsDashboard({ countries }: Props) {
         {statCards.map((s, i) => (
           <div
             key={i}
-            className="rounded-2xl p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
+            className="rounded-2xl p-4 lg:p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
             style={{
               backgroundColor: "#fff",
               border: "1px solid rgba(34, 47, 48, 0.08)",
@@ -107,19 +107,19 @@ export default function InsightsDashboard({ countries }: Props) {
             }}
           >
             <div
-              className="text-[2rem] font-semibold tracking-[-0.04em] leading-none mb-1.5"
+              className="text-[1.6rem] lg:text-[2rem] font-semibold tracking-[-0.04em] leading-none mb-1.5"
               style={{ color: "#22c55e" }}
             >
               {s.value}
             </div>
             <div
-              className="text-[13px] font-medium mb-0.5"
+              className="text-[12px] lg:text-[13px] font-medium mb-0.5"
               style={{ color: "#222f30" }}
             >
               {s.label}
             </div>
             <div
-              className="text-[12px] font-light"
+              className="text-[11px] lg:text-[12px] font-light leading-snug"
               style={{ color: "rgba(34, 47, 48, 0.5)" }}
             >
               {s.sub}
@@ -132,7 +132,7 @@ export default function InsightsDashboard({ countries }: Props) {
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
         {/* Readiness ranking */}
         <div
-          className="xl:col-span-3 rounded-2xl p-6"
+          className="xl:col-span-3 rounded-2xl p-4 lg:p-6"
           style={{
             backgroundColor: "#fff",
             border: "1px solid rgba(34, 47, 48, 0.08)",
@@ -152,21 +152,21 @@ export default function InsightsDashboard({ countries }: Props) {
               return (
                 <div key={c.country}>
                   <div className="flex items-center justify-between mb-1">
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2 min-w-0">
                       <span
-                        className="text-[11px] font-medium w-5 text-right tabular-nums"
+                        className="text-[11px] font-medium w-5 text-right tabular-nums flex-shrink-0"
                         style={{ color: "rgba(34, 47, 48, 0.35)" }}
                       >
                         {idx + 1}
                       </span>
                       <span
-                        className="text-[13px] font-normal"
+                        className="text-[12px] lg:text-[13px] font-normal truncate"
                         style={{ color: "#222f30" }}
                       >
                         {c.country}
                       </span>
                       <span
-                        className="text-[10px] px-2 py-0.5 rounded-full font-normal"
+                        className="hidden sm:inline-block text-[10px] px-2 py-0.5 rounded-full font-normal flex-shrink-0"
                         style={{
                           backgroundColor: `${color}18`,
                           color: color,
@@ -176,7 +176,7 @@ export default function InsightsDashboard({ countries }: Props) {
                       </span>
                     </div>
                     <span
-                      className="text-[13px] font-medium tabular-nums"
+                      className="text-[12px] lg:text-[13px] font-medium tabular-nums flex-shrink-0"
                       style={{ color: "#222f30" }}
                     >
                       {c.readiness_score}
@@ -204,7 +204,7 @@ export default function InsightsDashboard({ countries }: Props) {
         {/* Dimension leaders */}
         <div className="xl:col-span-2 space-y-4">
           <div
-            className="rounded-2xl p-6"
+            className="rounded-2xl p-4 lg:p-6"
             style={{
               backgroundColor: "#fff",
               border: "1px solid rgba(34, 47, 48, 0.08)",

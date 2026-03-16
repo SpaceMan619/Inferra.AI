@@ -291,7 +291,7 @@ export default function Hero() {
       >
         <div className="flex flex-col h-full">
           {/* Head */}
-          <div className="scroller_head px-[var(--container-padding)] pt-12 pb-11 flex-shrink-0">
+          <div className="scroller_head px-[var(--container-padding)] pt-20 lg:pt-12 pb-11 flex-shrink-0">
             <span className="text-[clamp(0.75rem,calc(0.75rem+0.002*(100vw-27.5rem)),0.875rem)] uppercase tracking-wide opacity-70 font-light">
               What we do
             </span>
@@ -334,10 +334,11 @@ export default function Hero() {
                 >
                   <p
                     style={{
-                      fontSize: "clamp(1.875rem, calc(1.875rem + 0.028 * (100vw - 27.5rem)), 3.625rem)",
+                      fontSize: "clamp(1.25rem, calc(1.25rem + 0.038 * (100vw - 27.5rem)), 3.625rem)",
                       letterSpacing: "-0.02em",
-                      lineHeight: "1.1em",
-                      textWrap: "pretty",
+                      lineHeight: "1.15em",
+                      wordBreak: "keep-all",
+                      overflowWrap: "normal",
                     }}
                   >
                     {text}

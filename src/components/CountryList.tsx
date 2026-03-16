@@ -20,7 +20,7 @@ export default function CountryList({
   countries,
   selected,
   onSelect,
-  height = 520,
+  height,
 }: CountryListProps) {
   const [query, setQuery] = useState("");
 
@@ -37,7 +37,8 @@ export default function CountryList({
       style={{
         backgroundColor: "#fff",
         border: "1px solid rgba(34, 47, 48, 0.08)",
-        height,
+        height: height ?? "auto",
+        maxHeight: height ?? "min(520px, 50vh)",
       }}
     >
       {/* Header + search */}

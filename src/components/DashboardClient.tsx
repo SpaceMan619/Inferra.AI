@@ -31,21 +31,25 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
     [countries]
   );
 
-  const sectionTitles: Record<string, { title: string; sub: string }> = {
+  const sectionTitles: Record<string, { title: string; shortTitle: string; sub: string }> = {
     overview: {
       title: "Overview",
+      shortTitle: "Overview",
       sub: `Directional readiness signals across ${countries.length} African markets`,
     },
     map: {
       title: "Infrastructure Map",
+      shortTitle: "Map",
       sub: "Geographic view of data centers, connectivity, and policy signals",
     },
     markets: {
       title: "Markets",
+      shortTitle: "Markets",
       sub: "Compare readiness indicators across countries",
     },
     insights: {
       title: "Insights",
+      shortTitle: "Insights",
       sub: `Readiness rankings, dimension leaders, and key signals across ${countries.length} markets`,
     },
   };
@@ -60,10 +64,10 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
       />
 
       {/* Main content */}
-      <main className="flex-1 ml-[220px]">
+      <main className="flex-1 ml-0 lg:ml-[220px] pb-28 lg:pb-0">
         {/* Top bar */}
         <header
-          className="sticky top-0 z-30 flex items-center justify-between px-8 py-5"
+          className="sticky top-0 z-30 flex items-center justify-between px-4 lg:px-8 py-4 lg:py-5"
           style={{
             backgroundColor: "rgba(247, 247, 245, 0.85)",
             backdropFilter: "blur(12px)",
@@ -71,25 +75,37 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
             borderBottom: "1px solid rgba(34, 47, 48, 0.08)",
           }}
         >
-          <div>
-            <h1
-              className="text-[18px] font-medium tracking-[-0.02em]"
-              style={{ color: "#222f30" }}
+          <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-3">
+            {/* Mobile logo */}
+            <span
+              className="flex lg:hidden h-6 w-6 items-center justify-center rounded-md text-[9px] font-semibold tracking-wide flex-shrink-0"
+              style={{ backgroundColor: "#222f30", color: "#fff" }}
             >
-              {current.title}
-            </h1>
-            <p
-              className="text-[13px] font-light"
-              style={{ color: "rgba(34, 47, 48, 0.55)" }}
-            >
-              {current.sub}
-            </p>
+              iA
+            </span>
+            <div className="min-w-0">
+              <h1
+                className="text-[15px] lg:text-[18px] font-medium tracking-[-0.02em] truncate"
+                style={{ color: "#222f30" }}
+              >
+                <span className="lg:hidden">{current.shortTitle}</span>
+                <span className="hidden lg:inline">{current.title}</span>
+              </h1>
+              <p
+                className="text-[11px] lg:text-[13px] font-light hidden sm:block truncate"
+                style={{ color: "rgba(34, 47, 48, 0.55)" }}
+              >
+                {current.sub}
+              </p>
+            </div>
           </div>
-          <ModeToggle mode={mode} onModeChange={setMode} />
+          <div className="flex-shrink-0">
+            <ModeToggle mode={mode} onModeChange={setMode} />
+          </div>
         </header>
 
         {/* Content */}
-        <div className="p-8">
+        <div className="p-4 lg:p-8">
           <AnimatePresence mode="wait">
 
             {activeSection === "overview" && (
@@ -100,7 +116,7 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                 className="flex gap-5 flex-col xl:flex-row"
-                style={{ minHeight: 520 }}
+                style={{ minHeight: "auto" }}
               >
                 {/* Globe */}
                 <div
@@ -108,7 +124,7 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
                   style={{
                     backgroundColor: "#0a0c10",
                     border: "1px solid rgba(34, 47, 48, 0.08)",
-                    minHeight: 520,
+                    minHeight: "min(520px, 60vh)",
                   }}
                 >
                   <ParticleGlobe
@@ -140,7 +156,6 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
                     countries={countries}
                     selected={selectedCountry}
                     onSelect={setSelectedCountry}
-                    height={520}
                   />
                 </div>
 
@@ -162,7 +177,7 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
               >
                 <div
                   className="flex-1 rounded-2xl overflow-hidden"
-                  style={{ minHeight: 560 }}
+                  style={{ minHeight: "min(560px, 55vh)" }}
                 >
                   <MapView
                     countries={countries}
