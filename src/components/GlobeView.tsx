@@ -76,9 +76,6 @@ export default function GlobeView({ selectedCountry, countries, onSelectCountry 
       duration: 1800,
       essential: true,
     });
-    // Resume rotation after fly completes
-    const t = setTimeout(startRotation, 2200);
-    return () => clearTimeout(t);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCountry]);
 
@@ -119,9 +116,9 @@ export default function GlobeView({ selectedCountry, countries, onSelectCountry 
         touchPitch={false}
         style={{ width: "100%", height: "100%" }}
         onMouseDown={() => { isInteracting.current = true; stopRotation(); }}
-        onMouseUp={() => { isInteracting.current = false; startRotation(); }}
+        onMouseUp={() => { isInteracting.current = false; }}
         onTouchStart={() => { isInteracting.current = true; stopRotation(); }}
-        onTouchEnd={() => { isInteracting.current = false; startRotation(); }}
+        onTouchEnd={() => { isInteracting.current = false; }}
         onLoad={(e) => {
           const map = e.target;
           // Set globe projection
