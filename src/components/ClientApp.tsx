@@ -5,7 +5,6 @@ import Navbar from "./Navbar";
 import Hero from "./Hero";
 import StatsBar from "./StatsBar";
 import Features from "./Features";
-import ToolSection from "./ToolSection";
 import Insights from "./Insights";
 import CTA from "./CTA";
 import Footer from "./Footer";
@@ -22,7 +21,6 @@ export default function ClientApp({ countries }: ClientAppProps) {
         <Hero />
         <StatsBar countries={countries} />
         <Features />
-        <ToolSection countries={countries} />
         <Insights />
         <CTA />
       </main>

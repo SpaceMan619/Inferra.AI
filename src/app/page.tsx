@@ -1,12 +1,21 @@
-import { promises as fs } from "fs";
-import path from "path";
-import type { CountryData } from "@/types";
-import ClientApp from "@/components/ClientApp";
+import Navbar from "@/components/landing/Navbar";
+import Hero from "@/components/landing/Hero";
+import WhatWeDo from "@/components/landing/WhatWeDo";
+import Pillars from "@/components/landing/Pillars";
+import About from "@/components/landing/About";
+import Newsroom from "@/components/landing/Newsroom";
+import Footer from "@/components/landing/Footer";
 
-export default async function Home() {
-  const filePath = path.join(process.cwd(), "public", "data", "countries.json");
-  const raw = await fs.readFile(filePath, "utf-8");
-  const countries: CountryData[] = JSON.parse(raw);
-
-  return <ClientApp countries={countries} />;
+export default function Home() {
+  return (
+    <main>
+      <Navbar />
+      <Hero />
+      <WhatWeDo />
+      <Pillars />
+      <About />
+      <Newsroom />
+      <Footer />
+    </main>
+  );
 }

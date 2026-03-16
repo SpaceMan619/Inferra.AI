@@ -1,174 +1,149 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import createGlobe from "cobe";
 
-// Simplified continent coordinate data [lat, lon] for dot placement
-// These approximate the coastlines of major landmasses visible when viewing Africa
-const LAND_POINTS: [number, number][] = [
-  // Africa outline (dense)
-  [35, -6], [35, 0], [37, 10], [32, 13], [31, 32], [30, 31],
-  [27, 34], [22, 36], [15, 40], [12, 43], [10, 45], [5, 42],
-  [0, 42], [-5, 40], [-10, 40], [-15, 35], [-20, 35], [-25, 33],
-  [-30, 30], [-34, 25], [-34, 18], [-30, 17], [-25, 15], [-20, 12],
-  [-15, 12], [-10, 14], [-5, 12], [0, 10], [5, 1], [5, -5],
-  [10, -15], [15, -17], [20, -17], [25, -15], [30, -10], [35, -6],
-  // Africa interior
-  [25, 30], [20, 30], [15, 30], [10, 30], [5, 30], [0, 30],
-  [-5, 30], [-10, 25], [-15, 25], [-20, 25], [-25, 25],
-  [25, 20], [20, 20], [15, 20], [10, 20], [5, 20], [0, 20], [-5, 20],
-  [20, 10], [15, 10], [10, 10], [5, 10], [0, 10], [-5, 10],
-  [20, 0], [15, 0], [10, 0], [5, 0],
-  [25, 25], [15, 35], [10, 35], [5, 35], [0, 35], [-5, 35],
-  [30, 0], [28, 5], [26, 10], [22, 15],
-  // Europe hints
-  [40, -8], [42, -3], [43, 3], [46, 7], [48, 2], [50, 5],
-  [52, 10], [55, 12], [48, 16], [45, 12], [42, 12], [38, 24],
-  [40, 20], [45, 20], [50, 20], [55, 25], [60, 25], [60, 30],
-  // Middle East hints
-  [32, 35], [30, 40], [25, 45], [20, 55], [15, 50],
-  [35, 40], [37, 45], [33, 45], [28, 48],
-  // South America hint (far left)
-  [5, -60], [0, -50], [-5, -45], [-10, -40], [-15, -45],
-  [-20, -45], [-25, -50], [-30, -55], [-5, -35], [0, -55],
-  [-15, -50], [-10, -50],
-  // More Africa density
-  [8, 5], [12, 5], [8, 15], [12, 15], [8, 25], [12, 25],
-  [-2, 15], [-2, 25], [-8, 18], [-12, 20], [-18, 28],
-  [28, 28], [22, 32], [18, 38], [6, 38], [-2, 38],
-  [16, -8], [14, -12], [12, -8], [6, -3], [4, -8],
+// ── Global data center hubs (dark/muted markers) ────────
+const GLOBAL_DCS: { location: [number, number]; size: number }[] = [
+  { location: [38.9, -77.4], size: 0.04 },   // Virginia/Ashburn
+  { location: [45.6, -121.2], size: 0.03 },   // Oregon
+  { location: [-23.5, -46.6], size: 0.03 },   // São Paulo
+  { location: [51.5, -0.1], size: 0.04 },     // London
+  { location: [50.1, 8.7], size: 0.04 },      // Frankfurt
+  { location: [52.4, 4.9], size: 0.03 },      // Amsterdam
+  { location: [48.9, 2.3], size: 0.03 },      // Paris
+  { location: [19.1, 72.9], size: 0.03 },     // Mumbai
+  { location: [1.3, 103.8], size: 0.04 },     // Singapore
+  { location: [35.7, 139.7], size: 0.04 },    // Tokyo
+  { location: [-33.9, 151.2], size: 0.03 },   // Sydney
+  { location: [53.3, -6.3], size: 0.03 },     // Dublin
+  { location: [59.3, 18.1], size: 0.03 },     // Stockholm
+  { location: [43.7, -79.4], size: 0.03 },    // Toronto
+  { location: [22.3, 114.2], size: 0.03 },    // Hong Kong
+  { location: [37.6, 127.0], size: 0.03 },    // Seoul
+  { location: [26.1, 50.5], size: 0.03 },     // Bahrain
+  { location: [-6.2, 106.8], size: 0.03 },    // Jakarta
+  { location: [47.6, -122.3], size: 0.03 },   // Seattle
+  { location: [37.4, -122.1], size: 0.03 },   // Silicon Valley
+  { location: [25.3, 55.3], size: 0.03 },     // Dubai
+  { location: [39.9, 116.4], size: 0.03 },    // Beijing
+  { location: [31.2, 121.5], size: 0.03 },    // Shanghai
+  { location: [13.1, 77.6], size: 0.03 },     // Bangalore
 ];
 
-// 7 tracked countries with their colors
-const TRACKED: { lat: number; lon: number; color: string }[] = [
-  { lat: -30.5, lon: 22.9, color: "#10b981" },   // South Africa — Viable
-  { lat: 9.08, lon: 8.68, color: "#f59e0b" },    // Nigeria — Emerging
-  { lat: -0.02, lon: 37.9, color: "#f59e0b" },   // Kenya — Emerging
-  { lat: 26.82, lon: 30.8, color: "#10b981" },   // Egypt — Viable
-  { lat: 31.79, lon: -7.09, color: "#f59e0b" },  // Morocco — Emerging
-  { lat: 7.95, lon: -1.02, color: "#f59e0b" },   // Ghana — Emerging
-  { lat: -1.94, lon: 29.87, color: "#ef4444" },  // Rwanda — Early
+// ── Africa tracked markets (bright green markers) ───────
+const AFRICA_MARKERS: { location: [number, number]; size: number }[] = [
+  { location: [-30.5, 22.9], size: 0.08 },    // South Africa
+  { location: [9.08, 8.68], size: 0.06 },     // Nigeria
+  { location: [-0.02, 37.9], size: 0.06 },    // Kenya
+  { location: [26.82, 30.8], size: 0.08 },    // Egypt
+  { location: [31.79, -7.09], size: 0.06 },   // Morocco
+  { location: [7.95, -1.02], size: 0.06 },    // Ghana
+  { location: [-1.94, 29.87], size: 0.05 },   // Rwanda
 ];
 
-function latLonToXYZ(lat: number, lon: number, R: number) {
-  const phi = (lat * Math.PI) / 180;
-  const theta = (lon * Math.PI) / 180;
-  return {
-    x: R * Math.cos(phi) * Math.cos(theta),
-    y: R * Math.sin(phi),
-    z: R * Math.cos(phi) * Math.sin(theta),
-  };
-}
+const DARK_DOT: [number, number, number] = [0.22, 0.22, 0.28];
+const GREEN_DOT: [number, number, number] = [0.063, 0.82, 0.502];
 
-function rotateY(x: number, z: number, angle: number) {
-  const cos = Math.cos(angle);
-  const sin = Math.sin(angle);
-  return { x: x * cos - z * sin, z: x * sin + z * cos };
-}
+const ALL_MARKERS = [
+  ...GLOBAL_DCS.map((m) => ({ ...m, color: DARK_DOT })),
+  ...AFRICA_MARKERS.map((m) => ({ ...m, color: GREEN_DOT })),
+];
+
+const AFRICA_PHI = (20 / 180) * Math.PI;
+const AFRICA_THETA = (5 / 180) * Math.PI;
 
 export default function RotatingGlobe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animRef = useRef<number>(0);
-  const angleRef = useRef(-0.3); // start slightly rotated to show Africa
+  const pointerInteracting = useRef<number | null>(null);
+  const pointerInteractionMovement = useRef(0);
+  const phiRef = useRef(AFRICA_PHI);
+  const widthRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
 
-    const size = 500;
-    canvas.width = size;
-    canvas.height = size;
-    const cx = size / 2;
-    const cy = size / 2;
-    const R = size * 0.38;
+    const onResize = () => {
+      if (canvas) {
+        widthRef.current = canvas.offsetWidth;
+      }
+    };
+    window.addEventListener("resize", onResize);
+    onResize();
 
-    function drawGlobe() {
-      if (!ctx || !canvas) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const angle = angleRef.current;
-
-      // Globe outline circle
-      ctx.beginPath();
-      ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.06)";
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      // Latitude/longitude grid lines (very subtle)
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.03)";
-      ctx.lineWidth = 0.5;
-      for (let lat = -60; lat <= 60; lat += 30) {
-        ctx.beginPath();
-        for (let lon = -180; lon <= 180; lon += 3) {
-          const p = latLonToXYZ(lat, lon, R);
-          const r = rotateY(p.x, p.z, angle);
-          if (r.z < 0) continue; // back of globe
-          const sx = cx + r.x;
-          const sy = cy - p.y;
-          if (lon === -180 || r.z < 0) ctx.moveTo(sx, sy);
-          else ctx.lineTo(sx, sy);
+    const globe = createGlobe(canvas, {
+      devicePixelRatio: 2,
+      width: widthRef.current * 2,
+      height: widthRef.current * 2,
+      phi: AFRICA_PHI,
+      theta: AFRICA_THETA,
+      dark: 0,
+      diffuse: 1.2,
+      mapSamples: 28000,
+      mapBrightness: 1.6,
+      mapBaseBrightness: 0.03,
+      baseColor: [1, 1, 1],
+      markerColor: [0.31, 0.27, 0.9],
+      glowColor: [0.93, 0.93, 0.91],
+      scale: 1.05,
+      offset: [0, 0],
+      markers: ALL_MARKERS,
+      onRender: (state) => {
+        if (pointerInteracting.current === null) {
+          phiRef.current += 0.002;
         }
-        ctx.stroke();
+        state.phi = phiRef.current + pointerInteractionMovement.current;
+        state.theta = AFRICA_THETA;
+        state.width = widthRef.current * 2;
+        state.height = widthRef.current * 2;
+      },
+    });
+
+    const onPointerDown = (e: PointerEvent) => {
+      pointerInteracting.current = e.clientX - pointerInteractionMovement.current;
+      canvas.style.cursor = "grabbing";
+    };
+    const onPointerUp = () => {
+      pointerInteracting.current = null;
+      canvas.style.cursor = "grab";
+    };
+    const onPointerOut = () => {
+      pointerInteracting.current = null;
+      canvas.style.cursor = "grab";
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      if (pointerInteracting.current !== null) {
+        const delta = e.clientX - pointerInteracting.current;
+        pointerInteractionMovement.current = delta / 200;
+        phiRef.current = AFRICA_PHI + pointerInteractionMovement.current;
       }
+    };
 
-      // Land dots
-      for (const [lat, lon] of LAND_POINTS) {
-        const p = latLonToXYZ(lat, lon, R);
-        const r = rotateY(p.x, p.z, angle);
-        if (r.z < 0) continue; // hide back-facing
+    canvas.addEventListener("pointerdown", onPointerDown);
+    canvas.addEventListener("pointerup", onPointerUp);
+    canvas.addEventListener("pointerout", onPointerOut);
+    canvas.addEventListener("pointermove", onPointerMove);
 
-        const depth = (r.z + R) / (2 * R); // 0 at back, 1 at front
-        const sx = cx + r.x;
-        const sy = cy - p.y;
-
-        ctx.beginPath();
-        ctx.arc(sx, sy, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(79, 70, 229, ${0.12 + depth * 0.2})`;
-        ctx.fill();
-      }
-
-      // Tracked country dots (larger, colored, with glow)
-      for (const t of TRACKED) {
-        const p = latLonToXYZ(t.lat, t.lon, R);
-        const r = rotateY(p.x, p.z, angle);
-        if (r.z < 0) continue;
-
-        const depth = (r.z + R) / (2 * R);
-        const sx = cx + r.x;
-        const sy = cy - p.y;
-
-        // Glow
-        const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, 12);
-        grad.addColorStop(0, t.color + "40");
-        grad.addColorStop(1, t.color + "00");
-        ctx.beginPath();
-        ctx.arc(sx, sy, 12, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-
-        // Core dot
-        ctx.beginPath();
-        ctx.arc(sx, sy, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = t.color;
-        ctx.globalAlpha = 0.6 + depth * 0.4;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-
-      angleRef.current += 0.003; // slow rotation
-      animRef.current = requestAnimationFrame(drawGlobe);
-    }
-
-    drawGlobe();
-    return () => cancelAnimationFrame(animRef.current);
+    return () => {
+      globe.destroy();
+      window.removeEventListener("resize", onResize);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointerup", onPointerUp);
+      canvas.removeEventListener("pointerout", onPointerOut);
+      canvas.removeEventListener("pointermove", onPointerMove);
+    };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="w-[400px] h-[400px] md:w-[500px] md:h-[500px]"
-      style={{ opacity: 0.85 }}
+      className="w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] md:w-[420px] md:h-[420px] xl:w-[520px] xl:h-[520px] contain-layout"
+      style={{
+        cursor: "grab",
+        maxWidth: "100%",
+        aspectRatio: "1",
+      }}
     />
   );
 }

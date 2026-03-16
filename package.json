@@ -11,14 +11,22 @@
   "dependencies": {
     "@deck.gl/core": "^9.2.11",
     "@deck.gl/layers": "^9.2.11",
+    "@deck.gl/mapbox": "^9.2.11",
     "@deck.gl/react": "^9.2.11",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@react-three/postprocessing": "^3.0.4",
+    "cobe": "^0.6.5",
     "deck.gl": "^9.2.11",
     "framer-motion": "^12.35.1",
+    "lucide-react": "^0.577.0",
     "mapbox-gl": "^3.19.1",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-map-gl": "^8.1.0"
+    "react-globe.gl": "^2.37.0",
+    "react-map-gl": "^8.1.0",
+    "three": "^0.183.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

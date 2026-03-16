@@ -21,14 +21,14 @@ function Metric({ label, value, sub }: MetricProps) {
       className="rounded-xl p-3.5 transition-all duration-150 hover:shadow-sm"
       style={{ background: "var(--bg-elevated)", border: "1px solid var(--glass-border)" }}
     >
-      <div className="text-[10px] uppercase tracking-widest font-semibold mb-1" style={{ color: "var(--text-muted)" }}>
+      <div className="text-[11px] uppercase tracking-widest font-semibold mb-1" style={{ color: "var(--text-muted)" }}>
         {label}
       </div>
       <div className="text-[13px] font-bold" style={{ color: "var(--text-primary)" }}>
         {value}
       </div>
       {sub && (
-        <div className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)" }}>
+        <div className="text-[11px] mt-0.5" style={{ color: "var(--text-muted)" }}>
           {sub}
         </div>
       )}
@@ -45,7 +45,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           background: "var(--bg-surface)",
           border: "1px solid var(--glass-border)",
           boxShadow: "0 2px 20px rgba(0,0,0,0.04)",
-          minHeight: "550px",
+          minHeight: "400px",
         }}
       >
         <div className="text-center">
@@ -95,7 +95,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
         background: "var(--bg-surface)",
         border: "1px solid var(--glass-border)",
         boxShadow: "0 2px 20px rgba(0,0,0,0.04)",
-        minHeight: "550px",
+        minHeight: "auto",
       }}
     >
       <AnimatePresence mode="wait">
@@ -110,7 +110,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           {/* Header */}
           <div className="flex items-start justify-between mb-1">
             <div>
-              <p className="text-[10px] uppercase tracking-widest font-semibold mb-0.5" style={{ color: "var(--text-muted)" }}>
+              <p className="text-[11px] uppercase tracking-widest font-semibold mb-0.5" style={{ color: "var(--text-muted)" }}>
                 {country.region}
               </p>
               <h2 className="text-2xl font-extrabold tracking-tight">{country.country}</h2>
@@ -124,7 +124,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           <div className="h-px w-full mb-5" style={{ background: "var(--glass-border)" }} />
 
           {/* Primary metrics */}
-          <p className="text-[10px] uppercase tracking-widest font-semibold mb-2.5" style={{ color: "var(--text-muted)" }}>
+          <p className="text-[11px] uppercase tracking-widest font-semibold mb-2.5" style={{ color: "var(--text-muted)" }}>
             {mode === "founder" ? "Infrastructure" : "Policy Signals"}
           </p>
           <div className="grid grid-cols-2 gap-2 mb-5">
@@ -132,7 +132,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           </div>
 
           {/* Infra context */}
-          <p className="text-[10px] uppercase tracking-widest font-semibold mb-2.5" style={{ color: "var(--text-muted)" }}>
+          <p className="text-[11px] uppercase tracking-widest font-semibold mb-2.5" style={{ color: "var(--text-muted)" }}>
             Infrastructure
           </p>
           <div className="grid grid-cols-2 gap-2 mb-5">
@@ -141,7 +141,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
 
           {/* Insight */}
           <div className="rounded-xl p-4" style={{ background: "rgba(79,70,229,0.04)", borderLeft: "3px solid var(--primary)" }}>
-            <p className="text-[10px] uppercase tracking-widest font-semibold mb-1.5" style={{ color: "var(--primary)" }}>
+            <p className="text-[11px] uppercase tracking-widest font-semibold mb-1.5" style={{ color: "var(--primary)" }}>
               Founder Insight
             </p>
             <p className="text-[13px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>

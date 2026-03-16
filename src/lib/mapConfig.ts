@@ -29,7 +29,7 @@ export const INITIAL_VIEW_STATE = {
   latitude: 5,
   longitude: 20,
   zoom: 3.2,
-  pitch: 45,
+  pitch: 0,
   bearing: 0,
 };
 

@@ -11,6 +11,20 @@ interface ToolSectionProps {
   countries: CountryData[];
 }
 
+const sectionVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
 export default function ToolSection({ countries }: ToolSectionProps) {
   const [mode, setMode] = useState<ViewMode>("founder");
   const [selectedCountry, setSelectedCountry] = useState<string>(
@@ -21,59 +35,54 @@ export default function ToolSection({ countries }: ToolSectionProps) {
     countries.find((c) => c.country === selectedCountry) || null;
 
   return (
-    <section id="explore" className="relative z-10 py-24 px-6">
-      {/* Background accent */}
+    <section id="explore" className="relative z-10 pt-12 pb-20 px-5 md:px-6">
+      {/* Background */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-elevated) 30%, var(--bg-elevated) 70%, var(--bg-deep) 100%)",
+          background:
+            "linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-elevated) 25%, var(--bg-elevated) 75%, var(--bg-deep) 100%)",
         }}
       />
 
-      <div className="relative max-w-[1400px] mx-auto">
+      <motion.div
+        className="relative max-w-[1400px] mx-auto"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+      >
         {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-10"
-        >
+        <motion.div variants={fadeUp} className="text-center mb-10">
           <p
-            className="text-sm font-semibold uppercase tracking-widest mb-3"
+            className="text-[13px] font-bold uppercase tracking-[0.2em] mb-4"
             style={{ color: "var(--primary)" }}
           >
             Interactive Map
           </p>
-          <h2 className="text-3xl md:text-[2.75rem] font-extrabold tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-[2.75rem] font-extrabold tracking-tight mb-5">
             Explore African Markets
           </h2>
-          <p className="text-lg max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
+          <p
+            className="text-[17px] max-w-xl mx-auto leading-relaxed"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Click any country to see its full infrastructure and policy profile.
           </p>
         </motion.div>
 
         {/* Mode Toggle */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
+        <motion.div variants={fadeUp}>
           <ModeToggle mode={mode} onModeChange={setMode} />
         </motion.div>
 
-        {/* Map + Panel — map takes 2/3, panel 1/3, like the Streamlit original */}
+        {/* Map + Panel */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          variants={fadeUp}
           className="flex flex-col xl:flex-row gap-5"
-          style={{ minHeight: "650px" }}
         >
-          {/* Map — large and prominent */}
-          <div className="xl:flex-[2.2] min-h-[550px] xl:min-h-0">
+          {/* Map */}
+          <div className="xl:flex-[2.2] min-h-[350px] md:min-h-[550px] xl:min-h-0">
             <MapView
               countries={countries}
               mode={mode}
@@ -90,10 +99,7 @@ export default function ToolSection({ countries }: ToolSectionProps) {
 
         {/* Country quick-select */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          variants={fadeUp}
           className="flex flex-wrap justify-center gap-2 mt-8"
         >
           {countries.map((c) => {
@@ -102,13 +108,13 @@ export default function ToolSection({ countries }: ToolSectionProps) {
               <button
                 key={c.country}
                 onClick={() => setSelectedCountry(c.country)}
-                className="px-5 py-2.5 rounded-full text-[13px] font-medium transition-all duration-200 cursor-pointer"
+                className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-[12px] sm:text-[13px] font-semibold transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
                 style={{
                   background: active ? "var(--primary)" : "var(--bg-surface)",
                   border: `1px solid ${active ? "var(--primary)" : "var(--glass-border)"}`,
                   color: active ? "#fff" : "var(--text-secondary)",
                   boxShadow: active
-                    ? "0 2px 10px rgba(79,70,229,0.25)"
+                    ? "0 2px 12px rgba(79,70,229,0.3)"
                     : "0 1px 2px rgba(0,0,0,0.03)",
                 }}
               >
@@ -117,7 +123,7 @@ export default function ToolSection({ countries }: ToolSectionProps) {
             );
           })}
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

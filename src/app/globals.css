@@ -4,9 +4,10 @@
 :root {
   --bg-deep: #fafaf8;
   --bg-surface: #ffffff;
-  --bg-elevated: #f3f2ef;
-  --bg-dark: #0f1117;
-  --bg-dark-surface: #1a1c25;
+  --bg-elevated: #f5f4f1;
+  --bg-dark: #0c0e14;
+  --bg-dark-surface: #14161e;
+  --bg-dark-elevated: #1c1f2a;
   --primary: #4f46e5;
   --primary-light: #6366f1;
   --primary-dark: #3730a3;
@@ -17,9 +18,10 @@
   --text-primary: #111827;
   --text-secondary: #4b5563;
   --text-muted: #9ca3af;
-  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-bg: rgba(255, 255, 255, 0.62);
   --glass-border: rgba(0, 0, 0, 0.06);
-  --glass-bg-hover: rgba(255, 255, 255, 0.9);
+  --glass-bg-hover: rgba(255, 255, 255, 0.85);
+  --glass-specular: rgba(255, 255, 255, 0.9);
 }
 
 @theme inline {
@@ -48,14 +50,50 @@ body {
 ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
+/* ── Glass tiers ────────────────────────────── */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--glass-border);
 }
 
-/* Map */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(48px) saturate(200%) brightness(1.05);
+  -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 var(--glass-specular),
+    inset 0 -0.5px 0 rgba(0, 0, 0, 0.05),
+    0 0 0 0.5px rgba(0, 0, 0, 0.08),
+    0 4px 20px rgba(0, 0, 0, 0.06),
+    0 12px 48px rgba(0, 0, 0, 0.03);
+}
+
+.liquid-glass-subtle {
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 1px 8px rgba(0, 0, 0, 0.04);
+}
+
+.liquid-glass-dark {
+  background: rgba(12, 14, 20, 0.65);
+  backdrop-filter: blur(48px) saturate(180%) brightness(0.9);
+  -webkit-backdrop-filter: blur(48px) saturate(180%) brightness(0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -0.5px 0 rgba(0, 0, 0, 0.4),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Map ────────────────────────────────────── */
 .map-wrap {
   border-radius: 20px;
   overflow: hidden;
@@ -65,7 +103,7 @@ body {
 .map-wrap .mapboxgl-ctrl-bottom-left,
 .map-wrap .mapboxgl-ctrl-bottom-right { display: none; }
 
-/* Scroll bounce */
+/* ── Animations ─────────────────────────────── */
 @keyframes float-bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(8px); }
@@ -75,3 +113,51 @@ body {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* ── Auth page backgrounds ──────────────────── */
+.auth-bg {
+  background: var(--bg-dark);
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.auth-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 25% 20%, rgba(79, 70, 229, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 75% 70%, rgba(16, 185, 129, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 35% 40% at 55% 40%, rgba(99, 102, 241, 0.08) 0%, transparent 55%),
+    radial-gradient(circle at 30% 80%, rgba(245, 158, 11, 0.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.auth-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* ── Typography ─────────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* ── Utility ────────────────────────────────── */
+.text-balance { text-wrap: balance; }
