@@ -29,7 +29,7 @@ const pillars = [
     number: "02.",
     title: "Intelligence",
     description:
-      "We power our platform with AI models trained on differentiated African market datasets.",
+      "We synthesise infrastructure, connectivity, and policy signals into composite readiness scores across 30 markets.",
     bg: "#222f30",
     textDark: false,
     icon: (
@@ -44,7 +44,7 @@ const pillars = [
     number: "03.",
     title: "Policy",
     description:
-      "We monitor regulatory frameworks and investment signals across 54 nations.",
+      "We monitor regulatory frameworks, AI policy adoption, and investment signals across 30 African markets.",
     bg: "#e7e8e1",
     textDark: true,
     icon: (
