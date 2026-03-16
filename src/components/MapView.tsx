@@ -9,6 +9,7 @@ import {
   INITIAL_VIEW_STATE,
   MAPBOX_STYLE,
 } from "@/lib/mapConfig";
+import InferenceArcs from "./InferenceArcs";
 
 interface MapViewProps {
   countries: CountryData[];
@@ -77,6 +78,7 @@ export default function MapView({
           touchPitch={false}
           style={{ width: "100%", height: "100%" }}
         >
+          <InferenceArcs countries={countries} />
           {countries.map((c) => {
             const key = c[colorKey] as string;
             const color = colorMap[key] || [156, 163, 175, 160];
@@ -186,7 +188,7 @@ export default function MapView({
         {mode === "founder" ? "Infrastructure" : "Policy"} layer
       </div>
 
-      {/* Legend */}
+      {/* Readiness legend */}
       <div
         className="absolute bottom-4 left-4 rounded-xl px-4 py-3 flex flex-col gap-1.5"
         style={{
@@ -209,6 +211,22 @@ export default function MapView({
           </>
         )}
       </div>
+
+      {/* Inference route legend */}
+      <div
+        className="absolute bottom-4 right-4 rounded-xl px-4 py-3 flex flex-col gap-1.5"
+        style={{
+          backgroundColor: "rgba(255,255,255,0.85)",
+          backdropFilter: "blur(8px)",
+          border: "1px solid rgba(34, 47, 48, 0.08)",
+        }}
+      >
+        <p className="text-[9px] uppercase tracking-widest mb-0.5" style={{ color: "rgba(34,47,48,0.35)" }}>
+          Inference route
+        </p>
+        <LegendArc color="#f59e0b" label="Hybrid-Edge" />
+        <LegendArc color="#f97316" label="Regional-Tethered" />
+      </div>
     </div>
   );
 }
@@ -220,6 +238,22 @@ function LegendItem({ color, label }: { color: string; label: string }) {
         className="w-2 h-2 rounded-full"
         style={{ backgroundColor: color }}
       />
+      <span
+        className="text-[11px] font-light"
+        style={{ color: "rgba(34, 47, 48, 0.5)" }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
+
+function LegendArc({ color, label }: { color: string; label: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      <svg width="18" height="6" viewBox="0 0 18 6" fill="none">
+        <path d="M1 5 Q9 0 17 5" stroke={color} strokeWidth="1.5" strokeDasharray="2 2" strokeLinecap="round" fill="none" />
+      </svg>
       <span
         className="text-[11px] font-light"
         style={{ color: "rgba(34, 47, 48, 0.5)" }}
