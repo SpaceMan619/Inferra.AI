@@ -5,6 +5,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { CountryData } from "@/types";
 import RadarChart from "./RadarChart";
 
+const COMPARE_STYLES = `
+  @keyframes comp-fade-up {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .comp-insight { animation: comp-fade-up 0.28s ease both; }
+  .comp-radar   { animation: comp-fade-up 0.22s ease both; }
+`;
+
 const COLOR_A = "#22c55e";
 const COLOR_B = "#818cf8";
 
@@ -221,13 +230,14 @@ function CountrySelector({
 // Everything else is plain HTML.
 
 function DimRow({
-  label, icon, scoreA, scoreB, colorA, colorB,
+  label, icon, scoreA, scoreB, colorA, colorB, animKey,
 }: {
   label: string; icon: string;
   scoreA: number; scoreB: number;
   colorA: string; colorB: string;
   nameA: string; nameB: string;
   index: number;
+  animKey: string;
 }) {
   const aWins = scoreA > scoreB;
   const bWins = scoreB > scoreA;
@@ -241,6 +251,7 @@ function DimRow({
         </span>
         <div className="flex-1 flex justify-end" style={{ maxWidth: "140px" }}>
           <motion.div
+            key={`a-${animKey}`}
             className="h-2 rounded-full"
             style={{ width: `${scoreA}%`, backgroundColor: `${colorA}${aWins ? "cc" : "55"}`, transformOrigin: "right center" }}
             initial={{ scaleX: 0 }}
@@ -261,6 +272,7 @@ function DimRow({
       <div className="flex items-center gap-2">
         <div className="flex-1" style={{ maxWidth: "140px" }}>
           <motion.div
+            key={`b-${animKey}`}
             className="h-2 rounded-full"
             style={{ width: `${scoreB}%`, backgroundColor: `${colorB}${bWins ? "cc" : "55"}`, transformOrigin: "left center" }}
             initial={{ scaleX: 0 }}
@@ -299,8 +311,11 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
 
   const scoreDelta = countryA.readiness_score - countryB.readiness_score;
 
+  const radarKey = `${nameA}-${nameB}`;
+
   return (
     <div className="flex flex-col gap-6 max-w-[1100px] mx-auto">
+      <style>{COMPARE_STYLES}</style>
 
       {/* ── Selectors ────────────────────────────── */}
       <div className="grid gap-3 items-stretch" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
@@ -353,8 +368,10 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
             </div>
           </div>
 
-          <RadarChart countryA={countryA} countryB={countryB}
-            colorA={COLOR_A} colorB={COLOR_B} size={280} />
+          <div key={radarKey} className="comp-radar">
+            <RadarChart countryA={countryA} countryB={countryB}
+              colorA={COLOR_A} colorB={COLOR_B} size={280} />
+          </div>
 
           <div className="flex items-center gap-4 pt-2">
             <div className="text-center">
@@ -418,6 +435,7 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
                   scoreA={countryA.scores[key]} scoreB={countryB.scores[key]}
                   colorA={COLOR_A} colorB={COLOR_B}
                   nameA={countryA.country} nameB={countryB.country}
+                  animKey={radarKey}
                 />
               ))}
             </div>
@@ -427,7 +445,7 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t"
             style={{ borderColor: "rgba(34,47,48,0.06)" }}>
             {([countryA, countryB] as const).map((c, i) => (
-              <div key={`insight-slot-${i}`} className="p-3 rounded-xl"
+              <div key={`insight-${i}-${c.country}`} className="comp-insight p-3 rounded-xl"
                 style={{ backgroundColor: "rgba(34,47,48,0.025)" }}>
                 <p className="text-[10px] uppercase tracking-wider mb-1.5 font-medium"
                   style={{ color: i === 0 ? COLOR_A : COLOR_B }}>
