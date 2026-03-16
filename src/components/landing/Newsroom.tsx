@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Inview, TextReveal } from "./Reveal";
 
 const articles = [
@@ -8,28 +7,22 @@ const articles = [
     category: "Infrastructure",
     date: "Feb 2026",
     title: "Africa Data Centres expands with new facilities in Ghana and South Africa",
-    slug: "#",
-    bg: "transparent",
-    textDark: true,
-    hasImage: true,
+    url: "https://www.datacenterdynamics.com/en/news/africa-data-centres-6mw-expansion-goes-live-in-cape-town-south-africa/",
+    image: "/news-datacenter.jpg",
   },
   {
     category: "Connectivity",
     date: "Jan 2026",
     title: "2Africa subsea cable system nears completion, promising lower latency across the continent",
-    slug: "#",
-    bg: "#222f30",
-    textDark: false,
-    hasImage: false,
+    url: "https://techafricanews.com/2026/02/12/2africa-is-here-how-africa-can-capture-the-full-potential-of-the-subsea-cable/",
+    image: "/news-subsea.jpg",
   },
   {
     category: "Policy",
-    date: "Dec 2025",
-    title: "Kenya and Rwanda lead Africa\u2019s push for national AI strategies and data sovereignty frameworks",
-    slug: "#",
-    bg: "#445e5f",
-    textDark: false,
-    hasImage: false,
+    date: "Nov 2025",
+    title: "Ghana, Rwanda and Kenya pioneer national AI strategies for inclusive growth",
+    url: "https://furtherafrica.com/2025/11/07/ghana-rwanda-and-kenya-pioneer-national-ai-strategies-for-inclusive-growth/",
+    image: "/news-policy.jpg",
   },
 ];
 
@@ -78,73 +71,83 @@ export default function Newsroom() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--gap,20px)]">
           {articles.map((article, i) => (
             <Inview key={article.title} delay={i * 0.1}>
-              <Link
-                href={article.slug}
+              <a
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group block overflow-hidden"
                 style={{
-                  backgroundColor: article.bg,
                   borderRadius: "12px",
-                  color: article.textDark ? "#222f30" : "#fff",
-                  minHeight: "clamp(280px, 35vw, 400px)",
+                  backgroundColor: "#fff",
+                  border: "1px solid rgba(34, 47, 48, 0.08)",
+                  color: "#222f30",
                 }}
               >
-                <article className="flex flex-col justify-between h-full p-6 lg:p-8">
-                  {/* Image placeholder for first article */}
-                  {article.hasImage && (
-                    <div
-                      className="w-full rounded-lg overflow-hidden mb-6 relative"
+                {/* Image */}
+                <div
+                  className="w-full overflow-hidden relative"
+                  style={{ aspectRatio: "16/10" }}
+                >
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                <article className="p-6 lg:p-7">
+                  {/* Category + date */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <span
+                      className="text-[11px] font-medium px-2.5 py-1 rounded-full uppercase"
                       style={{
-                        aspectRatio: "16/10",
                         backgroundColor: "rgba(34, 47, 48, 0.06)",
+                        color: "rgba(34, 47, 48, 0.7)",
                       }}
                     >
-                      <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105" />
-                    </div>
-                  )}
-
-                  {!article.hasImage && <div className="flex-1" />}
-
-                  <div>
-                    {/* Category + date */}
-                    <div className="flex items-center gap-3 mb-3">
-                      <span
-                        className="text-[11px] font-medium px-2.5 py-1 rounded-full uppercase"
-                        style={{
-                          backgroundColor: article.textDark
-                            ? "rgba(34, 47, 48, 0.08)"
-                            : "rgba(255, 255, 255, 0.15)",
-                          color: article.textDark
-                            ? "rgba(34, 47, 48, 0.7)"
-                            : "rgba(255, 255, 255, 0.8)",
-                        }}
-                      >
-                        {article.category}
-                      </span>
-                      <span
-                        className="text-[12px] font-light"
-                        style={{
-                          color: article.textDark
-                            ? "rgba(34, 47, 48, 0.4)"
-                            : "rgba(255, 255, 255, 0.5)",
-                        }}
-                      >
-                        {article.date}
-                      </span>
-                    </div>
-
-                    {/* Title */}
-                    <h3
-                      className="font-normal leading-[1.3] tracking-[-0.02em]"
-                      style={{
-                        fontSize:
-                          "clamp(1.125rem, calc(1.125rem + 0.3vw), 1.375rem)",
-                      }}
+                      {article.category}
+                    </span>
+                    <span
+                      className="text-[12px] font-light"
+                      style={{ color: "rgba(34, 47, 48, 0.4)" }}
                     >
-                      {article.title}
-                    </h3>
+                      {article.date}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className="font-normal leading-[1.3] tracking-[-0.02em]"
+                    style={{
+                      fontSize:
+                        "clamp(1.125rem, calc(1.125rem + 0.3vw), 1.375rem)",
+                    }}
+                  >
+                    {article.title}
+                  </h3>
+
+                  {/* Read arrow */}
+                  <div
+                    className="mt-4 flex items-center gap-2 text-[13px] font-light transition-colors duration-200 group-hover:opacity-100"
+                    style={{ color: "rgba(34, 47, 48, 0.5)" }}
+                  >
+                    <span>Read article</span>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      <path d="M7 17L17 7M17 7H7M17 7V17" />
+                    </svg>
                   </div>
                 </article>
-              </Link>
+              </a>
             </Inview>
           ))}
         </div>

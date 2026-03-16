@@ -48,22 +48,10 @@ export default function About() {
                 maxWidth: "623px",
               }}
             >
-              {/* Placeholder gradient — replace with real image */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #222f30 0%, #445e5f 50%, #222f30 100%)",
-                }}
-              />
-              {/* Dot pattern overlay */}
-              <div
-                className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)",
-                  backgroundSize: "20px 20px",
-                }}
+              <img
+                src="/about-africa.jpg"
+                alt="Aerial view of Lagos, Nigeria — a key market for AI infrastructure in Africa"
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </figure>
           </Inview>

@@ -1,8 +1,42 @@
+export interface CountryScores {
+  compute: number;
+  connectivity: number;
+  power: number;
+  policy: number;
+  ecosystem: number;
+}
+
 export interface CountryData {
+  // Identity
   country: string;
+  iso2: string;
   region: string;
   latitude: number;
   longitude: number;
+
+  // Socioeconomic context
+  population_m: number;
+  gdp_usd_bn: number;
+  internet_penetration_pct: number;
+  mobile_penetration_pct: number;
+
+  // Infrastructure
+  dc_count: number;
+  it_load_mw: number;
+  ixp_count: number;
+  submarine_cables: string[];
+  cloud_providers: string[];
+  dc_operators: string[];
+
+  // Policy
+  ai_strategy_status: "Adopted" | "Drafting" | "None";
+  key_regulations: string[];
+
+  // Readiness scores (0–100)
+  readiness_score: number;
+  scores: CountryScores;
+
+  // Legacy / dashboard display fields
   ai_inference_readiness: "Viable" | "Emerging" | "Emerging (Early)";
   active_data_centers: string;
   dc_pipeline: string;
