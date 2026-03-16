@@ -1,5 +1,6 @@
 # Inferra AI — Strategy & Roadmap
-> Last updated: 15 March 2026 (end of day). This is the working strategy document for taking Inferra AI from prototype to fundable, conference-ready product — and potentially a real company.
+
+> Last updated: 15 March 2026 (Session 2). This is the working strategy document for taking Inferra AI from prototype to fundable, conference-ready product — and potentially a real company.
 
 ---
 
@@ -19,14 +20,14 @@
 
 We researched every possible competitor. The specific product Inferra AI is building — a unified, interactive dashboard combining infrastructure + connectivity + policy + AI compute readiness for African markets — **does not exist yet**.
 
-| Potential Competitor | What They Do | Why They're NOT Inferra |
-|---------------------|-------------|----------------------|
-| **BARI** (Baobab Future Group) | AI governance readiness benchmarking | Governance-focused, aimed at governments. Not infrastructure. Not for founders/investors. |
-| **Cloudscene** | Global data center directory (4,700+ DCs) | Procurement tool, not Africa-focused, no AI readiness scoring |
-| **Oxford Insights AI Readiness Index** | Annual country AI readiness rankings | PDF report, not live dashboard. Global, not Africa-deep. |
-| **UNESCO RAM** | AI readiness assessments | Consulting engagement, not a product. Government-facing. |
-| **TeleGeography** | Submarine cable maps + telecom research | Connectivity only. No compute, no policy, no AI focus. |
-| **PeeringDB** | Network/IXP database | Raw data, no analysis, no dashboard, no readiness scoring |
+| Potential Competitor                   | What They Do                              | Why They're NOT Inferra                                                                   |
+| -------------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **BARI** (Baobab Future Group)         | AI governance readiness benchmarking      | Governance-focused, aimed at governments. Not infrastructure. Not for founders/investors. |
+| **Cloudscene**                         | Global data center directory (4,700+ DCs) | Procurement tool, not Africa-focused, no AI readiness scoring                             |
+| **Oxford Insights AI Readiness Index** | Annual country AI readiness rankings      | PDF report, not live dashboard. Global, not Africa-deep.                                  |
+| **UNESCO RAM**                         | AI readiness assessments                  | Consulting engagement, not a product. Government-facing.                                  |
+| **TeleGeography**                      | Submarine cable maps + telecom research   | Connectivity only. No compute, no policy, no AI focus.                                    |
+| **PeeringDB**                          | Network/IXP database                      | Raw data, no analysis, no dashboard, no readiness scoring                                 |
 
 **BARI is the closest** — but they measure governance readiness for institutions. We measure infrastructure readiness for builders. These are complementary, not competitive. A partnership with BARI could be powerful: "BARI + Inferra = the complete picture."
 
@@ -42,41 +43,58 @@ We researched every possible competitor. The specific product Inferra AI is buil
 
 ---
 
-## Where We Stand Today — 15 March 2026
+## Where We Stand Today — 15 March 2026 (Session 2)
 
-### ✅ Shipped (This Sprint)
+### ✅ Shipped (Session 1)
 
 **Product:**
+
 - Polished landing page — GSAP clip-path hero animation, scroll-pinned narrative, TextReveal animations, founder's note with Kigali Convention Centre image (real attribution), Newsroom with live article links
 - Dashboard with 4 fully functional sections: Overview, Map (Mapbox), Markets, Insights
-- **17 African markets** in the data layer, all with quantified scores across 5 dimensions (compute, connectivity, power, policy, ecosystem) plus full structured fields
 - **Insights tab** — live-computed from data: key stats, readiness ranking with tier bars, dimension leaders per category. No hardcoded values.
 - **Overview redesign** — 3-col layout (globe + searchable CountryList + detail panel), no more pill wall. Globe shows selected country overlay.
 - **Markets tab** — staggered card entrance animations, tier colour badges
 - **AnimatePresence** section transitions across all dashboard tabs
-- **Dashboard sidebar** — green accent system (`#22c55e`) on active nav item, left bar indicator, icon tint, Insights stat card numbers + borders
-- Login + signup pages — video background, glassmorphism card, readable labels (white/80), proper generic placeholders
+- **Dashboard sidebar** — green accent system (`#22c55e`) on active nav item, left bar indicator, icon tint
+- Login + signup pages — video background, glassmorphism card, readable labels (white/80)
 - Security headers in `next.config.ts` — CSP, X-Frame-Options, HSTS, Referrer-Policy, Permissions-Policy
-- All changes pushed to GitHub (`main`)
 
-**Data layer:**
-- 17 markets: South Africa, Nigeria, Kenya, Egypt, Morocco, Rwanda, Ghana, Ethiopia, Tanzania, Senegal, Ivory Coast, Tunisia, Uganda, Zambia, Cameroon, Angola + more
-- All with: readiness_score (0-100), scores{compute, connectivity, power, policy, ecosystem}, dc_count, it_load_mw, ixp_count, submarine_cables[], cloud_providers[], dc_operators[], ai_strategy_status, key_regulations[], founder_insight, est_rtt_to_europe_ms, primary_inference_route, and all legacy display fields
+### ✅ Shipped (Session 2)
 
-### 🔶 Remaining — Not Built Yet
+**Mobile responsiveness — full pass:**
+- Dashboard sidebar hidden on mobile → iOS 26-inspired floating pill tab bar with liquid glass effect (gradient border + backdrop-filter blur)
+- Landing page hamburger → iOS 26 slide-up glass sheet with spring easing, drag handle, dark glass surface
+- Header overflow fixes on Map tab (shortTitle pattern, ModeToggle compact on mobile)
+- Hero scroller word-break fixes, navbar clearance, pill spacing from frame border
+- CountryList, InsightsDashboard, all stat cards properly responsive
+
+**Data layer — 20 markets:**
+- Added 4 new markets: **Mozambique, Botswana, Djibouti, Mauritius**
+- Data gap audit from agent research — key corrections:
+  - Ethiopia RTT: ~354ms → **~140-180ms** (was a stale 2018 estimate)
+  - Ghana AI strategy: Drafting → **Adopted** (confirmed Oct 2023)
+  - Zambia AI strategy: Drafting → **Adopted** (launched Oct 2024)
+  - Tanzania $1B DC: corrected — that investment is **Kenya** (EcoCloud/G42 Olkaria)
+  - `data_residency_constraint` resolved for Nigeria, Kenya, Morocco, Ghana, Tunisia, Senegal (all were "Unclear")
+  - Named `dc_pipeline` projects added for Kenya, Tanzania, Rwanda, Nigeria, Angola
+- Claude Co-Authored-By entries wiped from entire git history (git-filter-repo)
+
+### 🔶 Remaining — Priority Order
 
 | Feature | Priority | Notes |
-|---------|----------|-------|
-| **Supabase auth** | High | UI is done, backend not wired. Login/signup are currently decorative. |
-| **Country comparison page** (`/dashboard/compare`) | High | The killer feature for investors and researchers. |
-| **Mobile responsiveness** | High | Entire app needs mobile audit — dashboard sidebar, overview layout, landing hero. Must be done before any public share. |
-| **Animated inference routes** | Medium | Mapbox line layers showing Local-Native / Hybrid-Edge / Regional-Tethered routing arcs |
-| **Q1 2026 report** | Medium | "State of AI Infrastructure in Africa" — free PDF gated by email. Big lead gen play. |
-| **Deep-dive country pages** | Low | `/dashboard/country/south-africa` with full profile, trend history |
-| **Real-time monitoring** | Future | Latency pings, uptime tracking — turns it from research tool to operational dashboard |
+| --- | --- | --- |
+| **Supabase auth** | 🔴 High | UI is done, backend not wired. Login/signup are currently decorative. Critical before GITEX. |
+| **Country comparison page** (`/dashboard/compare`) | 🔴 High | The killer demo feature. Side-by-side radar charts + metric table. |
+| **Globe fixes** | 🟠 Medium | Dedicated session needed — visual quality, interactions, performance audit. |
+| **Data accuracy audit** | 🟠 Medium | Verify every metric across 20 countries against primary sources. Document citations. Essential before calling it a paid tool. |
+| **Animated inference routes** | 🟡 Medium | Mapbox arc animations — Local-Native / Hybrid-Edge / Regional-Tethered. |
+| **Deep Learning Indaba application** | 🔴 Urgent | Deadline March 20 — 5 days. Apply now. |
+| **Deep-dive country pages** | Low | `/dashboard/country/south-africa` with full profile |
+| **Real-time monitoring** | Future | Latency pings, uptime tracking |
 
 ### The Gap in One Sentence
-We have a credible, data-rich, well-designed product. The next phase turns it from a polished prototype into something users can **depend on** — starting with auth (so users can save preferences) and the comparison feature (so the data becomes actionable).
+
+We have a credible, data-rich, well-designed, mobile-responsive product with 20 countries. The next phase turns it from a polished prototype into something users can **depend on** — starting with auth (so users can save preferences) and comparison (so the data becomes actionable).
 
 ---
 
@@ -84,25 +102,25 @@ We have a credible, data-rich, well-designed product. The next phase turns it fr
 
 ### Hyperscaler Cloud Regions in Africa
 
-| Provider | Location | Launched |
-|----------|----------|----------|
-| AWS | Cape Town (3 AZs) | April 2020 |
-| Azure | Johannesburg | 2019 |
-| Google Cloud | Johannesburg (3 AZs) | January 2024 |
-| Oracle OCI | Johannesburg | January 2022 |
-| Huawei Cloud | South Africa (2 AZs), Egypt (3 AZs), Nigeria (1 AZ) | 2025 |
+| Provider     | Location                                            | Launched     |
+| ------------ | --------------------------------------------------- | ------------ |
+| AWS          | Cape Town (3 AZs)                                   | April 2020   |
+| Azure        | Johannesburg                                        | 2019         |
+| Google Cloud | Johannesburg (3 AZs)                                | January 2024 |
+| Oracle OCI   | Johannesburg                                        | January 2022 |
+| Huawei Cloud | South Africa (2 AZs), Egypt (3 AZs), Nigeria (1 AZ) | 2025         |
 
 **Critical insight:** Only South Africa has cloud regions from AWS, Azure, Google Cloud, and Oracle. No other African country has a hyperscaler cloud region. This is THE core "inference readiness gap" that Inferra visualizes.
 
 ### Data Center Capacity (Our Top 5 Markets)
 
-| Country | # Data Centers | IT Load | Key Operators |
-|---------|---------------|---------|---------------|
-| South Africa | 56 | ~320 MW | Teraco (200 MW), ADC (120 MW), NTT, Equinix, Vantage |
-| Nigeria | 17 | ~137 MW | Rack Centre, Equinix/MainOne, Galaxy Backbone |
-| Kenya | 19 | ~40 MW | iXAfrica, ADC, Safaricom, Raxio Kenya |
-| Egypt | Growing | ~60 MW | Telecom Egypt, Huawei Cloud |
-| Morocco | Growing | ~30 MW | Emerging North Africa hub |
+| Country      | # Data Centers | IT Load | Key Operators                                        |
+| ------------ | -------------- | ------- | ---------------------------------------------------- |
+| South Africa | 56             | ~320 MW | Teraco (200 MW), ADC (120 MW), NTT, Equinix, Vantage |
+| Nigeria      | 17             | ~137 MW | Rack Centre, Equinix/MainOne, Galaxy Backbone        |
+| Kenya        | 19             | ~40 MW  | iXAfrica, ADC, Safaricom, Raxio Kenya                |
+| Egypt        | Growing        | ~60 MW  | Telecom Egypt, Huawei Cloud                          |
+| Morocco      | Growing        | ~30 MW  | Emerging North Africa hub                            |
 
 South Africa, Kenya, and Nigeria host **41% of Africa's DC infrastructure**.
 
@@ -110,29 +128,17 @@ South Africa, Kenya, and Nigeria host **41% of Africa's DC infrastructure**.
 
 77 cable systems connected to Africa. The big ones:
 
-| Cable | Capacity | Status | African Landings |
-|-------|----------|--------|-----------------|
-| **2Africa** (Meta) | 180 Tbit/s | Completed Nov 2025 | 21 landings, 16 countries |
-| **Equiano** (Google) | 144 Tbit/s | Operational Sep 2022 | Togo, Nigeria, Namibia, SA |
-| **PEACE** | 16 Tbit/s/pair | Operational Dec 2022 | Kenya, Egypt, Djibouti |
+| Cable                | Capacity       | Status               | African Landings           |
+| -------------------- | -------------- | -------------------- | -------------------------- |
+| **2Africa** (Meta)   | 180 Tbit/s     | Completed Nov 2025   | 21 landings, 16 countries  |
+| **Equiano** (Google) | 144 Tbit/s     | Operational Sep 2022 | Togo, Nigeria, Namibia, SA |
+| **PEACE**            | 16 Tbit/s/pair | Operational Dec 2022 | Kenya, Egypt, Djibouti     |
 
 ---
 
 ## Next Sprint — What to Build Now
 
-### Priority 1: Mobile Responsiveness (Before Any Public Share)
-
-Before sharing the URL with anyone — investor, journalist, conference — it must work on phone. Right now the dashboard sidebar and 3-col Overview will break on mobile.
-
-**What needs doing:**
-- Sidebar → collapsible bottom nav or hamburger on mobile
-- Overview 3-col → stack to single column with bottom sheet for country list
-- Landing hero → verify text scales and animation plays correctly on small viewports
-- Auth pages → already mostly fine (max-width card pattern)
-
-**Why first:** Every time you share a link, it gets opened on a phone. A broken mobile experience kills first impressions.
-
-### Priority 2: Wire Up Supabase Auth
+### Priority 1: Wire Up Supabase Auth
 
 The login and signup forms are complete UI. Connecting Supabase takes ~2-3 hours:
 
@@ -145,6 +151,7 @@ The login and signup forms are complete UI. Connecting Supabase takes ~2-3 hours
 Once auth is live, the **role field on signup** becomes strategic gold — you'll know immediately whether your users are founders, investors, or policymakers.
 
 **Route protection target:**
+
 ```
 /dashboard          → Protected (redirect to /login if not authed)
 /login + /signup    → Redirect to /dashboard if already authed
@@ -164,6 +171,7 @@ This feature alone justifies the product. "Which is better for my inference work
 ### Priority 4: Animated Inference Routes (Map Tab)
 
 Highest-impact visual for demos. Three arc types on the Mapbox map:
+
 - 🟢 **Local-Native** (South Africa): short loop arc within the country
 - 🟡 **Hybrid-Edge** (Nigeria → Frankfurt): animated dashed arc across the Mediterranean
 - 🔴 **Regional-Tethered** (Ethiopia → Djibouti → elsewhere): multi-hop arc showing dependency
@@ -173,6 +181,7 @@ Tech: Mapbox `line-dasharray` animation. No Three.js (thermal issues on MacBook 
 ### Priority 5: Q1 2026 Report
 
 "State of AI Infrastructure in Africa — Q1 2026" — a free, well-designed PDF that:
+
 - Summarises the 17-market dataset with charts
 - Highlights the inference routing map
 - Calls out the 3 markets to watch in 2026
@@ -184,40 +193,41 @@ This alone could generate 200-500 qualified leads. **Give this task to Pegasus**
 
 ## Conference & Opportunity Calendar
 
-| Event | Date | Location | Deadline / Action |
-|-------|------|----------|-------------------|
-| **GITEX Africa** | April 7-9, 2026 | Marrakech | Check startup showcase slots — this is weeks away |
-| **Deep Learning Indaba 2026** | Aug 2026 | Nigeria | Applications close March 20 — apply immediately |
-| **AI Everything Kenya** | May 19-21, 2026 | Nairobi | AI-focused, East Africa audience |
-| **Africa Tech Summit** | May 29, 2026 | London | International investor exposure |
-| **AI Expo Africa** | Oct 28-29, 2026 | Johannesburg | Africa's largest enterprise AI trade show |
-| **AfricArena** | Nov 26-27, 2026 | Cape Town | Premier startup showcase |
+| Event                         | Date            | Location     | Deadline / Action                                 |
+| ----------------------------- | --------------- | ------------ | ------------------------------------------------- |
+| **GITEX Africa**              | April 7-9, 2026 | Marrakech    | Check startup showcase slots — this is weeks away |
+| **Deep Learning Indaba 2026** | Aug 2026        | Nigeria      | Applications close March 20 — apply immediately   |
+| **AI Everything Kenya**       | May 19-21, 2026 | Nairobi      | AI-focused, East Africa audience                  |
+| **Africa Tech Summit**        | May 29, 2026    | London       | International investor exposure                   |
+| **AI Expo Africa**            | Oct 28-29, 2026 | Johannesburg | Africa's largest enterprise AI trade show         |
+| **AfricArena**                | Nov 26-27, 2026 | Cape Town    | Premier startup showcase                          |
 
-**Minimum viable demo for GITEX (April 7):** Mobile-responsive, auth working, comparison page live. That's 3 weeks. Tight but doable if the next sprint focuses.
+**Minimum viable demo for GITEX (April 7):** Auth working, comparison page live, globe polished. Mobile is already done. That's 3 weeks. Tight but doable if the next sprint focuses.
 
 ---
 
 ## Monetization Path
 
 ### Phase 1: Free (Now → 6 months)
+
 Everything free. Goal: **1,000 signups, 50 weekly active users**. Collect emails via the Q1 report gating and auth signup.
 
 ### Phase 2: Freemium (6-12 months)
 
-| Tier | Price | What |
-|------|-------|------|
-| **Free** | $0 | Dashboard, 17 markets, basic comparison |
-| **Pro** | $49/mo | PDF exports, API access (1,000 calls/mo), email alerts on market changes |
-| **Enterprise** | Custom ($500+/mo) | Custom reports, team workspace, white-label embeds, advisory calls |
+| Tier           | Price             | What                                                                     |
+| -------------- | ----------------- | ------------------------------------------------------------------------ |
+| **Free**       | $0                | Dashboard, 17 markets, basic comparison                                  |
+| **Pro**        | $49/mo            | PDF exports, API access (1,000 calls/mo), email alerts on market changes |
+| **Enterprise** | Custom ($500+/mo) | Custom reports, team workspace, white-label embeds, advisory calls       |
 
 ### Phase 3: Revenue Diversification (12+ months)
 
-| Revenue Stream | Potential | How |
-|----------------|-----------|-----|
-| **Sponsored reports** | $5K-20K per report | "2026 Nigeria AI Infrastructure Report — presented by AWS" |
-| **API licensing** | $1K-10K/mo per client | Cloud providers, VCs, consulting firms |
-| **Advisory/consulting** | $2K-10K per engagement | Market entry strategy for companies entering Africa |
-| **Embedded analytics** | $500-2K/mo per embed | News sites, investment platforms embed the map |
+| Revenue Stream          | Potential              | How                                                        |
+| ----------------------- | ---------------------- | ---------------------------------------------------------- |
+| **Sponsored reports**   | $5K-20K per report     | "2026 Nigeria AI Infrastructure Report — presented by AWS" |
+| **API licensing**       | $1K-10K/mo per client  | Cloud providers, VCs, consulting firms                     |
+| **Advisory/consulting** | $2K-10K per engagement | Market entry strategy for companies entering Africa        |
+| **Embedded analytics**  | $500-2K/mo per embed   | News sites, investment platforms embed the map             |
 
 ---
 
@@ -234,19 +244,19 @@ Everything free. Goal: **1,000 signups, 50 weekly active users**. Collect emails
 
 ### The 30-Second Pitch
 
-> "Africa is receiving $10 billion in AI infrastructure investment, but founders have no visibility into where they can actually deploy. Only one country has a hyperscaler cloud region. Inferra AI is the intelligence layer — we map compute, connectivity, power, and policy readiness across 17 African markets so founders, investors, and governments can make informed deployment decisions. Think Bloomberg Terminal for African AI infrastructure. We're the only platform doing this, and we're launching at a moment when the continent's infrastructure is being built in real time."
+> "Africa is receiving $10 billion in AI infrastructure investment, but founders have no visibility into where they can actually deploy. Only one country has a hyperscaler cloud region. Inferra AI is the intelligence layer — we map compute, connectivity, power, and policy readiness across 20 African markets so founders, investors, and governments can make informed deployment decisions. Think Bloomberg Terminal for African AI infrastructure. We're the only platform doing this, and we're launching at a moment when the continent's infrastructure is being built in real time."
 
 ---
 
 ## Partnership Opportunities
 
-| Partner Type | Who | Why | Approach |
-|-------------|-----|-----|----------|
-| **BARI** (Baobab Future Group) | Governance readiness platform | Complementary — they do policy, we do infra. Joint offering = complete picture. | Reach out for co-marketing, data sharing |
-| **Smart Africa Alliance** | 42-member state body | Continental reach, policy data, credibility | Apply to their programs, offer to power their dashboards |
-| **Cassava Technologies** | NVIDIA partner, ADC operator | They're building the infrastructure we're mapping | Offer to be their market intelligence layer |
-| **AfDB / AI Hub** | $10B initiative | They need dashboards to track investment impact | Propose Inferra as their monitoring tool |
-| **TeleGeography** | Submarine cable data | Their data is open, partnership could be formal | Embed their cable data, credit them, co-brand |
+| Partner Type                   | Who                           | Why                                                                             | Approach                                                 |
+| ------------------------------ | ----------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| **BARI** (Baobab Future Group) | Governance readiness platform | Complementary — they do policy, we do infra. Joint offering = complete picture. | Reach out for co-marketing, data sharing                 |
+| **Smart Africa Alliance**      | 42-member state body          | Continental reach, policy data, credibility                                     | Apply to their programs, offer to power their dashboards |
+| **Cassava Technologies**       | NVIDIA partner, ADC operator  | They're building the infrastructure we're mapping                               | Offer to be their market intelligence layer              |
+| **AfDB / AI Hub**              | $10B initiative               | They need dashboards to track investment impact                                 | Propose Inferra as their monitoring tool                 |
+| **TeleGeography**              | Submarine cable data          | Their data is open, partnership could be formal                                 | Embed their cable data, credit them, co-brand            |
 
 ---
 
@@ -262,7 +272,7 @@ Everything free. Goal: **1,000 signups, 50 weekly active users**. Collect emails
 
 1. **Real-time latency monitoring** — Hourly ping tests from cloud regions to African markets. Turns research tool into operational dashboard.
 2. **Historical data** — Show metric changes over time. "Nigeria went from 10 to 17 data centers in 18 months."
-3. **AI-powered Q&A** — Chat interface over the dataset using Claude API. "Which market has lowest latency to Frankfurt and allows cross-border data?"
+3. **AI assistant / chat layer** — Natural language interface over the dataset. "Which market has lowest latency to Frankfurt and allows cross-border data transfers?" This is a significant product bet — not a feature, more like a second product mode. Worth a dedicated design session before touching code. Could use the Claude API with the country dataset as context. The risk: it becomes the entire product and everything else looks underpowered next to it. The opportunity: no competitor has this at all.
 4. **Predictive scoring** — "Based on current pipeline, Ghana is likely to become Viable within 12 months."
 5. **Community contributions** — Wikipedia model. Users submit corrections, flag policy changes, add data points.
 
@@ -271,21 +281,25 @@ Everything free. Goal: **1,000 signups, 50 weekly active users**. Collect emails
 ## Appendix: Key Sources
 
 ### Market Intelligence
+
 - [McKinsey — Building Data Centers for Africa's Unique Market Dynamics (Nov 2025)](https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/building-data-centers-for-africas-unique-market-dynamics)
 - [AfDB — AI 10 Billion Initiative](https://www.afdb.org/en/news-and-events/press-releases/african-development-bank-undp-and-partners-launch-ai-10-billion-initiative-during-2026-nairobi-ai-forum-91104)
 - [Mordor Intelligence — Africa Data Center Market](https://www.mordorintelligence.com/industry-reports/africa-data-center-market)
 - [Disrupt Africa — 2025 Funding Report](https://disruptafrica.com/2026/02/03/african-tech-startup-funding-leaps-by-almost-50-as-sector-begins-to-recover-from-global-funding-winter/)
 
 ### Infrastructure
+
 - [Cassava/NVIDIA $700M AI Factory Partnership](https://www.intelligentcio.com/africa/2025/11/27/nvidia-and-cassava-technologies-launch-700m-ai-data-centre-rollout-across-africa/)
 - [2Africa Submarine Cable Completion](https://www.connectingafrica.com/connectivity/meta-backed-2africa-subsea-cable-completed)
 - [Submarine Cable Map](https://www.submarinecablemap.com/region/africa)
 
 ### Policy
+
 - [AI Policy Lab Africa — National Strategies](https://www.aipolicy.africa/national-strategies)
 - [AU Continental AI Strategy](https://au.int/en/pressreleases/20240617/african-ministers-adopt-landmark-continental-artificial-intelligence-strategy)
 
 ### Conferences & Programs
+
 - [Deep Learning Indaba 2026](https://deeplearningindaba.com/2026/)
 - [GITEX Africa 2026](https://gitexafrica.com)
 - [AfricArena](https://www.africarena.com/)

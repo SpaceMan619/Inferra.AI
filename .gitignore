@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Internal docs — not for repo
+docs/AGENT_TASKS.md
+docs/PROJECT_BIBLE.md
