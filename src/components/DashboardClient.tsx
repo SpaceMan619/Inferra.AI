@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DashboardSidebar from "./DashboardSidebar";
-import ParticleGlobe from "./ParticleGlobe";
+import RotatingGlobe from "./RotatingGlobe";
 import MapView from "./MapView";
 import CountryPanel from "./CountryPanel";
 import CountryList from "./CountryList";
@@ -22,14 +22,6 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
 
   const countryData =
     countries.find((c) => c.country === selectedCountry) || countries[0];
-
-  const handleMarkerClick = useCallback(
-    (marker: { name: string }) => {
-      const match = countries.find((c) => c.country === marker.name);
-      if (match) setSelectedCountry(match.country);
-    },
-    [countries]
-  );
 
   const sectionTitles: Record<string, { title: string; shortTitle: string; sub: string }> = {
     overview: {
@@ -120,17 +112,16 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
               >
                 {/* Globe */}
                 <div
-                  className="rounded-2xl overflow-hidden flex-1 relative"
+                  className="rounded-2xl overflow-hidden flex-1 relative flex items-center justify-center"
                   style={{
                     backgroundColor: "#0a0c10",
                     border: "1px solid rgba(34, 47, 48, 0.08)",
                     minHeight: "min(520px, 60vh)",
                   }}
                 >
-                  <ParticleGlobe
-                    interactive
-                    onMarkerClick={handleMarkerClick}
-                    className="absolute inset-0"
+                  <RotatingGlobe
+                    selectedCountry={selectedCountry}
+                    countries={countries}
                   />
                   {/* Selected country overlay */}
                   <div
