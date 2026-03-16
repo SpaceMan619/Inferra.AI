@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import DashboardSidebar from "./DashboardSidebar";
-import GlobeView from "./GlobeView";
-import MapView from "./MapView";
 import CountryPanel from "./CountryPanel";
 import CountryList from "./CountryList";
 import ModeToggle from "./ModeToggle";
 import InsightsDashboard from "./InsightsDashboard";
 import CompareClient from "./CompareClient";
+
+const GlobeView = dynamic(() => import("./GlobeView"), { ssr: false });
+const MapView   = dynamic(() => import("./MapView"),   { ssr: false });
 import type { CountryData, ViewMode } from "@/types";
 
 interface DashboardClientProps {
@@ -83,14 +85,14 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
             </span>
             <div className="min-w-0">
               <h1
-                className="text-[15px] lg:text-[18px] font-medium tracking-[-0.02em] truncate"
+                className="text-[15px] lg:text-[18px] font-medium tracking-[-0.02em] truncate pb-0.5"
                 style={{ color: "#222f30" }}
               >
                 <span className="lg:hidden">{current.shortTitle}</span>
                 <span className="hidden lg:inline">{current.title}</span>
               </h1>
               <p
-                className="text-[11px] lg:text-[13px] font-light hidden sm:block truncate"
+                className="text-[11px] lg:text-[13px] font-light hidden sm:block truncate pb-0.5"
                 style={{ color: "rgba(34, 47, 48, 0.55)" }}
               >
                 {current.sub}
@@ -249,7 +251,7 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
                       </span>
                     </div>
                     <p
-                      className="text-[13px] font-light mb-3 leading-[1.5] line-clamp-3"
+                      className="text-[13px] font-light mb-3 leading-[1.5] line-clamp-3 pb-1"
                       style={{ color: "rgba(34, 47, 48, 0.65)" }}
                     >
                       {c.founder_insight}

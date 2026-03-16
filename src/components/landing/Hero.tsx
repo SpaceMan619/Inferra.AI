@@ -241,7 +241,7 @@ export default function Hero() {
             style={{
               fontSize: "clamp(3.125rem, calc(3.125rem + 0.062 * (100vw - 27.5rem)), 7rem)",
               letterSpacing: "-0.03em",
-              lineHeight: "1em",
+              lineHeight: "1.15",
               textWrap: "pretty",
               opacity: 0,
             } as React.CSSProperties}
@@ -256,7 +256,7 @@ export default function Hero() {
               style={{
                 fontSize: "clamp(1.25rem, calc(1.25rem + 0.004 * (100vw - 27.5rem)), 1.5rem)",
                 letterSpacing: "-0.02em",
-                lineHeight: "1.2em",
+                lineHeight: "1.45",
                 textWrap: "pretty",
                 opacity: 0,
               } as React.CSSProperties}

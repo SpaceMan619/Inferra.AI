@@ -107,7 +107,7 @@ function CountrySelector({
       {/* Trigger — plain button, CSS transition only */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex-1 w-full text-left p-4 rounded-2xl"
+        className="flex-1 w-full text-left p-4 rounded-2xl flex flex-col"
         style={{
           backgroundColor: "#fff",
           border: `1.5px solid ${open ? color : "rgba(34,47,48,0.08)"}`,
@@ -117,9 +117,9 @@ function CountrySelector({
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+            <div className="flex items-center gap-2 mb-1.5 overflow-hidden">
               <span
-                className="text-[10px] font-normal px-2 py-0.5 rounded-full whitespace-nowrap"
+                className="text-[10px] font-normal px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
                 style={{
                   backgroundColor: READINESS_BG[selected.ai_inference_readiness] || "rgba(34,47,48,0.06)",
                   color: READINESS_COLORS[selected.ai_inference_readiness] || "rgba(34,47,48,0.5)",
@@ -127,13 +127,12 @@ function CountrySelector({
               >
                 {selected.ai_inference_readiness}
               </span>
-              <span className="text-[10px]" style={{ color: "rgba(34,47,48,0.35)" }}>
+              <span className="text-[10px] truncate" style={{ color: "rgba(34,47,48,0.35)" }}>
                 {selected.region}
               </span>
             </div>
-            {/* Plain text — no motion wrapper, CSS opacity transition */}
             <h3
-              className="text-[18px] font-semibold tracking-[-0.03em] truncate"
+              className="text-[18px] font-semibold tracking-[-0.03em] truncate pb-1"
               style={{ color: "#222f30", transition: "opacity 0.1s" }}
             >
               {selected.country}
@@ -149,8 +148,12 @@ function CountrySelector({
             <span className="text-[10px]" style={{ color: "rgba(34,47,48,0.3)" }}>/ 100</span>
           </div>
         </div>
+
+        {/* Spacer pushes bottom row to the card's bottom edge */}
+        <div className="flex-1" />
+
         <div className="mt-3 flex items-center justify-between gap-2">
-          <span className="text-[11px] font-light leading-snug" style={{ color: "rgba(34,47,48,0.45)" }}>
+          <span className="text-[11px] font-light leading-snug line-clamp-2" style={{ color: "rgba(34,47,48,0.45)" }}>
             {selected.connectivity_role}
           </span>
           <svg
@@ -305,6 +308,7 @@ function numericCompare(a: unknown, b: unknown): "a" | "b" | null {
 export default function CompareClient({ countries }: { countries: CountryData[] }) {
   const [nameA, setNameA] = useState(() => countries[0]?.country ?? "");
   const [nameB, setNameB] = useState(() => countries[1]?.country ?? "");
+  const [insightExpanded, setInsightExpanded] = useState(false);
 
   const countryA = useMemo(() => countries.find((c) => c.country === nameA) ?? countries[0], [countries, nameA]);
   const countryB = useMemo(() => countries.find((c) => c.country === nameB) ?? countries[1], [countries, nameB]);
@@ -312,6 +316,13 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
   const scoreDelta = countryA.readiness_score - countryB.readiness_score;
 
   const radarKey = `${nameA}-${nameB}`;
+
+  // Collapse insights whenever the selection changes
+  const prevPairRef = useRef(radarKey);
+  if (prevPairRef.current !== radarKey) {
+    prevPairRef.current = radarKey;
+    if (insightExpanded) setInsightExpanded(false);
+  }
 
   return (
     <div className="flex flex-col gap-6 max-w-[1100px] mx-auto">
@@ -368,7 +379,7 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
             </div>
           </div>
 
-          <div key={radarKey} className="comp-radar">
+          <div key={radarKey} className="comp-radar w-full" style={{ maxWidth: 280 }}>
             <RadarChart countryA={countryA} countryB={countryB}
               colorA={COLOR_A} colorB={COLOR_B} size={280} />
           </div>
@@ -419,12 +430,12 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
             <div className="grid gap-2 mb-3" style={{ gridTemplateColumns: "1fr 48px 1fr" }}>
               <div className="flex items-center justify-end gap-1.5">
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: COLOR_A }} />
-                <span className="text-[11px] font-medium truncate" style={{ color: "#222f30" }}>{countryA.country}</span>
+                <span className="text-[11px] font-medium truncate pb-0.5" style={{ color: "#222f30" }}>{countryA.country}</span>
               </div>
               <div />
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: COLOR_B }} />
-                <span className="text-[11px] font-medium truncate" style={{ color: "#222f30" }}>{countryB.country}</span>
+                <span className="text-[11px] font-medium truncate pb-0.5" style={{ color: "#222f30" }}>{countryB.country}</span>
               </div>
             </div>
 
@@ -442,21 +453,39 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
           </div>
 
           {/* Insight snippets */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t"
-            style={{ borderColor: "rgba(34,47,48,0.06)" }}>
-            {([countryA, countryB] as const).map((c, i) => (
-              <div key={`insight-${i}-${c.country}`} className="comp-insight p-3 rounded-xl"
-                style={{ backgroundColor: "rgba(34,47,48,0.025)" }}>
-                <p className="text-[10px] uppercase tracking-wider mb-1.5 font-medium"
-                  style={{ color: i === 0 ? COLOR_A : COLOR_B }}>
-                  {c.country}
-                </p>
-                <p className="text-[11px] font-light leading-[1.6] line-clamp-3"
-                  style={{ color: "rgba(34,47,48,0.6)" }}>
-                  {c.founder_insight}
-                </p>
-              </div>
-            ))}
+          <div className="pt-2 border-t" style={{ borderColor: "rgba(34,47,48,0.06)" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+              {([countryA, countryB] as const).map((c, i) => (
+                <div key={`insight-${i}-${c.country}`} className="comp-insight p-3 rounded-xl"
+                  style={{ backgroundColor: "rgba(34,47,48,0.025)" }}>
+                  <p className="text-[10px] uppercase tracking-wider mb-1.5 font-medium"
+                    style={{ color: i === 0 ? COLOR_A : COLOR_B }}>
+                    {c.country}
+                  </p>
+                  <p
+                    className={`text-[11px] font-light leading-[1.6] pb-1 ${insightExpanded ? "" : "line-clamp-3"}`}
+                    style={{ color: "rgba(34,47,48,0.6)" }}>
+                    {c.founder_insight}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => setInsightExpanded((v) => !v)}
+              className="flex items-center gap-1.5 mx-auto text-[11px] font-medium transition-colors duration-150"
+              style={{ color: "rgba(34,47,48,0.4)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#222f30"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(34,47,48,0.4)"; }}
+            >
+              {insightExpanded ? "Show less" : "Read more"}
+              <svg
+                width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                style={{ transition: "transform 0.2s", transform: insightExpanded ? "rotate(180deg)" : "rotate(0deg)" }}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

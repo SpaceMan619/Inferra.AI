@@ -47,6 +47,11 @@ export default function RadarChart({ countryA, countryB, colorA, colorB, size = 
   const cy = size / 2;
   const maxR = size / 2 - LABEL_PAD;
 
+  // Extra viewBox margin so side/top labels are never clipped by the SVG viewport.
+  // All internal coordinates stay the same — only the declared viewport shifts.
+  const HM = 78; // horizontal margin for CONNECTIVITY / ECOSYSTEM
+  const VM = 26; // vertical margin for COMPUTE / POWER / POLICY
+
   const polyA = dataPolygon(countryA.scores, cx, cy, maxR);
   const polyB = dataPolygon(countryB.scores, cx, cy, maxR);
 
@@ -62,7 +67,11 @@ export default function RadarChart({ countryA, countryB, colorA, colorB, size = 
         .radar-poly-a { animation: radar-in 0.4s ease 0s both; }
       `}</style>
 
-      <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} style={{ overflow: "visible" }}>
+      <svg
+        viewBox={`${-HM} ${-VM} ${size + HM * 2} ${size + VM * 2}`}
+        width="100%"
+        style={{ display: "block", overflow: "visible" }}
+      >
         {/* Grid rings */}
         {RINGS.map((pct) => (
           <polygon key={pct} points={gridPolygon(cx, cy, (pct / 100) * maxR)}

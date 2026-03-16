@@ -18,7 +18,7 @@ export default function Marquee() {
               style={{
                 fontSize: "clamp(2rem, calc(2rem + 3vw), 5rem)",
                 letterSpacing: "-0.02em",
-                lineHeight: "1em",
+                lineHeight: "1.15",
                 fontWeight: 300,
                 color: "#222f30",
               }}
@@ -35,7 +35,7 @@ export default function Marquee() {
               style={{
                 fontSize: "clamp(2rem, calc(2rem + 3vw), 5rem)",
                 letterSpacing: "-0.02em",
-                lineHeight: "1em",
+                lineHeight: "1.15",
                 fontWeight: 300,
                 color: "#222f30",
               }}

@@ -10,6 +10,7 @@ const navLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -18,11 +19,21 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 3000);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <>
       <nav
         ref={navRef}
         className="fixed top-5 lg:top-5 left-0 right-0 z-[100] px-5 lg:px-0"
+        style={{
+          opacity: visible ? 1 : 0,
+          transition: "opacity 0.6s ease",
+          pointerEvents: visible ? "auto" : "none",
+        }}
       >
         <div
           className="mx-auto flex items-center justify-between transition-all duration-600"

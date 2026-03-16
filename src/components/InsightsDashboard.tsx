@@ -160,7 +160,7 @@ export default function InsightsDashboard({ countries }: Props) {
                         {idx + 1}
                       </span>
                       <span
-                        className="text-[12px] lg:text-[13px] font-normal truncate"
+                        className="text-[12px] lg:text-[13px] font-normal truncate pb-0.5"
                         style={{ color: "#222f30" }}
                       >
                         {c.country}
@@ -241,7 +241,7 @@ export default function InsightsDashboard({ countries }: Props) {
                       </span>
                     </div>
                     <div
-                      className="text-[13px] font-normal truncate"
+                      className="text-[13px] font-normal truncate pb-0.5"
                       style={{ color: "#222f30" }}
                     >
                       {leader.country}

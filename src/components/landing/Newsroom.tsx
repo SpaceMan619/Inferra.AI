@@ -49,7 +49,7 @@ export default function Newsroom() {
               fontSize:
                 "clamp(3rem, calc(3rem + 2.9vw), 5.625rem)",
               letterSpacing: "-0.02em",
-              lineHeight: "1em",
+              lineHeight: "1.15",
               fontWeight: 400,
               color: "#222f30",
             }}

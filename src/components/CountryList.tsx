@@ -131,7 +131,7 @@ export default function CountryList({
 
               {/* Country name */}
               <span
-                className="flex-1 text-[12.5px] truncate"
+                className="flex-1 text-[12.5px] truncate pb-0.5"
                 style={{
                   color: isActive ? "#222f30" : "rgba(34, 47, 48, 0.72)",
                   fontWeight: isActive ? 500 : 400,
