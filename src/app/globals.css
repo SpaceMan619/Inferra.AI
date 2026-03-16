@@ -2,30 +2,28 @@
 @import "mapbox-gl/dist/mapbox-gl.css";
 
 :root {
-  /* Bold & Vibrant — Modern African Tech */
-  --bg-deep: #0a0a12;
-  --bg-surface: #12121e;
-  --bg-elevated: #1a1a2e;
-  --primary: #ff6b35;
-  --primary-light: #ff8c5a;
-  --secondary: #00c9a7;
-  --secondary-light: #33d4b8;
-  --accent: #ffd166;
-  --danger: #ef476f;
-  --text-primary: #f8f8f8;
-  --text-secondary: #b0b0c0;
-  --text-muted: #6a6a80;
-  --glass-bg: rgba(255, 107, 53, 0.05);
-  --glass-border: rgba(255, 107, 53, 0.12);
-  --glass-bg-hover: rgba(255, 107, 53, 0.1);
-  --glass-border-alt: rgba(0, 201, 167, 0.12);
+  /* Light, clean, modern */
+  --bg-deep: #f7f6f3;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f0efec;
+  --primary: #4f46e5;
+  --primary-light: #6366f1;
+  --secondary: #10b981;
+  --secondary-light: #34d399;
+  --accent: #f59e0b;
+  --danger: #ef4444;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-bg-hover: rgba(255, 255, 255, 0.9);
 }
 
 @theme inline {
   --color-background: var(--bg-deep);
   --color-foreground: var(--text-primary);
   --font-sans: var(--font-body);
-  --font-serif: var(--font-heading);
 }
 
 * {
@@ -43,8 +41,8 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 107, 53, 0.35);
-  color: #fff;
+  background: rgba(79, 70, 229, 0.15);
+  color: var(--text-primary);
 }
 
 ::-webkit-scrollbar {
@@ -54,25 +52,26 @@ body {
   background: var(--bg-deep);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
+  background: #d1d5db;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+  background: #9ca3af;
 }
 
 /* Glass panel utility */
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .glass-panel-hover:hover {
   background: var(--glass-bg-hover);
-  border-color: rgba(255, 107, 53, 0.22);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 /* Scroll indicator bounce */
@@ -90,6 +89,7 @@ body {
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
 .map-container .mapboxgl-ctrl-bottom-left,

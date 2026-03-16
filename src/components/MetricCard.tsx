@@ -9,11 +9,14 @@ interface MetricCardProps {
 export default function MetricCard({ label, value, subtitle }: MetricCardProps) {
   return (
     <div
-      className="glass-panel glass-panel-hover p-4 transition-all duration-200"
-      style={{ borderRadius: "12px" }}
+      className="rounded-xl p-3.5 transition-all duration-200 hover:shadow-sm"
+      style={{
+        background: "var(--bg-elevated)",
+        border: "1px solid var(--glass-border)",
+      }}
     >
       <div
-        className="text-xs tracking-wider uppercase mb-1.5"
+        className="text-[11px] tracking-wider uppercase mb-1 font-medium"
         style={{ color: "var(--text-muted)" }}
       >
         {label}
@@ -26,7 +29,7 @@ export default function MetricCard({ label, value, subtitle }: MetricCardProps) 
       </div>
       {subtitle && (
         <div
-          className="text-xs mt-1"
+          className="text-[11px] mt-0.5"
           style={{ color: "var(--text-muted)" }}
         >
           {subtitle}

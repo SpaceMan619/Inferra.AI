@@ -18,16 +18,16 @@ function StatItem({ value, label, color }: StatItemProps) {
   const { ref, count } = useCountUp(value, 1800);
 
   return (
-    <div className="flex flex-col items-center gap-1 px-6 py-4">
+    <div className="flex flex-col items-center gap-1.5 px-6 py-4">
       <span
         ref={ref}
-        className="text-4xl md:text-5xl font-bold tabular-nums"
+        className="text-3xl md:text-4xl font-bold tabular-nums"
         style={{ color }}
       >
         {count}
       </span>
       <span
-        className="text-xs tracking-[0.15em] uppercase font-medium"
+        className="text-xs tracking-[0.12em] uppercase font-medium"
         style={{ color: "var(--text-muted)" }}
       >
         {label}
@@ -39,7 +39,7 @@ function StatItem({ value, label, color }: StatItemProps) {
 function Separator() {
   return (
     <div
-      className="hidden md:block w-px h-12 self-center"
+      className="hidden md:block w-px h-10 self-center"
       style={{ background: "var(--glass-border)" }}
     />
   );
@@ -63,14 +63,14 @@ export default function StatsBar({ countries }: StatsBarProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="relative z-10 mx-auto max-w-4xl px-4 -mt-8"
+      className="relative z-10 mx-auto max-w-3xl px-4 -mt-4"
     >
       <div className="glass-panel flex flex-wrap justify-center md:justify-between items-center">
-        <StatItem value={totalMarkets} label="Markets Tracked" color="var(--text-primary)" />
+        <StatItem value={totalMarkets} label="Markets" color="var(--text-primary)" />
         <Separator />
         <StatItem value={viableHubs} label="Viable Hubs" color="var(--secondary)" />
         <Separator />
-        <StatItem value={gpuMarkets} label="GPU Available" color="var(--primary)" />
+        <StatItem value={gpuMarkets} label="GPU Ready" color="var(--primary)" />
         <Separator />
         <StatItem value={strongPolicy} label="Strong Policy" color="var(--accent)" />
       </div>

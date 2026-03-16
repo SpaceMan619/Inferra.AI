@@ -27,27 +27,25 @@ export default function ToolSection({ countries }: ToolSectionProps) {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="relative z-10 max-w-[1400px] mx-auto px-4 md:px-8 py-16"
+      id="explore"
     >
       {/* Section header */}
       <div className="text-center mb-10">
         <h2
-          className="text-3xl md:text-4xl font-bold mb-3"
-          id="explore"
+          className="text-3xl md:text-4xl font-bold mb-2"
           style={{ color: "var(--text-primary)" }}
         >
           Explore the Map
         </h2>
-        <div
-          className="w-12 h-px mx-auto"
-          style={{ background: "var(--primary)", opacity: 0.3 }}
-        />
+        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+          Click a country to see its inference readiness profile
+        </p>
       </div>
 
       <ModeToggle mode={mode} onModeChange={setMode} />
 
       {/* Map + Panel layout */}
       <div className="flex flex-col lg:flex-row gap-6" style={{ minHeight: "600px" }}>
-        {/* Map */}
         <div className="flex-[3] min-h-[500px]">
           <MapView
             countries={countries}
@@ -56,14 +54,12 @@ export default function ToolSection({ countries }: ToolSectionProps) {
             onSelectCountry={setSelectedCountry}
           />
         </div>
-
-        {/* Country Panel */}
         <div className="flex-[2]">
           <CountryPanel country={selectedData} mode={mode} />
         </div>
       </div>
 
-      {/* Country quick-select pills (below the map) */}
+      {/* Country quick-select pills */}
       <div className="flex flex-wrap justify-center gap-2 mt-6">
         {countries.map((c) => (
           <button
@@ -72,18 +68,15 @@ export default function ToolSection({ countries }: ToolSectionProps) {
             className="px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer"
             style={{
               background:
-                selectedCountry === c.country
-                  ? "var(--glass-bg-hover)"
-                  : "transparent",
+                selectedCountry === c.country ? "var(--primary)" : "var(--bg-surface)",
               border: `1px solid ${
-                selectedCountry === c.country
-                  ? "var(--primary)"
-                  : "var(--glass-border)"
+                selectedCountry === c.country ? "var(--primary)" : "var(--glass-border)"
               }`,
-              color:
+              color: selectedCountry === c.country ? "#fff" : "var(--text-secondary)",
+              boxShadow:
                 selectedCountry === c.country
-                  ? "var(--primary-light)"
-                  : "var(--text-muted)",
+                  ? "0 2px 8px rgba(79, 70, 229, 0.2)"
+                  : "none",
             }}
           >
             {c.country}

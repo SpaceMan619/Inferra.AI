@@ -17,10 +17,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
         className="glass-panel h-full flex items-center justify-center p-8"
         style={{ minHeight: "500px" }}
       >
-        <p
-          className="text-center text-sm"
-          style={{ color: "var(--text-muted)" }}
-        >
+        <p className="text-center text-sm" style={{ color: "var(--text-muted)" }}>
           Select a country on the map to view details.
         </p>
       </div>
@@ -54,9 +51,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
 
   const primaryMetrics = mode === "founder" ? founderMetrics : policyMetrics;
   const statusValue =
-    mode === "founder"
-      ? country.ai_inference_readiness
-      : country.ai_policy_signal;
+    mode === "founder" ? country.ai_inference_readiness : country.ai_policy_signal;
 
   return (
     <div className="glass-panel p-6 h-full overflow-y-auto" style={{ minHeight: "500px" }}>
@@ -66,56 +61,58 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Header */}
           <div className="flex items-start justify-between mb-1">
             <div>
               <p
-                className="text-xs tracking-wider uppercase mb-1"
+                className="text-[11px] tracking-wider uppercase mb-1 font-medium"
                 style={{ color: "var(--text-muted)" }}
               >
                 {country.region}
               </p>
-              <h2 className="text-3xl font-bold" style={{ color: "var(--text-primary)" }}>
+              <h2
+                className="text-2xl font-bold"
+                style={{ color: "var(--text-primary)" }}
+              >
                 {country.country}
               </h2>
             </div>
             <ReadinessBadge label={statusValue} />
           </div>
 
-          {/* Connectivity Role tag */}
-          <p className="text-xs mb-5" style={{ color: "var(--text-secondary)" }}>
+          <p className="text-xs mb-4" style={{ color: "var(--text-secondary)" }}>
             {country.connectivity_role}
           </p>
 
           {/* Divider */}
           <div
-            className="h-px w-full mb-5"
+            className="h-px w-full mb-4"
             style={{ background: "var(--glass-border)" }}
           />
 
-          {/* Primary Metrics Grid */}
+          {/* Primary Metrics */}
           <p
-            className="text-xs tracking-wider uppercase mb-3"
+            className="text-[11px] tracking-wider uppercase mb-2.5 font-medium"
             style={{ color: "var(--text-muted)" }}
           >
             {mode === "founder" ? "Infrastructure" : "Policy Signals"}
           </p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="grid grid-cols-2 gap-2.5 mb-4">
             {primaryMetrics.map((m) => (
               <MetricCard key={m.label} label={m.label} value={m.value} />
             ))}
           </div>
 
-          {/* Infrastructure Context Grid */}
+          {/* Infra Context */}
           <p
-            className="text-xs tracking-wider uppercase mb-3"
+            className="text-[11px] tracking-wider uppercase mb-2.5 font-medium"
             style={{ color: "var(--text-muted)" }}
           >
             Infrastructure Context
           </p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="grid grid-cols-2 gap-2.5 mb-4">
             {infraMetrics.map((m) => (
               <MetricCard
                 key={m.label}
@@ -130,18 +127,18 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           <div
             className="rounded-xl p-4"
             style={{
-              background: "rgba(255, 107, 53, 0.04)",
+              background: "#eef2ff",
               borderLeft: "3px solid var(--primary)",
             }}
           >
             <p
-              className="text-xs tracking-wider uppercase mb-2"
-              style={{ color: "var(--text-muted)" }}
+              className="text-[11px] tracking-wider uppercase mb-1.5 font-medium"
+              style={{ color: "var(--primary)" }}
             >
               Founder Insight
             </p>
             <p
-              className="text-sm leading-relaxed italic"
+              className="text-sm leading-relaxed"
               style={{ color: "var(--text-secondary)" }}
             >
               &ldquo;{country.founder_insight}&rdquo;

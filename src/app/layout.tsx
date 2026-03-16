@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Outfit } from "next/font/google";
+import { DM_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
-const heading = Space_Grotesk({
+const heading = DM_Sans({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-const body = Outfit({
+const body = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
