@@ -75,6 +75,16 @@ export default function RotatingGlobe({ selectedCountry, countries }: RotatingGl
     window.addEventListener("resize", onResize);
     onResize();
 
+    // Pause rendering when tab is hidden — saves CPU/battery
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        canvas.style.visibility = "hidden";
+      } else {
+        canvas.style.visibility = "visible";
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     // Build live markers from countries data
     const africaMarkers = (countries ?? []).map((c) => ({
       location: [c.latitude, c.longitude] as [number, number],
@@ -105,6 +115,7 @@ export default function RotatingGlobe({ selectedCountry, countries }: RotatingGl
       offset: [0, 0],
       markers: allMarkers,
       onRender: (state) => {
+        if (document.hidden) return; // pause when tab is not visible
         if (pointerInteracting.current === null) {
           // Lerp toward target phi, then resume slow auto-rotate
           const diff = targetPhiRef.current - phiRef.current;
@@ -154,6 +165,7 @@ export default function RotatingGlobe({ selectedCountry, countries }: RotatingGl
     return () => {
       globe.destroy();
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointerup", onPointerUp);
       canvas.removeEventListener("pointerout", onPointerOut);
