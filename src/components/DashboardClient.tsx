@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import DashboardSidebar from "./DashboardSidebar";
 import ParticleGlobe from "./ParticleGlobe";
 import MapView from "./MapView";
 import CountryPanel from "./CountryPanel";
+import CountryList from "./CountryList";
 import ModeToggle from "./ModeToggle";
+import InsightsDashboard from "./InsightsDashboard";
 import type { CountryData, ViewMode } from "@/types";
 
 interface DashboardClientProps {
@@ -31,7 +34,7 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
   const sectionTitles: Record<string, { title: string; sub: string }> = {
     overview: {
       title: "Overview",
-      sub: "Directional readiness signals across 7 African markets",
+      sub: `Directional readiness signals across ${countries.length} African markets`,
     },
     map: {
       title: "Infrastructure Map",
@@ -43,7 +46,7 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
     },
     insights: {
       title: "Insights",
-      sub: "Emerging patterns and observations",
+      sub: `Readiness rankings, dimension leaders, and key signals across ${countries.length} markets`,
     },
   };
 
@@ -87,16 +90,25 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
 
         {/* Content */}
         <div className="p-8">
-          {activeSection === "overview" && (
-            <div>
-              {/* Globe + Country Panel */}
-              <div className="flex gap-5 flex-col lg:flex-row" style={{ minHeight: 500 }}>
+          <AnimatePresence mode="wait">
+
+            {activeSection === "overview" && (
+              <motion.div
+                key="overview"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                className="flex gap-5 flex-col xl:flex-row"
+                style={{ minHeight: 520 }}
+              >
+                {/* Globe */}
                 <div
                   className="rounded-2xl overflow-hidden flex-1 relative"
                   style={{
                     backgroundColor: "#0a0c10",
                     border: "1px solid rgba(34, 47, 48, 0.08)",
-                    height: 520,
+                    minHeight: 520,
                   }}
                 >
                   <ParticleGlobe
@@ -104,164 +116,160 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
                     onMarkerClick={handleMarkerClick}
                     className="absolute inset-0"
                   />
+                  {/* Selected country overlay */}
+                  <div
+                    className="absolute bottom-4 left-4 px-4 py-2.5 rounded-xl pointer-events-none"
+                    style={{
+                      backgroundColor: "rgba(10, 12, 16, 0.75)",
+                      backdropFilter: "blur(10px)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                    }}
+                  >
+                    <p className="text-[10px] uppercase tracking-widest text-white/40 mb-0.5">
+                      Selected
+                    </p>
+                    <p className="text-[14px] font-medium text-white tracking-[-0.02em]">
+                      {countryData.country}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="w-full lg:w-[380px] flex-shrink-0">
+                {/* Country list */}
+                <div className="w-full xl:w-[200px] flex-shrink-0">
+                  <CountryList
+                    countries={countries}
+                    selected={selectedCountry}
+                    onSelect={setSelectedCountry}
+                    height={520}
+                  />
+                </div>
+
+                {/* Detail panel */}
+                <div className="w-full xl:w-[360px] flex-shrink-0">
                   <CountryPanel country={countryData} mode={mode} />
                 </div>
-              </div>
+              </motion.div>
+            )}
 
-              {/* Country quick-select */}
-              <div className="flex flex-wrap gap-2 mt-6">
-                {countries.map((c) => {
-                  const isActive = selectedCountry === c.country;
-                  return (
-                    <button
-                      key={c.country}
-                      onClick={() => setSelectedCountry(c.country)}
-                      className="px-5 py-2.5 rounded-full text-[13px] transition-all duration-200 hover:shadow-sm"
-                      style={{
-                        backgroundColor: isActive ? "#222f30" : "#fff",
-                        color: isActive ? "#fff" : "#222f30",
-                        border: `1px solid ${isActive ? "#222f30" : "rgba(34, 47, 48, 0.12)"}`,
-                        fontWeight: isActive ? 400 : 300,
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.3)";
-                          e.currentTarget.style.backgroundColor = "rgba(255,255,255,1)";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.12)";
-                          e.currentTarget.style.backgroundColor = "#fff";
-                        }
-                      }}
-                    >
-                      {c.country}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {activeSection === "map" && (
-            <div className="flex gap-6 flex-col xl:flex-row">
-              <div
-                className="flex-1 rounded-2xl overflow-hidden"
-                style={{ minHeight: 560 }}
+            {activeSection === "map" && (
+              <motion.div
+                key="map"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                className="flex gap-6 flex-col xl:flex-row"
               >
-                <MapView
-                  countries={countries}
-                  mode={mode}
-                  selectedCountry={selectedCountry}
-                  onSelectCountry={setSelectedCountry}
-                />
-              </div>
-              <div className="w-full xl:w-[380px]">
-                <CountryPanel country={countryData} mode={mode} />
-              </div>
-            </div>
-          )}
-
-          {activeSection === "markets" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {countries.map((c) => (
-                <button
-                  key={c.country}
-                  onClick={() => {
-                    setSelectedCountry(c.country);
-                    setActiveSection("overview");
-                  }}
-                  className="text-left p-6 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
-                  style={{
-                    backgroundColor: "#fff",
-                    border: "1px solid rgba(34, 47, 48, 0.08)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.18)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.08)";
-                  }}
+                <div
+                  className="flex-1 rounded-2xl overflow-hidden"
+                  style={{ minHeight: 560 }}
                 >
-                  <div className="flex items-center justify-between mb-3">
-                    <h3
-                      className="text-[15px] font-medium tracking-[-0.02em] group-hover:underline underline-offset-2"
-                      style={{ color: "#222f30" }}
-                    >
-                      {c.country}
-                    </h3>
-                    <span
-                      className="text-[11px] font-normal px-2.5 py-0.5 rounded-full"
-                      style={{
-                        backgroundColor:
-                          c.ai_inference_readiness === "Viable"
-                            ? "rgba(16,185,129,0.12)"
-                            : c.ai_inference_readiness === "Emerging"
-                            ? "rgba(245,158,11,0.12)"
-                            : "rgba(239,68,68,0.1)",
-                        color:
-                          c.ai_inference_readiness === "Viable"
-                            ? "#047857"
-                            : c.ai_inference_readiness === "Emerging"
-                            ? "#b45309"
-                            : "#b91c1c",
-                      }}
-                    >
-                      {c.ai_inference_readiness}
-                    </span>
-                  </div>
-                  <p
-                    className="text-[13px] font-light mb-3 leading-[1.5]"
-                    style={{ color: "rgba(34, 47, 48, 0.65)" }}
-                  >
-                    {c.founder_insight}
-                  </p>
-                  <div
-                    className="h-px w-full mb-3"
-                    style={{ backgroundColor: "rgba(34, 47, 48, 0.06)" }}
+                  <MapView
+                    countries={countries}
+                    mode={mode}
+                    selectedCountry={selectedCountry}
+                    onSelectCountry={setSelectedCountry}
                   />
-                  <div
-                    className="flex gap-4 text-[11px]"
-                    style={{ color: "rgba(34, 47, 48, 0.55)" }}
-                  >
-                    <span>GPU: {c.ai_compute_availability}</span>
-                    <span>Latency: {c.est_rtt_to_europe_ms}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
+                </div>
+                <div className="w-full xl:w-[380px]">
+                  <CountryPanel country={countryData} mode={mode} />
+                </div>
+              </motion.div>
+            )}
 
-          {activeSection === "insights" && (
-            <div
-              className="rounded-2xl p-10"
-              style={{
-                backgroundColor: "#fff",
-                border: "1px solid rgba(34, 47, 48, 0.08)",
-              }}
-            >
-              <div className="max-w-[520px]">
-                <h3
-                  className="text-[1.25rem] font-medium tracking-[-0.02em] mb-3"
-                  style={{ color: "#222f30" }}
-                >
-                  Coming soon
-                </h3>
-                <p
-                  className="text-[14px] font-light leading-[1.6]"
-                  style={{ color: "rgba(34, 47, 48, 0.6)" }}
-                >
-                  This section will surface emerging patterns from the data —
-                  trend lines, market comparisons, and directional signals
-                  that help you think about where the landscape is heading.
-                </p>
-              </div>
-            </div>
-          )}
+            {activeSection === "markets" && (
+              <motion.div
+                key="markets"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+              >
+                {countries.map((c, i) => (
+                  <motion.button
+                    key={c.country}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.18, delay: i * 0.03, ease: "easeOut" }}
+                    onClick={() => {
+                      setSelectedCountry(c.country);
+                      setActiveSection("overview");
+                    }}
+                    className="text-left p-6 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
+                    style={{
+                      backgroundColor: "#fff",
+                      border: "1px solid rgba(34, 47, 48, 0.08)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.18)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.08)";
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <h3
+                        className="text-[15px] font-medium tracking-[-0.02em] group-hover:underline underline-offset-2"
+                        style={{ color: "#222f30" }}
+                      >
+                        {c.country}
+                      </h3>
+                      <span
+                        className="text-[11px] font-normal px-2.5 py-0.5 rounded-full"
+                        style={{
+                          backgroundColor:
+                            c.ai_inference_readiness === "Viable"
+                              ? "rgba(16,185,129,0.12)"
+                              : c.ai_inference_readiness === "Emerging"
+                              ? "rgba(245,158,11,0.12)"
+                              : "rgba(239,68,68,0.1)",
+                          color:
+                            c.ai_inference_readiness === "Viable"
+                              ? "#047857"
+                              : c.ai_inference_readiness === "Emerging"
+                              ? "#b45309"
+                              : "#b91c1c",
+                        }}
+                      >
+                        {c.ai_inference_readiness}
+                      </span>
+                    </div>
+                    <p
+                      className="text-[13px] font-light mb-3 leading-[1.5] line-clamp-3"
+                      style={{ color: "rgba(34, 47, 48, 0.65)" }}
+                    >
+                      {c.founder_insight}
+                    </p>
+                    <div
+                      className="h-px w-full mb-3"
+                      style={{ backgroundColor: "rgba(34, 47, 48, 0.06)" }}
+                    />
+                    <div
+                      className="flex gap-4 text-[11px]"
+                      style={{ color: "rgba(34, 47, 48, 0.55)" }}
+                    >
+                      <span>GPU: {c.ai_compute_availability}</span>
+                      <span>Latency: {c.est_rtt_to_europe_ms}</span>
+                    </div>
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+
+            {activeSection === "insights" && (
+              <motion.div
+                key="insights"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <InsightsDashboard countries={countries} />
+              </motion.div>
+            )}
+
+          </AnimatePresence>
         </div>
       </main>
     </div>

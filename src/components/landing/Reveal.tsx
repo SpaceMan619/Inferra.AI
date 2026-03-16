@@ -133,7 +133,7 @@ export function TextReveal({
   }, [delay, stagger, duration, immediate]);
 
   return (
-    <div ref={ref} className={className} style={style}>
+    <div ref={ref} className={className} style={{ paddingBottom: "0.12em", ...style }}>
       {children}
     </div>
   );

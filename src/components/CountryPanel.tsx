@@ -178,7 +178,7 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           className="rounded-xl p-4 transition-colors duration-150"
           style={{
             backgroundColor: "rgba(34, 47, 48, 0.025)",
-            borderLeft: "2px solid rgba(34, 47, 48, 0.2)",
+            borderLeft: "2px solid #22c55e",
           }}
         >
           <p

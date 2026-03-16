@@ -42,16 +42,21 @@ export default function FounderNote() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
               {/* Name overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-6">
+              <div
+                className="absolute bottom-0 left-0 right-0 px-6 pt-20 pb-10"
+                style={{
+                  background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)",
+                }}
+              >
                 <p
-                  className="font-light text-white/60"
-                  style={{ fontSize: "0.875rem" }}
+                  className="font-light text-white"
+                  style={{ fontSize: "0.9375rem", opacity: 0.92 }}
                 >
                   Rajveer
                 </p>
                 <p
-                  className="font-light text-white/40"
-                  style={{ fontSize: "0.8125rem" }}
+                  className="font-light text-white"
+                  style={{ fontSize: "0.8125rem", opacity: 0.62 }}
                 >
                   Founder, Inferra AI
                 </p>

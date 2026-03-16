@@ -41,7 +41,7 @@ export default function About() {
         <aside>
           <Inview>
             <figure
-              className="relative overflow-hidden w-full"
+              className="relative overflow-hidden w-full m-0"
               style={{
                 aspectRatio: "623 / 500",
                 borderRadius: "12px",
@@ -50,9 +50,29 @@ export default function About() {
             >
               <img
                 src="/about-africa.jpg"
-                alt="Aerial view of Lagos, Nigeria — a key market for AI infrastructure in Africa"
+                alt="Aerial view of the Kigali Convention Centre, Rwanda"
                 className="absolute inset-0 w-full h-full object-cover"
               />
+              {/* Location / source tag */}
+              <div
+                className="absolute bottom-0 left-0 right-0 px-6 pt-20 pb-10"
+                style={{
+                  background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)",
+                }}
+              >
+                <p
+                  className="font-light text-white"
+                  style={{ fontSize: "0.9375rem", opacity: 0.92 }}
+                >
+                  Kigali Convention Centre
+                </p>
+                <p
+                  className="font-light text-white"
+                  style={{ fontSize: "0.8125rem", opacity: 0.58 }}
+                >
+                  Kigali, Rwanda — Photo: Emmanuel Kwizera, CC BY-SA 4.0
+                </p>
+              </div>
             </figure>
           </Inview>
         </aside>
