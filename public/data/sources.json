@@ -1,0 +1,419 @@
+{
+  "_version": "2.0",
+  "_scope": "30 markets",
+  "_last_updated": "March 2026",
+  "_confidence_levels": {
+    "high": "Confirmed from primary source (official operator doc, hyperscaler page, government gazette)",
+    "medium": "Derived from multiple secondary sources with reasonable confidence",
+    "low": "Estimated from limited or indirect sources — treat with caution"
+  },
+  "countries": {
+    "South Africa": {
+      "primary_sources": [
+        "Teraco (Digital Realty) official specs: teraco.co.za",
+        "AWS af-south-1 region page: aws.amazon.com/about-aws/global-infrastructure",
+        "GCP africa-south1 region: cloud.google.com/about/locations",
+        "Azure South Africa North: azure.microsoft.com/en-us/global-infrastructure",
+        "POPIA: justice.gov.za/inforeg",
+        "Eskom load-shedding stage data 2024: eskom.co.za",
+        "TeleGeography submarine cable map: submarinecablemap.com",
+        "PeeringDB JINX/CINX/DINX: peeringdb.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: All four hyperscaler regions verified from official docs; Teraco/Equinix/ADC AI-capable designation cross-referenced against 30kW+/rack specs; load-shedding end confirmed via Eskom Stage 0 reports Q2-Q4 2024"
+    },
+    "Nigeria": {
+      "primary_sources": [
+        "Equinix LG1/LG2 Lagos: equinix.com/data-centers/africa-colocation/nigeria-colocation/lagos",
+        "Africa Data Centres Lagos: africadatacentres.com",
+        "Rack Centre GPU pod specs: rackcentre.com",
+        "NDPA 2023: nitda.gov.ng",
+        "National AI Strategy 2024: nitda.gov.ng",
+        "TeleGeography cables (WACS, MainOne, Glo-1, Equiano, 2Africa, ACE): submarinecablemap.com",
+        "IXPN: peeringdb.com",
+        "AWS Local Zone Lagos: aws.amazon.com/about-aws/global-infrastructure/localzones"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Equinix LG1/LG2 AI-capable verified from operator specs; AWS Local Zone Lagos confirmed; NDPA 2023 and AI Strategy 2024 confirmed from NITDA"
+    },
+    "Kenya": {
+      "primary_sources": [
+        "iXAfrica NBOX1 specs (50kW/rack, 22.5MW): ixafrica.com",
+        "Africa Data Centres Nairobi: africadatacentres.com",
+        "KIXP and distributed IXPs: peeringdb.com",
+        "Data Protection Act 2019: odpc.go.ke",
+        "National AI Strategy 2022-2027: ict.go.ke",
+        "TeleGeography EASSy/SEACOM/TEAMS/2Africa/PEACE/DARE1: submarinecablemap.com",
+        "G42/Microsoft EcoCloud Olkaria 100MW announcement: businessdailyafrica.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: iXAfrica 50kW/rack spec verified directly; DPA 2019 and AI Strategy confirmed; cable landings verified; G42 campus announcement confirmed"
+    },
+    "Egypt": {
+      "primary_sources": [
+        "AWS Local Zone Cairo: aws.amazon.com",
+        "Huawei Cloud Cairo 3AZs: huaweicloud.com",
+        "TeleGeography Egypt cables (SEA-ME-WE 4/5, AAE-1, PEACE, 2Africa, etc.): submarinecablemap.com",
+        "Personal Data Protection Law No. 151/2020: mcit.gov.eg",
+        "National AI Strategy 2025-2030: mcit.gov.eg",
+        "Raxio Egypt announcement: raxiogroup.com",
+        "PeeringDB Egypt IXPs: peeringdb.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: AWS Local Zone Cairo verified; 10+ cables confirmed via TeleGeography; PDPL 2020 confirmed; ~45ms RTT to Marseille verified via cable distance calc"
+    },
+    "Morocco": {
+      "primary_sources": [
+        "Oracle Cloud Morocco West (Casablanca): oracle.com/cloud/data-regions",
+        "TeleGeography Morocco cables (WACS, ACE, 2Africa, ALMORAVID, SEA-ME-WE 3): submarinecablemap.com",
+        "CNDP data protection: cndp.ma",
+        "Digital Morocco 2030: maroc.ma",
+        "N+ONE Datacenters: n-plus-one.ma",
+        "Microsoft/Atlas Offshore cable announcement: datacenterdynamics.com",
+        "Xalam Analytics North Africa DC Market: xalamanalytics.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Oracle Cloud Casablanca region verified; ~35ms RTT to Marseille confirmed; Morocco AI-capable DC count cross-referenced with Xalam Analytics Africa DC Market report"
+    },
+    "Ghana": {
+      "primary_sources": [
+        "Equinix AC1 Accra: equinix.com",
+        "Digital Realty ACR2 Accra: digitalrealty.com",
+        "Africa Data Centres Accra: africadatacentres.com",
+        "AWS Wavelength Zone Accra via MTN/Orange: aws.amazon.com/wavelength",
+        "Data Protection Act 2012 (Act 843): ghana.gov.gh",
+        "National AI Strategy 2023-2033: moc.gov.gh",
+        "TeleGeography cables: submarinecablemap.com",
+        "PeeringDB GHIX: peeringdb.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Equinix AC1 and Digital Realty ACR2 AI-capable verified from operator spec pages; AWS Wavelength Zone confirmed; AI Strategy 2023-2033 confirmed from Ministry of Communications"
+    },
+    "Ethiopia": {
+      "primary_sources": [
+        "Raxio Ethiopia ET1 specs: raxiogroup.com",
+        "Wingu Africa ICT Park: wingu.africa",
+        "Personal Data Protection Proclamation No. 1321/2024: ethiopialaws.com",
+        "National AI Policy June 2024: ethiopiaai.gov.et",
+        "TeleGeography (Djibouti cable corridor): submarinecablemap.com",
+        "IFC Raxio $100M funding announcement: ifc.org",
+        "World Bank electricity access Ethiopia: data.worldbank.org"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: Raxio ET1 well-documented; Data Protection Proclamation 2024 and AI Policy 2024 confirmed; power data estimated from World Bank/USAID sources; landlocked cable access inferred from Djibouti corridor"
+    },
+    "Tanzania": {
+      "primary_sources": [
+        "Raxio Tanzania announcement: raxiogroup.com",
+        "Vodacom Business DC Dar es Salaam: vodacom.co.tz",
+        "2Africa Tanzania landing 2025: submarinecablemap.com",
+        "Personal Data Protection Act: parliament.go.tz",
+        "TeleGeography EASSy/SEACOM: submarinecablemap.com",
+        "PeeringDB Tanzania IXPs (6): peeringdb.com"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: 2Africa Dar es Salaam activation 2025 confirmed; Raxio Tanzania timeline cross-referenced; PDPA Data Protection Commission inauguration 2024 confirmed; power data estimated"
+    },
+    "Rwanda": {
+      "primary_sources": [
+        "Africa Data Centres KGL1: africadatacentres.com",
+        "PAIX Kigali Innovation City: paix.africa",
+        "National AI Policy April 2023: rdb.rw",
+        "National Data Sharing Policy May 2025: gov.rw",
+        "Kigali Innovation City $300M Africa50/RDB: kigaliinnovationcity.rw",
+        "Data Protection and Privacy Law: ncsa.rw",
+        "PeeringDB Rwanda IXP: peeringdb.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Rwanda policy stack (AI Policy 2023, DPPL, Data Sharing Policy 2025) all confirmed from official sources; ADC KGL1 verified; Kigali Innovation City groundbreaking confirmed"
+    },
+    "Senegal": {
+      "primary_sources": [
+        "AWS Wavelength Zone Dakar via Sonatel April 2025: aws.amazon.com",
+        "PAIX Dakar announcement: paix.africa",
+        "Diamniadio National Datacenter: sn.gov.sn",
+        "National AI Strategy SNIA 2023: mnum.gouv.sn",
+        "CDP Personal Data Protection: cdp.sn",
+        "TeleGeography cables (SAT-3, ACE, MainOne, 2Africa): submarinecablemap.com",
+        "Taiba N'Diaye wind farm 158MW: energymonitor.ai"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: AWS Wavelength Zone Dakar April 2025 confirmed; SNIA 2023 verified; CDP active enforcement confirmed; cable landings verified via TeleGeography"
+    },
+    "Ivory Coast": {
+      "primary_sources": [
+        "Equinix AB1/AB2 Abidjan: equinix.com",
+        "Raxio CIV1 Abidjan: raxiogroup.com",
+        "SNIA 2030 December 2024: artci.ci",
+        "Law No. 2013-450 Personal Data Protection: artci.ci",
+        "TeleGeography cables (SAT-3, MainOne, ACE, WACS, 2Africa): submarinecablemap.com",
+        "PeeringDB CIVIX: peeringdb.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Raxio CIV1 opening September 2024 confirmed; Equinix AB1/AB2 AI-capable specs verified; SNIA 2030 adoption December 2024 confirmed"
+    },
+    "Angola": {
+      "primary_sources": [
+        "Raxio Angola AO1 opening October 2025: raxiogroup.com",
+        "Angola Cables AngoNAP: angolacables.co.ao",
+        "ANGONIX IXP: angonix.ao",
+        "DE-CIX Angola partnership May 2025: de-cix.net",
+        "LBTIC 2023-2027 ICT White Paper: mtti.gov.ao",
+        "APD Angola Data Protection: apd.gov.ao",
+        "TeleGeography cables (WACS, SACS, MONET, 2Africa): submarinecablemap.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Raxio AO1 October 2025 opening confirmed; ANGONIX IXP verified; DE-CIX partnership confirmed; SACS/MONET Atlantic cables verified"
+    },
+    "Uganda": {
+      "primary_sources": [
+        "Raxio Uganda UG1 Namanve: raxiogroup.com",
+        "IFC $100M Raxio funding April 2025: ifc.org",
+        "Data Protection and Privacy Act 2019: pdpo.go.ug",
+        "Uganda Communications Commission: ucc.co.ug",
+        "PeeringDB UIXP: peeringdb.com",
+        "NITA-U NIPX announcement October 2025: nita.go.ug"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: Raxio UG1 Tier III confirmed; DPPA 2019 and PDPO verified; landlocked connectivity constraint verified; power data estimated from World Bank/USAID"
+    },
+    "Cameroon": {
+      "primary_sources": [
+        "CAMTEL Zamengoe DC specs: camtel.cm",
+        "Data Protection Law December 23 2024: spm.gov.cm",
+        "TeleGeography cables (SAT-3, WACS, ACE, NCSCS): submarinecablemap.com",
+        "PeeringDB CAMIX: peeringdb.com",
+        "Eneo power rationing 2024-2025: eneo.cm",
+        "Nachtigal dam 300MW December 2024: nachtigalhydro.cm"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: CAMTEL Zamengoe Tier III confirmed; DPL December 2024 confirmed; cable landings verified; power data from Eneo official reports; no AI-capable DC confirmed"
+    },
+    "Zambia": {
+      "primary_sources": [
+        "Paratus Zambia Vanguard DC: paratus.africa",
+        "Data Protection Act 2021: odpc.gov.zm",
+        "National AI Strategy 2024-2026: ict.gov.zm",
+        "ZICTA regulator: zicta.zm",
+        "Kariba Dam water levels 2024-2025: zesco.co.zm",
+        "PeeringDB Lusaka IXP: peeringdb.com"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: DPA 2021 and AI Strategy 2024-2026 confirmed; Paratus Vanguard Tier III confirmed; 8-12h load-shedding documented; landlocked connectivity estimated"
+    },
+    "Botswana": {
+      "primary_sources": [
+        "BoFiNet Digital Delta DC: bofinet.bw",
+        "Data Protection Act 2024: gov.bw",
+        "BotswanaPost / BINX IXP: peeringdb.com",
+        "TeleGeography cables (via SA/Zimbabwe corridor): submarinecablemap.com",
+        "BTC Sentlhaga DC: btc.bw",
+        "World Bank electricity Botswana: data.worldbank.org"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: Digital Delta DC1 Tier III verified; DPA 2024 confirmed; cable corridor access estimated; no formal AI strategy found"
+    },
+    "Mauritius": {
+      "primary_sources": [
+        "Rogers Capital Tier IV DC: rogerscapital.mu",
+        "Africa Data Centres Mauritius: africadatacentres.com",
+        "Data Protection Act 2017: dataprotection.govmu.org",
+        "National AI Strategy 2018 updated 2024: ict.govmu.org",
+        "TeleGeography cables (SAFE, LION, LION2, MARS, METISS, T3): submarinecablemap.com",
+        "MIXP IXP: peeringdb.com",
+        "Launch Africa VC HQ: launchafrica.vc"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Rogers Capital Tier IV AI-capable verified; DPA 2017 and AI Strategy confirmed; 6 submarine cables verified; Mauritius policy maturity cross-confirmed from multiple sources"
+    },
+    "Tunisia": {
+      "primary_sources": [
+        "DataXion Tier IV Tunis: dataxion.tn",
+        "TeleGeography cables (KELVIN, TE North, AAE-1, SEA-ME-WE 4, Didon): submarinecablemap.com",
+        "ANPDP data protection: anpdp.nat.tn",
+        "National AI Strategy 2023: mincom.tn",
+        "PeeringDB Tunisia IXPs: peeringdb.com",
+        "Cloudscene Tunisia DC listings: cloudscene.com"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: DataXion Tier IV confirmed; multiple Mediterranean cables verified; AI strategy confirmed; dc_count_total estimated from Cloudscene cross-reference"
+    },
+    "Mozambique": {
+      "primary_sources": [
+        "Raxio Mozambique announcement: raxiogroup.com",
+        "TeleGeography EASSy/SEACOM landings Maputo: submarinecablemap.com",
+        "INTIC data protection framework: intic.gov.mz",
+        "World Bank electricity Mozambique: data.worldbank.org",
+        "PeeringDB Mozambique IXP: peeringdb.com"
+      ],
+      "confidence": "low",
+      "confidence_note": "Low: Very limited public data; Raxio Mozambique construction status uncertain; power data estimated; dc_count_total estimated conservatively"
+    },
+    "Djibouti": {
+      "primary_sources": [
+        "Djibouti Data Centre: djiboutidatacentre.com",
+        "TeleGeography cables (EASSy, SEACOM, AAE-1, DARE1, PEACE, FLAG, FALCON, SEA-ME-WE 3, SMW5): submarinecablemap.com",
+        "Djibouti Telecom: djiboutitelecom.dj",
+        "PeeringDB Djibouti IXP: peeringdb.com",
+        "USAID Power Africa Djibouti: powerafrica.usaid.gov"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: Cable hub status confirmed (9+ cables); Djibouti DC confirmed operational; power data estimated; no hyperscaler region; score revised down from previous version based on AI-capable DC standard"
+    },
+    "Democratic Republic of Congo": {
+      "primary_sources": [
+        "https://www.raxiogroup.com/data-centres/dr-congo/",
+        "https://www.datacenterdynamics.com/en/news/?tag=raxio&term=africa",
+        "https://africanreview.com/ict/raxio-s-drc-data-centre-lands-prestigious-certification",
+        "https://www.connectingafrica.com/data-centers/raxio-inaugurates-30m-drc-data-center",
+        "https://lawgratis.com/blog-detail/artificial-intelligence-law-at-dr-congo",
+        "https://www.techhiveadvisory.africa/insights/roundup-on-data-protection-in-africa-2024-projections-for-2025",
+        "https://pulse.internetsociety.org/en/ixp-tracker/ixp/293/",
+        "https://unicompex.com/en/2025/02/27/chatgpt-on-power-in-africa/"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: Good data on Raxio facility but limited public data on other DCs; power reliability data from general Africa sources; AI policy landscape evolving"
+    },
+    "Zimbabwe": {
+      "primary_sources": [
+        "https://info.consoleconnect.com/africa-interconnection-report-2025",
+        "https://cms.d4dhub.eu/assets/Initiatives/Data-Governance-in-Africa/Digital-Investment-Facility/2507_Country-Market-Briefs/Data-Center-Market-Brief-Zimbabwe.pdf",
+        "https://techafricanews.com/2026/01/14/zimbabwe-launches-ambitious-digital-transformation-with-new-data-center-and-tech-park/",
+        "https://zimbabwe.un.org/en/311859-zimbabwe-unveils-2026%E2%80%932030-ai-strategy-advance-inclusive-digital-transformation",
+        "https://veritaszim.net/sites/veritas_d/files/Zimbabwe%20National%20Artificial%20Intelligence%20Strategy.pdf",
+        "https://en.sputniknews.africa/20241125/zambia-and-zimbabwe-face-severe-power-cuts-national-energy-companies-report-1069399205.html",
+        "https://www.ewor.com/blog/harare-good-place-launch-startup",
+        "https://www.peeringdb.com/asn/328235"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: New AI Strategy 2026-2030 provides clarity; power crisis well-documented; limited AI-capable DC infrastructure"
+    },
+    "Namibia": {
+      "primary_sources": [
+        "https://www.businesswire.com/news/home/20250219341395/en/Namibia-Data-Center-Colocation-Market-Analysis-and-Competitive-Landscape-2025",
+        "https://neweralive.na/paratus-data-centre-to-power-africas-digital-transformation-2/",
+        "https://www.datacentermap.com/ixp/internet-exchange-point-of-namibia/",
+        "https://info.consoleconnect.com/africa-interconnection-report-2025",
+        "https://www.nampower.com.na/public/docs/annual-reports/NamPower_Integrated_Annual_Report_2024.pdf",
+        "https://www.afrobarometer.org/wp-content/uploads/2024/09/AD849-Namibians-grow-more-dissatisfied-with-government-efforts-on-electricity-provision-Afrobarometer-5sept24.pdf",
+        "https://techcabal.com/2023/12/01/namibia-ecosystem-feature/",
+        "https://thebrief.com.na/2025/11/venture-capital-and-private-equity-key-to-namibias-economic-transformation/"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Comprehensive NamPower 2024 annual report; Paratus Armada well-documented; Data Protection Act 2024 confirmed; multiple sources verify infrastructure"
+    },
+    "Algeria": {
+      "primary_sources": [
+        "https://doaj.org/article/c749af00f71846f7a254577b9ef53e87",
+        "https://www.dcmarketinsights.com/report/algeria-data-center-market",
+        "https://www.datacenterdynamics.com/en/news/algerian-government-launches-parliament-data-center/",
+        "https://www.submarinecablemap.com/country/algeria",
+        "https://resources.telegeography.com/2025-africa-telecommunications-map",
+        "https://justai.in/ai-regulations-in-algeria-african-union/",
+        "https://www.iea.org/reports/national-climate-resilience-assessment-for-algeria",
+        "https://algeriatech.news/algeria-tech-ai-startup-scene/",
+        "https://www.ainvest.com/news/algeria-rising-tech-ecosystem-lz-5m-series-signals-strategic-entry-point-investors-north-africa-unicorn-2512/"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Digital Algeria 2030 strategy well-documented; multiple cable landings verified; AI data center construction confirmed March 2025; startup ecosystem data available"
+    },
+    "Madagascar": {
+      "primary_sources": [
+        "https://dig.watch/countries/madagascar",
+        "https://subtelforum.com/telma-vodafone-to-connect-madagascar-to-2africa/",
+        "https://pulse.internetsociety.org/en/ixp-tracker/ixp/484/",
+        "https://info.consoleconnect.com/africa-interconnection-report-2025",
+        "https://www.lawgratis.com/blog-detail/artificial-intelligence-law-at-madagascar",
+        "https://en.wikipedia.org/wiki/2025_Malagasy_protests",
+        "https://www.worldbank.org/en/news/press-release/2025/06/18/madagascar-leveling-the-playing-field-for-equitable-and-resilient-growth-across-key-sectors",
+        "https://techcabal.com/2023/07/03/madagascar-ecosystem-feature/"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: 2Africa landing confirmed; power crisis well-documented in 2025 protests; limited AI-specific infrastructure data; IXP data from PeeringDB"
+    },
+    "Gabon": {
+      "primary_sources": [
+        "https://www.internationaltelecomsweekafrica.com/africa-connectivity-insights/country-profile-gabon",
+        "https://thenextafrica.com/gabons-digital-leap-new-data-center-to-transform-the-economy/",
+        "https://techafricanews.com/2025/08/08/gabon-breaks-ground-on-landmark-data-center-in-nkok-special-economic-zone/",
+        "https://www.datacenterdynamics.com/en/news/gabon-breaks-ground-for-data-center-near-capital/",
+        "https://geocables.com/location/libreville-gabon",
+        "https://pulse.internetsociety.org/en/ixp-tracker/ixp/555/",
+        "https://www.lawgratis.com/blog-detail/artificial-intelligence-law-at-gabon",
+        "https://www.ecofinagency.com/news-industry/0503-53504-gabon-president-presses-utility-for-solutions-as-blackouts-hit-libreville",
+        "https://www.ecofinagency.com/news-digital/0510-49294-gabon-s-pozi-raises-foreign-investment-in-first-ever-vc-deal-for-local-startup"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: ST Digital facility operational confirmed; 2Africa landing verified; AI law amendment 2023 well-documented; POZI funding milestone confirmed"
+    },
+    "Benin": {
+      "primary_sources": [
+        "https://www.ecofinagency.com/news-digital/0402-52557-benin-s-vision-2060-makes-digital-technology-central-to-national-development",
+        "https://geocables.com/location/cotonou-benin",
+        "https://pulse.internetsociety.org/en/ixp-tracker/country/BJ/",
+        "https://numerique.gouv.bj/assets/documents/national-artificial-intelligence-and-big-data-strategy-1682673348.pdf",
+        "https://council.science/wp-content/uploads/2025/02/AI-Paper-Case-Study-Benin_V1.pdf",
+        "https://africaenergypulse.com/benin-to-expand-rural-power-with-30m-ebrd-loan",
+        "https://cdn.catf.us/wp-content/uploads/2025/06/27142835/benin-household-energy-poverty-report.pdf",
+        "https://medium.com/@lokossimaxime/tackling-the-missing-middle-of-the-tech-investment-landscape-in-benin-01799a3d9ee8"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: SNIAM 2023-2027 strategy comprehensive; submarine cable landings verified; limited data on AI-capable DCs; power data from 2024-2025 sources"
+    },
+    "Mali": {
+      "primary_sources": [
+        "https://africabriefingroom.com/mali-launches-tier-iii-data-center-reclaiming-control-of-government-data/",
+        "https://www.connectingafrica.com/data-centers/mali-inaugurates-a-tier-iii-data-center",
+        "https://techafricanews.com/2026/02/02/mali-inaugurates-tier-iii-data-center-to-strengthen-digital-sovereignty-in-the-sahel/",
+        "https://pulse.internetsociety.org/en/ixp-tracker/ixp/747/",
+        "https://www.techinafrica.com/mali-tech-security-shift-new-policies-impact-internet-access-telecoms-startups/",
+        "https://www.sinalda.com/world-voltages/africa/voltage-mali/",
+        "https://www.worldbank.org/en/news/press-release/2023/06/23/the-world-bank-strengthens-access-to-quality-electricity-in-mali",
+        "https://rusafromedia.ru/blogs/politic/the-struggle-for-a-brighter-future-how-mali-addresses-its-energy-challenges"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: Tier III DC inauguration January 2026 well-documented; power crisis confirmed by multiple sources; political instability limits data confidence; AES digital sovereignty initiative verified"
+    },
+    "Togo": {
+      "primary_sources": [
+        "https://www.internationaltelecomsweekafrica.com/africa-connectivity-insights/country-profile-togo",
+        "https://www.datacenterdynamics.com/en/news/st-digital-starts-construction-on-data-center-in-cote-divoire/",
+        "https://techcabal.com/2024/05/17/st-digital-to-build-additional-data-centres-in-3-francophone-countries/",
+        "https://pulse.internetsociety.org/en/ixp-tracker/ixp/677/",
+        "https://cms.d4dhub.eu/assets/Initiatives/Data-Governance-in-Africa/Digital-Investment-Facility/2507_Country-Market-Briefs/Data-Center-Market-Brief-Togo.pdf",
+        "https://smartafrica.org/wp-content/uploads/2025/11/ToR-Benin-National-Data-Stratetegy_EN-1.pdf",
+        "https://startupmapafrica.com/funding/country/togo",
+        "https://www.afdb.org/en/news-and-events/press-releases/african-development-bank-group-approves-eu65-million-investment-saviu-ii-fund-support-technology-start-ups-francophone-west-and-central-africa-91234"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Africa Data Centres Lomé confirmed operational 2021; ST Digital construction verified; Equiano landing confirmed; Data Protection Law 2019 established; Digital 2025 strategy documented"
+    },
+    "Sudan": {
+      "primary_sources": [
+        "https://timep.org/2024/09/19/internet-in-conflict-sudans-battle-for-connection/",
+        "https://www.euaa.europa.eu/coi/sudan/2025/security-situation/21-khartoum/215-conflict-related-infrastructure-damage-and-other-war-impacts",
+        "https://pulse.internetsociety.org/en/ixp-tracker/ixp/660/",
+        "https://www.lawgratis.com/blog-detail/artificial-intelligence-law-at-sudan",
+        "https://payneinstitute.mines.edu/satellite-data-captures-power-outages-in-sudans-civil-war/",
+        "https://english.news.cn/20250705/fdd6a97ffbfc46519a88ed0e6ed8d1f4/c.html",
+        "https://freedomhouse.org/country/sudan/freedom-net/2024",
+        "https://techcrunch.com/2024/09/29/savannah-returns-to-fuel-innovation/",
+        "https://restofworld.org/2023/sudan-war-local-apps-aid/"
+      ],
+      "confidence": "medium",
+      "confidence_note": "Medium: Civil war situation well-documented but rapidly evolving; satellite data confirms power outages; internet shutdowns verified; limited reliable data on remaining infrastructure; Savannah Innovation Labs confirmed operational in Port Sudan"
+    },
+    "Côte d'Ivoire": {
+      "primary_sources": [
+        "Equinix AB1/AB2 Abidjan: equinix.com",
+        "Raxio CIV1 Abidjan: raxiogroup.com",
+        "SNIA 2030 December 2024: artci.ci",
+        "Law No. 2013-450 Personal Data Protection: artci.ci",
+        "TeleGeography cables (SAT-3, MainOne, ACE, WACS, 2Africa): submarinecablemap.com",
+        "PeeringDB CIVIX: peeringdb.com"
+      ],
+      "confidence": "high",
+      "confidence_note": "High: Raxio CIV1 opening September 2024 confirmed; Equinix AB1/AB2 AI-capable specs verified; SNIA 2030 adoption December 2024 confirmed"
+    }
+  }
+}

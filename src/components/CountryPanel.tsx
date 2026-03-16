@@ -17,41 +17,41 @@ interface MetricProps {
 function Metric({ label, value, sub }: MetricProps) {
   return (
     <div
-      className="rounded-xl p-3.5 transition-colors duration-150"
-      style={{
-        backgroundColor: "rgba(34, 47, 48, 0.025)",
-        border: "1px solid rgba(34, 47, 48, 0.06)",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = "rgba(34, 47, 48, 0.05)";
-        e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.12)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = "rgba(34, 47, 48, 0.025)";
-        e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.06)";
-      }}
+      className="py-3 border-b"
+      style={{ borderColor: "rgba(34,47,48,0.06)" }}
     >
       <div
-        className="text-[10px] uppercase tracking-widest mb-1.5"
-        style={{ color: "rgba(34, 47, 48, 0.5)", fontWeight: 400 }}
+        className="text-[10px] uppercase tracking-widest mb-1 font-normal"
+        style={{ color: "rgba(34,47,48,0.4)" }}
       >
         {label}
       </div>
       <div
-        className="text-[13px] font-medium"
+        className="text-[13px] leading-snug font-medium"
         style={{ color: "#222f30" }}
       >
         {value}
       </div>
       {sub && (
         <div
-          className="text-[11px] mt-0.5"
-          style={{ color: "rgba(34, 47, 48, 0.5)" }}
+          className="text-[11px] mt-0.5 leading-snug font-normal"
+          style={{ color: "rgba(34,47,48,0.5)" }}
         >
           {sub}
         </div>
       )}
     </div>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p
+      className="text-[10px] uppercase tracking-widest mt-5 mb-0 font-normal"
+      style={{ color: "rgba(34,47,48,0.4)" }}
+    >
+      {children}
+    </p>
   );
 }
 
@@ -90,23 +90,23 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
 
   const founderMetrics: MetricProps[] = [
     { label: "Inference Route", value: country.primary_inference_route },
-    { label: "Latency to EU", value: `${country.est_rtt_to_europe_ms} ms` },
-    { label: "Compute", value: country.ai_compute_availability },
-    { label: "Readiness", value: country.ai_inference_readiness },
+    { label: "Latency to EU",   value: country.est_rtt_to_europe_ms },
+    { label: "Compute",         value: country.ai_compute_availability },
+    { label: "Readiness",       value: country.ai_inference_readiness },
   ];
 
   const policyMetrics: MetricProps[] = [
-    { label: "Policy Signal", value: country.ai_policy_signal },
+    { label: "Policy Signal",   value: country.ai_policy_signal },
     { label: "Data Governance", value: country.ai_data_governance_posture },
-    { label: "Compute Policy", value: country.ai_compute_policy_commitment },
-    { label: "Cross-Border", value: country.cross_border_ai_alignment },
+    { label: "Compute Policy",  value: country.ai_compute_policy_commitment },
+    { label: "Cross-Border",    value: country.cross_border_ai_alignment },
   ];
 
   const infraMetrics: MetricProps[] = [
     { label: "Data Centers", value: country.active_data_centers, sub: country.dc_pipeline },
-    { label: "Power", value: country.power_reliability },
-    { label: "Cloud", value: country.cloud_maturity },
-    { label: "Ops Friction", value: country.ops_friction },
+    { label: "Power",         value: country.power_reliability },
+    { label: "Cloud",         value: country.cloud_maturity },
+    { label: "Ops Friction",  value: country.ops_friction },
   ];
 
   const primaryMetrics = mode === "founder" ? founderMetrics : policyMetrics;
@@ -140,42 +140,32 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
           <ReadinessBadge label={statusValue} />
         </div>
         <p
-          className="text-[13px] mb-5"
+          className="text-[13px] mb-4"
           style={{ color: "rgba(34, 47, 48, 0.6)" }}
         >
           {country.connectivity_role}
         </p>
 
         <div
-          className="h-px w-full mb-5"
+          className="h-px w-full"
           style={{ backgroundColor: "rgba(34, 47, 48, 0.08)" }}
         />
 
         {/* Primary metrics */}
-        <p
-          className="text-[10px] uppercase tracking-widest mb-2.5"
-          style={{ color: "rgba(34, 47, 48, 0.5)", fontWeight: 400 }}
-        >
-          {mode === "founder" ? "Infrastructure" : "Policy Signals"}
-        </p>
-        <div className="grid grid-cols-2 gap-2 mb-5">
+        <SectionLabel>{mode === "founder" ? "AI Readiness" : "Policy Signals"}</SectionLabel>
+        <div className="flex flex-col">
           {primaryMetrics.map((m) => <Metric key={m.label} {...m} />)}
         </div>
 
         {/* Infra context */}
-        <p
-          className="text-[10px] uppercase tracking-widest mb-2.5"
-          style={{ color: "rgba(34, 47, 48, 0.5)", fontWeight: 400 }}
-        >
-          Infrastructure
-        </p>
-        <div className="grid grid-cols-2 gap-2 mb-5">
+        <SectionLabel>Infrastructure</SectionLabel>
+        <div className="flex flex-col">
           {infraMetrics.map((m) => <Metric key={m.label} {...m} />)}
         </div>
 
         {/* Insight */}
         <div
-          className="rounded-xl p-4 transition-colors duration-150"
+          className="rounded-xl p-4 mt-5 transition-colors duration-150"
           style={{
             backgroundColor: "rgba(34, 47, 48, 0.025)",
             borderLeft: "2px solid #22c55e",

@@ -43,7 +43,8 @@ const METRIC_ROWS: {
   unit?: string;
   lowerIsBetter?: boolean;
 }[] = [
-  { label: "Data Centers",    field: "dc_count",                  type: "number" },
+  { label: "DCs (total)",     field: "dc_count_total",            type: "number" },
+  { label: "AI-Capable DCs", field: "dc_ai_capable",             type: "number" },
   { label: "IT Load",         field: "it_load_mw",                type: "number", unit: "MW" },
   { label: "IXPs",            field: "ixp_count",                 type: "number" },
   { label: "Latency to EU",   field: "est_rtt_to_europe_ms",      type: "text",  lowerIsBetter: true },
@@ -514,16 +515,25 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
           const displayA = row.unit ? `${valA} ${row.unit}` : String(valA);
           const displayB = row.unit ? `${valB} ${row.unit}` : String(valB);
 
+          const isText = row.type === "text";
           return (
-            <div key={row.label} className="grid px-6 py-3 text-[13px]"
+            <div key={row.label} className="grid px-6 py-3 text-[13px] items-start"
               style={{
                 gridTemplateColumns: "1fr 1fr 1fr",
                 backgroundColor: idx % 2 === 0 ? "rgba(34,47,48,0.015)" : "transparent",
                 borderTop: "1px solid rgba(34,47,48,0.04)",
               }}>
-              <span className="font-light" style={{ color: "rgba(34,47,48,0.5)" }}>{row.label}</span>
-              <span style={{ color: winnerA ? COLOR_A : "#222f30", fontWeight: winnerA ? 500 : 400 }}>{displayA}</span>
-              <span style={{ color: winnerB ? COLOR_B : "#222f30", fontWeight: winnerB ? 500 : 400 }}>{displayB}</span>
+              <span className="font-light pt-0.5" style={{ color: "rgba(34,47,48,0.5)" }}>{row.label}</span>
+              <span
+                className={isText ? "line-clamp-2 leading-snug pr-4" : ""}
+                title={isText ? displayA : undefined}
+                style={{ color: winnerA ? COLOR_A : "#222f30", fontWeight: winnerA ? 500 : 400 }}
+              >{displayA}</span>
+              <span
+                className={isText ? "line-clamp-2 leading-snug pr-2" : ""}
+                title={isText ? displayB : undefined}
+                style={{ color: winnerB ? COLOR_B : "#222f30", fontWeight: winnerB ? 500 : 400 }}
+              >{displayB}</span>
             </div>
           );
         })}

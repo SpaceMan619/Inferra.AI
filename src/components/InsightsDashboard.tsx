@@ -50,7 +50,8 @@ export default function InsightsDashboard({ countries }: Props) {
   const adoptedCount = countries.filter(
     (c) => c.ai_strategy_status === "Adopted"
   ).length;
-  const totalDcCount = countries.reduce((s, c) => s + (c.dc_count ?? 0), 0);
+  const totalDcCount = countries.reduce((s, c) => s + (c.dc_count_total ?? 0), 0);
+  const totalAiCapable = countries.reduce((s, c) => s + (c.dc_ai_capable ?? 0), 0);
 
   // --- ranked countries ---
   const ranked = [...countries].sort(
@@ -78,7 +79,7 @@ export default function InsightsDashboard({ countries }: Props) {
     {
       value: `${totalDcCount}`,
       label: "Data centers",
-      sub: `${totalDcMw.toFixed(0)} MW total IT load`,
+      sub: `${totalAiCapable} AI-capable across all markets`,
     },
     {
       value: `${avgReadiness}`,

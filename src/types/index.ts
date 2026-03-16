@@ -21,7 +21,8 @@ export interface CountryData {
   mobile_penetration_pct: number;
 
   // Infrastructure
-  dc_count: number;
+  dc_count_total: number;
+  dc_ai_capable: number;
   it_load_mw: number;
   ixp_count: number;
   submarine_cables: string[];
