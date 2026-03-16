@@ -1,9 +1,13 @@
 "use client";
 
 import type { CountryData } from "@/types";
+import Navbar from "./Navbar";
 import Hero from "./Hero";
 import StatsBar from "./StatsBar";
+import Features from "./Features";
 import ToolSection from "./ToolSection";
+import Insights from "./Insights";
+import CTA from "./CTA";
 import Footer from "./Footer";
 
 interface ClientAppProps {
@@ -12,11 +16,17 @@ interface ClientAppProps {
 
 export default function ClientApp({ countries }: ClientAppProps) {
   return (
-    <main>
-      <Hero />
-      <StatsBar countries={countries} />
-      <ToolSection countries={countries} />
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <StatsBar countries={countries} />
+        <Features />
+        <ToolSection countries={countries} />
+        <Insights />
+        <CTA />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }
