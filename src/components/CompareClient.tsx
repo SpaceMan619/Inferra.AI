@@ -122,13 +122,13 @@ function CountrySelector({
                 {selected.region}
               </span>
             </div>
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               <motion.h3
                 key={selected.country}
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 6 }}
-                transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, position: "absolute" }}
+                transition={{ duration: 0.15 }}
                 className="text-[18px] font-semibold tracking-[-0.03em] truncate"
                 style={{ color: "#222f30" }}
               >
@@ -137,13 +137,13 @@ function CountrySelector({
             </AnimatePresence>
           </div>
           <div className="flex-shrink-0 flex flex-col items-end gap-1.5">
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               <motion.span
                 key={selected.readiness_score}
-                initial={{ opacity: 0, scale: 0.7 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.7 }}
-                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, position: "absolute" }}
+                transition={{ duration: 0.15 }}
                 className="text-[28px] font-bold tabular-nums leading-none block"
                 style={{ color }}
               >
@@ -251,25 +251,24 @@ function DimRow({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* A bar — grows from right */}
+      {/* A bar — scaleX from right (GPU-composited, no layout) */}
       <div className="flex items-center gap-2 justify-end">
-        <motion.span
-          key={`sa-${scoreA}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.25, delay: delay + 0.15 }}
-          className="text-[12px] tabular-nums font-medium"
-          style={{ color: aWins ? colorA : "rgba(34,47,48,0.4)" }}
-        >
+        <span className="text-[12px] tabular-nums font-medium"
+          style={{ color: aWins ? colorA : "rgba(34,47,48,0.4)" }}>
           {scoreA}
-        </motion.span>
+        </span>
         <div className="flex-1 flex justify-end" style={{ maxWidth: "140px" }}>
+          {/* width is static (set once); scaleX 0→1 is GPU transform */}
           <motion.div
             className="h-2 rounded-full"
-            style={{ backgroundColor: `${colorA}${aWins ? "cc" : "55"}` }}
-            initial={{ width: 0 }}
-            animate={{ width: `${scoreA}%` }}
-            transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              width: `${scoreA}%`,
+              backgroundColor: `${colorA}${aWins ? "cc" : "55"}`,
+              transformOrigin: "right center",
+            }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
       </div>
@@ -283,27 +282,25 @@ function DimRow({
         </span>
       </div>
 
-      {/* B bar — grows from left */}
+      {/* B bar — scaleX from left */}
       <div className="flex items-center gap-2">
         <div className="flex-1" style={{ maxWidth: "140px" }}>
           <motion.div
             className="h-2 rounded-full"
-            style={{ backgroundColor: `${colorB}${bWins ? "cc" : "55"}` }}
-            initial={{ width: 0 }}
-            animate={{ width: `${scoreB}%` }}
-            transition={{ duration: 0.65, delay: delay + 0.04, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              width: `${scoreB}%`,
+              backgroundColor: `${colorB}${bWins ? "cc" : "55"}`,
+              transformOrigin: "left center",
+            }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.55, delay: delay + 0.04, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
-        <motion.span
-          key={`sb-${scoreB}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.25, delay: delay + 0.18 }}
-          className="text-[12px] tabular-nums font-medium"
-          style={{ color: bWins ? colorB : "rgba(34,47,48,0.4)" }}
-        >
+        <span className="text-[12px] tabular-nums font-medium"
+          style={{ color: bWins ? colorB : "rgba(34,47,48,0.4)" }}>
           {scoreB}
-        </motion.span>
+        </span>
       </div>
     </motion.div>
   );
@@ -383,10 +380,10 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLOR_A }} />
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.span key={countryA.country}
-                  initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 6 }} transition={{ duration: 0.18 }}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, position: "absolute" }} transition={{ duration: 0.15 }}
                   className="text-[12px] font-medium" style={{ color: "#222f30" }}>
                   {countryA.country}
                 </motion.span>
@@ -395,10 +392,10 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
             <div className="text-[11px] font-light" style={{ color: "rgba(34,47,48,0.3)" }}>vs</div>
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLOR_B }} />
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.span key={countryB.country}
-                  initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.18 }}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, position: "absolute" }} transition={{ duration: 0.15 }}
                   className="text-[12px] font-medium" style={{ color: "#222f30" }}>
                   {countryB.country}
                 </motion.span>
@@ -412,13 +409,13 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
           {/* Overall score comparison */}
           <div className="flex items-center gap-4 pt-2">
             <div className="text-center">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.div
                   key={`a-${countryA.readiness_score}`}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, position: "absolute" }}
+                  transition={{ duration: 0.15 }}
                   className="text-[32px] font-bold leading-none tabular-nums"
                   style={{ color: COLOR_A }}
                 >
@@ -431,13 +428,13 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
             </div>
 
             <div className="flex flex-col items-center gap-1">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.div
                   key={scoreDelta}
-                  initial={{ opacity: 0, scale: 0.75 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.75 }}
-                  transition={{ duration: 0.2 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, position: "absolute" }}
+                  transition={{ duration: 0.15 }}
                   className="text-[11px] font-medium px-2.5 py-1 rounded-lg tabular-nums"
                   style={{
                     backgroundColor: scoreDelta === 0 ? "rgba(34,47,48,0.05)"
@@ -455,13 +452,13 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
             </div>
 
             <div className="text-center">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.div
                   key={`b-${countryB.readiness_score}`}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, position: "absolute" }}
+                  transition={{ duration: 0.15 }}
                   className="text-[32px] font-bold leading-none tabular-nums"
                   style={{ color: COLOR_B }}
                 >
