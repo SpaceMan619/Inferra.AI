@@ -1,15 +1,28 @@
 # InferraAI — Game Plan & Directions
 
-## Where We Are Now
+## Where We Are Now — 16 March 2026 (Session 3)
 
-- Landing page with rotating globe, stats bar, features grid, interactive Mapbox map, insights section, CTA
-- Login/signup pages (visual only, no auth wired)
-- 7 African markets with real data (JSON)
-- Founder Mode / Policy Mode toggle on the map
-- Responsive design across breakpoints
-- DM Sans + Outfit typography, subtle animations, clean glass aesthetic
+### ✅ Done
+- Landing page — GSAP clip-path hero, scroll-pinned narrative, founder note, newsroom with live links
+- Dashboard with **5 fully functional sections**: Overview, Map, Markets, Insights, Compare
+- **30 African markets** with fully sourced, audited data (`public/data/countries.json` + `sources.json`)
+- Founder Mode / Policy Mode toggle across all dashboard sections
+- **Mapbox satellite globe** (globe projection) on Overview — auto-rotates, flies to selected country, viewport-aware centering
+- **CountryCombobox** on desktop Overview — compact searchable dropdown above detail panel
+- **Animated inference arc routes** on Map tab (Local-Native, Hybrid-Edge, Regional-Tethered)
+- **Compare tab** — side-by-side radar chart across 5 dimensions, animated score bars
+- **Insights tab** — live-computed from data: rankings, dimension leaders, aggregate stats
+- Full mobile responsiveness — floating pill tab bar (iOS 26 glass), hamburger slide-up sheet, capped scrollable country list
+- Security headers in `next.config.ts` (CSP, HSTS, X-Frame-Options)
+- Login/signup pages — UI complete, video background, glassmorphism card
 
-**What's missing to make this feel like a weeks-long, best-in-class project:**
+### 🔶 Still Missing
+- **Supabase auth** — login/signup are decorative, not wired
+- **Deep-dive country pages** (`/dashboard/country/[slug]`)
+- **"Can I Run This Here?"** feature in country panels
+- Map tab differentiation beyond inference arcs
+
+**What will push this from great to unforgettable for a presentation:**
 
 ---
 
@@ -154,14 +167,17 @@ This is the #1 differentiator. Replace boring text metrics with:
 
 ## Recommended Build Order
 
-| Week | Focus | Deliverable |
-|------|-------|-------------|
-| **Now** | Auth + route split | Login works, dashboard layout exists, landing cleaned up |
-| **Next** | Dashboard home + leaderboard | Sortable table, overview map, command palette |
-| **Then** | Country deep-dive pages | Scorecard, route diagram, comparison |
-| **Then** | Data visualizations | D3 charts, animated arcs on map, radar profiles |
-| **Then** | AI chat + recommendations | Claude-powered Q&A sidebar |
-| **Polish** | Scroll animations, transitions, dark mode | Cinematic feel throughout |
+| Priority | Focus | Status |
+|----------|-------|--------|
+| ~~Auth + route split~~ | ~~Login works, dashboard protected~~ | 🔴 UI done, backend pending |
+| ~~Dashboard home~~ | ~~Overview, Markets, Insights, Compare~~ | ✅ All 5 tabs live |
+| ~~Country comparison~~ | ~~Radar charts, side-by-side metrics~~ | ✅ Shipped |
+| ~~Data visualizations~~ | ~~Animated arcs on map, radar profiles~~ | ✅ Shipped |
+| ~~30-country data~~ | ~~Full sourced dataset~~ | ✅ Shipped |
+| **Next: Wire Supabase auth** | Login/signup → real sessions, protect `/dashboard` | 🔴 Urgent before GITEX |
+| **Then: Deep Learning Indaba** | Application due March 20 | 🔴 4 days |
+| **Then: Country deep-dive pages** | `/dashboard/country/[slug]` with full profile | 🟠 Medium |
+| **Polish: "Can I Run This Here?"** | Deployment recommendation tool in country panel | 🟡 Future |
 
 ---
 
@@ -172,7 +188,7 @@ This is the #1 differentiator. Replace boring text metrics with:
 | Auth | NextAuth.js v5 (Auth.js) |
 | Database | Supabase (Postgres + auth + realtime) or Neon |
 | Charts | Recharts (simple) + D3.js (complex) |
-| 3D Map Arcs | Deck.gl or custom Three.js on Mapbox |
+| 3D Map Arcs | ~~Deck.gl or custom Three.js~~ Mapbox `line-dasharray` animation (No Three.js — thermal issues on MacBook Air) |
 | AI Chat | Claude API via Anthropic SDK |
 | PDF Export | jsPDF + html2canvas |
 | Command Palette | cmdk (by Rauno) |

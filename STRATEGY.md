@@ -1,6 +1,6 @@
 # Inferra AI — Strategy & Roadmap
 
-> Last updated: 15 March 2026 (Session 2). This is the working strategy document for taking Inferra AI from prototype to fundable, conference-ready product — and potentially a real company.
+> Last updated: 16 March 2026 (Session 3). This is the working strategy document for taking Inferra AI from prototype to fundable, conference-ready product — and potentially a real company.
 
 ---
 
@@ -79,22 +79,46 @@ We researched every possible competitor. The specific product Inferra AI is buil
   - Named `dc_pipeline` projects added for Kenya, Tanzania, Rwanda, Nigeria, Angola
 - Claude Co-Authored-By entries wiped from entire git history (git-filter-repo)
 
+### ✅ Shipped (Session 3 — 16 March 2026)
+
+**Data layer — full 30-country audit:**
+- Expanded from 20 → **30 African markets** (added Gabon, Benin, Mali, Togo, Sudan + 5 others)
+- Split `dc_count` into `dc_count_total` + `dc_ai_capable` (30kW+/rack, N+1 power, 2+ fiber, carrier-neutral threshold)
+- Added `ai_compute_availability`, `power_reliability`, `cloud_maturity`, `ops_friction` fields
+- `sources.json` — all data points cited with real URLs
+- Full methodology in `docs/data-methodology.md`
+
+**Dashboard — Compare tab (completed this sprint):**
+- `CompareClient.tsx` + `RadarChart.tsx` — side-by-side radar chart overlay across all 5 dimensions
+- Animated score bars, re-animate on country change, insight expand/collapse
+- GPU-safe animations only — no framer-motion on the radar to prevent jitter
+
+**Map tab:**
+- `InferenceArcs.tsx` — animated Mapbox arc routes: Local-Native, Hybrid-Edge, Regional-Tethered
+
+**Overview UX:**
+- **Desktop**: replaced 220px `CountryList` column with compact `CountryCombobox` above the detail panel — gives globe more room, country selection stays right next to the data you're reading
+- **Mobile**: `CountryList` capped at 220px fixed height — scrollable, no longer dominates the page
+- **GlobeView flyTo**: viewport-aware centering — selected country now appears at the centre of the *visible* screen, not the map container's geometric centre
+
+**Git / project hygiene:**
+- Author email corrected across entire 32-commit history (`r.jolly@alustudent.com`)
+- All commits attributed to Rajveer Singh Jolly — no AI attribution anywhere
+
 ### 🔶 Remaining — Priority Order
 
 | Feature | Priority | Notes |
 | --- | --- | --- |
+| **Deep Learning Indaba application** | 🔴 Urgent | Deadline **March 20** — 4 days. Apply immediately. |
 | **Supabase auth** | 🔴 High | UI is done, backend not wired. Login/signup are currently decorative. Critical before GITEX. |
-| **Country comparison page** (`/dashboard/compare`) | 🔴 High | The killer demo feature. Side-by-side radar charts + metric table. |
-| **Globe fixes** | 🟠 Medium | Dedicated session needed — visual quality, interactions, performance audit. |
-| **Data accuracy audit** | 🟠 Medium | Verify every metric across 20 countries against primary sources. Document citations. Essential before calling it a paid tool. |
-| **Animated inference routes** | 🟡 Medium | Mapbox arc animations — Local-Native / Hybrid-Edge / Regional-Tethered. |
-| **Deep Learning Indaba application** | 🔴 Urgent | Deadline March 20 — 5 days. Apply now. |
-| **Deep-dive country pages** | Low | `/dashboard/country/south-africa` with full profile |
+| **Deep-dive country pages** | 🟠 Medium | `/dashboard/country/south-africa` — scorecard, pipeline timeline, full profile |
+| **"Can I Run This Here?" feature** | 🟠 Medium | Country panel tool: input model size + use-case, get a deployment recommendation |
+| **Map tab differentiation** | 🟠 Medium | Currently shows same globe as Overview — needs its own purpose (arc routes already done, build on that) |
 | **Real-time monitoring** | Future | Latency pings, uptime tracking |
 
 ### The Gap in One Sentence
 
-We have a credible, data-rich, well-designed, mobile-responsive product with 20 countries. The next phase turns it from a polished prototype into something users can **depend on** — starting with auth (so users can save preferences) and comparison (so the data becomes actionable).
+We have a credible, data-rich, well-designed, fully responsive product covering 30 markets with a working comparison tool and animated inference routes. The last critical gap before GITEX is **auth** — login/signup are still decorative, which undercuts the "real product" story.
 
 ---
 
@@ -244,7 +268,7 @@ Everything free. Goal: **1,000 signups, 50 weekly active users**. Collect emails
 
 ### The 30-Second Pitch
 
-> "Africa is receiving $10 billion in AI infrastructure investment, but founders have no visibility into where they can actually deploy. Only one country has a hyperscaler cloud region. Inferra AI is the intelligence layer — we map compute, connectivity, power, and policy readiness across 20 African markets so founders, investors, and governments can make informed deployment decisions. Think Bloomberg Terminal for African AI infrastructure. We're the only platform doing this, and we're launching at a moment when the continent's infrastructure is being built in real time."
+> "Africa is receiving $10 billion in AI infrastructure investment, but founders have no visibility into where they can actually deploy. Only one country has a hyperscaler cloud region. Inferra AI is the intelligence layer — we map compute, connectivity, power, and policy readiness across 30 African markets so founders, investors, and governments can make informed deployment decisions. Think Bloomberg Terminal for African AI infrastructure. We're the only platform doing this, and we're launching at a moment when the continent's infrastructure is being built in real time."
 
 ---
 
@@ -263,9 +287,9 @@ Everything free. Goal: **1,000 signups, 50 weekly active users**. Collect emails
 ## Risk & Honest Challenges
 
 1. **Data staleness** — Infrastructure changes fast. Need a disciplined quarterly refresh cadence. Eventually: automated monitoring.
-2. **"Nice to have" problem** — Value is in aggregation and live comparison. Single data points aren't enough. The comparison feature is what converts "interesting" to "essential."
+2. **"Nice to have" problem** — Value is in aggregation and live comparison. Single data points aren't enough. The comparison feature (now live) is what converts "interesting" to "essential."
 3. **Solo founder risk** — Investors want teams. A technical or data co-founder would materially de-risk the pitch.
-4. **Mobile gap** — Currently desktop-only. Must fix before any public share.
+4. **Auth gap** — Login/signup are still decorative. Without real auth, "save preferences" and role-based data features can't ship. Critical before GITEX.
 5. **Funding environment** — African VC is recovering but still cautious. $250K seed raise is realistic; $2M is harder without revenue traction.
 
 ### What Would Make This 10x
