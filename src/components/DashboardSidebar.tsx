@@ -39,6 +39,16 @@ const NAV_ITEMS = [
       </svg>
     ),
   },
+  {
+    id: "compare",
+    label: "Compare",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 3L4 7l4 4" /><path d="M4 7h16" />
+        <path d="M16 21l4-4-4-4" /><path d="M20 17H4" />
+      </svg>
+    ),
+  },
 ];
 
 // Subtle neon-adjacent green that works on the light background

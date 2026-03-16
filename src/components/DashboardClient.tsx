@@ -9,6 +9,7 @@ import CountryPanel from "./CountryPanel";
 import CountryList from "./CountryList";
 import ModeToggle from "./ModeToggle";
 import InsightsDashboard from "./InsightsDashboard";
+import CompareClient from "./CompareClient";
 import type { CountryData, ViewMode } from "@/types";
 
 interface DashboardClientProps {
@@ -43,6 +44,11 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
       title: "Insights",
       shortTitle: "Insights",
       sub: `Readiness rankings, dimension leaders, and key signals across ${countries.length} markets`,
+    },
+    compare: {
+      title: "Compare Markets",
+      shortTitle: "Compare",
+      sub: "Side-by-side readiness analysis across all dimensions",
     },
   };
 
@@ -273,6 +279,18 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               >
                 <InsightsDashboard countries={countries} />
+              </motion.div>
+            )}
+
+            {activeSection === "compare" && (
+              <motion.div
+                key="compare"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <CompareClient countries={countries} />
               </motion.div>
             )}
 
