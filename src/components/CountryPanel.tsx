@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import type { CountryData, ViewMode } from "@/types";
 import ReadinessBadge from "./ReadinessBadge";
 
@@ -18,17 +17,37 @@ interface MetricProps {
 function Metric({ label, value, sub }: MetricProps) {
   return (
     <div
-      className="rounded-xl p-3.5 transition-all duration-150 hover:shadow-sm"
-      style={{ background: "var(--bg-elevated)", border: "1px solid var(--glass-border)" }}
+      className="rounded-xl p-3.5 transition-colors duration-150"
+      style={{
+        backgroundColor: "rgba(34, 47, 48, 0.025)",
+        border: "1px solid rgba(34, 47, 48, 0.06)",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = "rgba(34, 47, 48, 0.05)";
+        e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.12)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = "rgba(34, 47, 48, 0.025)";
+        e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.06)";
+      }}
     >
-      <div className="text-[11px] uppercase tracking-widest font-semibold mb-1" style={{ color: "var(--text-muted)" }}>
+      <div
+        className="text-[10px] uppercase tracking-widest mb-1.5"
+        style={{ color: "rgba(34, 47, 48, 0.5)", fontWeight: 400 }}
+      >
         {label}
       </div>
-      <div className="text-[13px] font-bold" style={{ color: "var(--text-primary)" }}>
+      <div
+        className="text-[13px] font-medium"
+        style={{ color: "#222f30" }}
+      >
         {value}
       </div>
       {sub && (
-        <div className="text-[11px] mt-0.5" style={{ color: "var(--text-muted)" }}>
+        <div
+          className="text-[11px] mt-0.5"
+          style={{ color: "rgba(34, 47, 48, 0.5)" }}
+        >
           {sub}
         </div>
       )}
@@ -42,21 +61,26 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
       <div
         className="h-full flex items-center justify-center rounded-2xl p-8"
         style={{
-          background: "var(--bg-surface)",
-          border: "1px solid var(--glass-border)",
-          boxShadow: "0 2px 20px rgba(0,0,0,0.04)",
+          backgroundColor: "#fff",
+          border: "1px solid rgba(34, 47, 48, 0.08)",
           minHeight: "400px",
         }}
       >
         <div className="text-center">
-          <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: "var(--bg-elevated)" }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <div
+            className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center"
+            style={{ backgroundColor: "rgba(34, 47, 48, 0.04)" }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(34,47,48,0.35)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
               <path d="M2 12h20" />
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10" />
             </svg>
           </div>
-          <p className="text-sm font-medium" style={{ color: "var(--text-muted)" }}>
+          <p
+            className="text-[14px]"
+            style={{ color: "rgba(34, 47, 48, 0.5)" }}
+          >
             Select a country to view details
           </p>
         </div>
@@ -92,64 +116,85 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
     <div
       className="h-full rounded-2xl overflow-hidden"
       style={{
-        background: "var(--bg-surface)",
-        border: "1px solid var(--glass-border)",
-        boxShadow: "0 2px 20px rgba(0,0,0,0.04)",
-        minHeight: "auto",
+        backgroundColor: "#fff",
+        border: "1px solid rgba(34, 47, 48, 0.08)",
       }}
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${country.country}-${mode}`}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="p-6 h-full overflow-y-auto"
+      <div className="p-6 h-full overflow-y-auto">
+        {/* Header */}
+        <div className="flex items-start justify-between mb-1">
+          <div>
+            <p
+              className="text-[10px] uppercase tracking-widest mb-1"
+              style={{ color: "rgba(34, 47, 48, 0.5)", fontWeight: 400 }}
+            >
+              {country.region}
+            </p>
+            <h2
+              className="text-[1.5rem] font-medium tracking-[-0.02em]"
+              style={{ color: "#222f30" }}
+            >
+              {country.country}
+            </h2>
+          </div>
+          <ReadinessBadge label={statusValue} />
+        </div>
+        <p
+          className="text-[13px] mb-5"
+          style={{ color: "rgba(34, 47, 48, 0.6)" }}
         >
-          {/* Header */}
-          <div className="flex items-start justify-between mb-1">
-            <div>
-              <p className="text-[11px] uppercase tracking-widest font-semibold mb-0.5" style={{ color: "var(--text-muted)" }}>
-                {country.region}
-              </p>
-              <h2 className="text-2xl font-extrabold tracking-tight">{country.country}</h2>
-            </div>
-            <ReadinessBadge label={statusValue} />
-          </div>
-          <p className="text-xs font-medium mb-5" style={{ color: "var(--text-secondary)" }}>
-            {country.connectivity_role}
+          {country.connectivity_role}
+        </p>
+
+        <div
+          className="h-px w-full mb-5"
+          style={{ backgroundColor: "rgba(34, 47, 48, 0.08)" }}
+        />
+
+        {/* Primary metrics */}
+        <p
+          className="text-[10px] uppercase tracking-widest mb-2.5"
+          style={{ color: "rgba(34, 47, 48, 0.5)", fontWeight: 400 }}
+        >
+          {mode === "founder" ? "Infrastructure" : "Policy Signals"}
+        </p>
+        <div className="grid grid-cols-2 gap-2 mb-5">
+          {primaryMetrics.map((m) => <Metric key={m.label} {...m} />)}
+        </div>
+
+        {/* Infra context */}
+        <p
+          className="text-[10px] uppercase tracking-widest mb-2.5"
+          style={{ color: "rgba(34, 47, 48, 0.5)", fontWeight: 400 }}
+        >
+          Infrastructure
+        </p>
+        <div className="grid grid-cols-2 gap-2 mb-5">
+          {infraMetrics.map((m) => <Metric key={m.label} {...m} />)}
+        </div>
+
+        {/* Insight */}
+        <div
+          className="rounded-xl p-4 transition-colors duration-150"
+          style={{
+            backgroundColor: "rgba(34, 47, 48, 0.025)",
+            borderLeft: "2px solid rgba(34, 47, 48, 0.2)",
+          }}
+        >
+          <p
+            className="text-[10px] uppercase tracking-widest mb-1.5"
+            style={{ color: "rgba(34, 47, 48, 0.5)", fontWeight: 400 }}
+          >
+            Context
           </p>
-
-          <div className="h-px w-full mb-5" style={{ background: "var(--glass-border)" }} />
-
-          {/* Primary metrics */}
-          <p className="text-[11px] uppercase tracking-widest font-semibold mb-2.5" style={{ color: "var(--text-muted)" }}>
-            {mode === "founder" ? "Infrastructure" : "Policy Signals"}
+          <p
+            className="text-[13px] leading-[1.6]"
+            style={{ color: "rgba(34, 47, 48, 0.75)" }}
+          >
+            {country.founder_insight}
           </p>
-          <div className="grid grid-cols-2 gap-2 mb-5">
-            {primaryMetrics.map((m) => <Metric key={m.label} {...m} />)}
-          </div>
-
-          {/* Infra context */}
-          <p className="text-[11px] uppercase tracking-widest font-semibold mb-2.5" style={{ color: "var(--text-muted)" }}>
-            Infrastructure
-          </p>
-          <div className="grid grid-cols-2 gap-2 mb-5">
-            {infraMetrics.map((m) => <Metric key={m.label} {...m} />)}
-          </div>
-
-          {/* Insight */}
-          <div className="rounded-xl p-4" style={{ background: "rgba(79,70,229,0.04)", borderLeft: "3px solid var(--primary)" }}>
-            <p className="text-[11px] uppercase tracking-widest font-semibold mb-1.5" style={{ color: "var(--primary)" }}>
-              Founder Insight
-            </p>
-            <p className="text-[13px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              {country.founder_insight}
-            </p>
-          </div>
-        </motion.div>
-      </AnimatePresence>
+        </div>
+      </div>
     </div>
   );
 }

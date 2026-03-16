@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inferra AI
+
+A directional tool for understanding AI infrastructure readiness across Africa.
+
+Inferra AI brings together available data on data centers, submarine cables, power availability, and regulatory frameworks — giving founders, investors, and policymakers a starting point for thinking about where AI deployment might be possible on the continent.
+
+## Features
+
+- **Interactive Dashboard** — explore 7 African markets with infrastructure and policy readiness signals
+- **Infrastructure Map** — geographic view of data centers, connectivity, and policy indicators via Mapbox
+- **Market Comparison** — side-by-side readiness indicators across countries
+- **Dual View Modes** — switch between Infrastructure and Policy lenses
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **Frontend**: React 19, TypeScript
+- **Styling**: Tailwind CSS v4, CSS variables
+- **Animations**: GSAP (ScrollTrigger, SplitText), Lenis smooth scroll
+- **Map**: Mapbox GL via react-map-gl
+- **Globe**: cobe (lightweight WebGL globe)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Add your NEXT_PUBLIC_MAPBOX_TOKEN
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the landing page.
+Navigate to [http://localhost:3000/dashboard](http://localhost:3000/dashboard) for the dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox access token for the infrastructure map |
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── page.tsx            # Landing page
+│   ├── dashboard/          # Dashboard page
+│   ├── login/              # Login page
+│   └── signup/             # Signup page
+├── components/
+│   ├── landing/            # Landing page components
+│   │   ├── Hero.tsx        # Video hero with clip-path reveal
+│   │   ├── WhatWeDo.tsx    # Platform description
+│   │   ├── Pillars.tsx     # Three-column feature cards
+│   │   ├── Marquee.tsx     # Scrolling text banner
+│   │   ├── About.tsx       # About section
+│   │   ├── FounderNote.tsx # Founder's statement
+│   │   ├── Newsroom.tsx    # Signals / articles
+│   │   ├── Navbar.tsx      # Navigation bar
+│   │   ├── Footer.tsx      # Footer
+│   │   ├── Reveal.tsx      # Scroll animation primitives
+│   │   └── SmoothScroll.tsx
+│   ├── DashboardClient.tsx # Main dashboard layout
+│   ├── DashboardSidebar.tsx
+│   ├── MapView.tsx         # Mapbox infrastructure map
+│   ├── CountryPanel.tsx    # Country detail panel
+│   ├── ModeToggle.tsx      # Infrastructure/Policy toggle
+│   └── ReadinessBadge.tsx  # Status badge component
+├── types/                  # TypeScript interfaces
+├── hooks/                  # Custom React hooks
+└── lib/                    # Utilities and config
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Country data is stored in `public/data/countries.json` covering 7 markets: South Africa, Nigeria, Kenya, Egypt, Morocco, Ghana, and Rwanda. Data is directional and should not be treated as authoritative.
 
-## Deploy on Vercel
+## Developed By
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Project Future**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contact: rajveer@projectfuture.co.za

@@ -50,8 +50,12 @@ export default function MapView({
   return (
     <div
       ref={containerRef}
-      className="map-wrap relative w-full h-full"
-      style={{ minHeight: "clamp(350px, 60vh, 550px)" }}
+      className="relative w-full h-full overflow-hidden"
+      style={{
+        minHeight: "clamp(350px, 60vh, 550px)",
+        borderRadius: "16px",
+        border: "1px solid rgba(34, 47, 48, 0.08)",
+      }}
     >
       {mapboxToken && (
         <Map
@@ -78,10 +82,6 @@ export default function MapView({
                 longitude={c.longitude}
                 anchor="center"
               >
-                {/*
-                  Single container div centered by the Marker anchor="center".
-                  Everything inside is positioned relative to this center.
-                */}
                 <div
                   className="relative cursor-pointer group"
                   style={{ width: size, height: size }}
@@ -99,7 +99,6 @@ export default function MapView({
                   }}
                   onMouseLeave={() => setTooltip(null)}
                 >
-                  {/* Selection ring — centered via inset negative margins */}
                   {isSelected && (
                     <>
                       <div
@@ -114,13 +113,12 @@ export default function MapView({
                         className="absolute rounded-full"
                         style={{
                           inset: -6,
-                          border: `2.5px solid ${cssColor}`,
-                          opacity: 0.6,
+                          border: `2px solid ${cssColor}`,
+                          opacity: 0.5,
                         }}
                       />
                     </>
                   )}
-                  {/* Core dot */}
                   <div
                     className="absolute inset-0 rounded-full transition-transform duration-200 group-hover:scale-110"
                     style={{
@@ -136,22 +134,28 @@ export default function MapView({
         </Map>
       )}
 
-      {/* Custom tooltip */}
+      {/* Tooltip */}
       {tooltip && (
         <div
           className="absolute pointer-events-none z-20 rounded-xl px-3.5 py-2.5"
           style={{
             left: tooltip.x + 14,
             top: tooltip.y - 14,
-            background: "white",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
-            border: "1px solid rgba(0,0,0,0.06)",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+            border: "1px solid rgba(34, 47, 48, 0.08)",
           }}
         >
-          <div className="text-sm font-bold" style={{ color: "#111827" }}>
+          <div
+            className="text-[13px] font-normal"
+            style={{ color: "#222f30" }}
+          >
             {tooltip.country.country}
           </div>
-          <div className="text-xs" style={{ color: "#6b7280" }}>
+          <div
+            className="text-[11px] font-light"
+            style={{ color: "rgba(34, 47, 48, 0.45)" }}
+          >
             {statusLabel}:{" "}
             {mode === "founder"
               ? tooltip.country.ai_inference_readiness
@@ -162,24 +166,36 @@ export default function MapView({
 
       {/* Mode badge */}
       <div
-        className="absolute top-4 left-4 glass px-3.5 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider"
-        style={{ color: "var(--text-muted)" }}
+        className="absolute top-4 left-4 px-3.5 py-2 rounded-xl text-[11px] font-light uppercase tracking-wider"
+        style={{
+          backgroundColor: "rgba(255,255,255,0.85)",
+          backdropFilter: "blur(8px)",
+          color: "rgba(34, 47, 48, 0.5)",
+          border: "1px solid rgba(34, 47, 48, 0.08)",
+        }}
       >
-        {mode === "founder" ? "Infrastructure" : "Policy"} Layer
+        {mode === "founder" ? "Infrastructure" : "Policy"} layer
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 glass rounded-xl px-4 py-3 flex flex-col gap-1.5">
+      <div
+        className="absolute bottom-4 left-4 rounded-xl px-4 py-3 flex flex-col gap-1.5"
+        style={{
+          backgroundColor: "rgba(255,255,255,0.85)",
+          backdropFilter: "blur(8px)",
+          border: "1px solid rgba(34, 47, 48, 0.08)",
+        }}
+      >
         {mode === "founder" ? (
           <>
-            <LegendItem color="var(--secondary)" label="Viable" />
-            <LegendItem color="var(--accent)" label="Emerging" />
-            <LegendItem color="var(--danger)" label="Early Stage" />
+            <LegendItem color="#059669" label="Viable" />
+            <LegendItem color="#d97706" label="Emerging" />
+            <LegendItem color="#dc2626" label="Early Stage" />
           </>
         ) : (
           <>
-            <LegendItem color="var(--primary)" label="Strong Signal" />
-            <LegendItem color="var(--accent)" label="Emerging" />
+            <LegendItem color="#222f30" label="Strong Signal" />
+            <LegendItem color="#d97706" label="Emerging" />
             <LegendItem color="#9ca3af" label="Unclear" />
           </>
         )}
@@ -192,12 +208,12 @@ function LegendItem({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex items-center gap-2">
       <div
-        className="w-2.5 h-2.5 rounded-full"
-        style={{ background: color }}
+        className="w-2 h-2 rounded-full"
+        style={{ backgroundColor: color }}
       />
       <span
-        className="text-[11px] font-medium"
-        style={{ color: "var(--text-muted)" }}
+        className="text-[11px] font-light"
+        style={{ color: "rgba(34, 47, 48, 0.5)" }}
       >
         {label}
       </span>

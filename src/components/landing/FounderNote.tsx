@@ -36,21 +36,10 @@ export default function FounderNote() {
                 maxWidth: "480px",
               }}
             >
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(160deg, #222f30 0%, #3a5556 40%, #222f30 100%)",
-                }}
-              />
-              {/* Subtle texture */}
-              <div
-                className="absolute inset-0 opacity-10"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)",
-                  backgroundSize: "24px 24px",
-                }}
+              <img
+                src="/founder.png"
+                alt="Rajveer — Founder, Inferra AI"
+                className="absolute inset-0 w-full h-full object-cover"
               />
               {/* Name overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-6">

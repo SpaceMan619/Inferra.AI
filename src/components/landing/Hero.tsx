@@ -269,7 +269,8 @@ export default function Hero() {
             <div ref={buttonRef} style={{ opacity: 0 }}>
               <Link
                 href="/dashboard"
-                className="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-[clamp(1rem,calc(1rem+0.002*(100vw-27.5rem)),1.125rem)] font-light text-[#222f30] hover:bg-white/90 transition-colors duration-300 whitespace-nowrap"
+                className="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 font-light hover:bg-white/90 transition-colors duration-300 whitespace-nowrap"
+                style={{ color: "#222f30", fontSize: "clamp(1rem, calc(1rem + 0.002 * (100vw - 27.5rem)), 1.125rem)" }}
               >
                 <span>Explore the Map</span>
                 <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#222f30] text-white transition-transform duration-300 group-hover:scale-110">
