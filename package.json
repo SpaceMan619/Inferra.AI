@@ -16,6 +16,8 @@
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@react-three/postprocessing": "^3.0.4",
+    "@supabase/ssr": "^0.9.0",
+    "@supabase/supabase-js": "^2.99.2",
     "cobe": "^0.6.5",
     "deck.gl": "^9.2.11",
     "framer-motion": "^12.35.1",
