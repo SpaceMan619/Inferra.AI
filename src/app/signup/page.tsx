@@ -96,10 +96,10 @@ export default function SignupPage() {
                 </svg>
               </div>
               <h2 className="text-[1.4rem] font-medium tracking-[-0.03em] mb-2 text-white">Check your inbox</h2>
-              <p className="text-[13px] font-light text-white/45 leading-relaxed">
-                We sent a confirmation link to <span className="text-white/70">{email}</span>.<br />Click it to activate your account.
+              <p className="text-[13px] font-light text-white/70 leading-relaxed">
+                We sent a confirmation link to <span className="text-white font-normal">{email}</span>.<br />Click it to activate your account.
               </p>
-              <Link href="/login" className="mt-6 inline-block text-[12px] text-white/40 hover:text-white/70 transition-colors">
+              <Link href="/login" className="mt-6 inline-block text-[12px] text-white/60 hover:text-white transition-colors">
                 Back to sign in →
               </Link>
             </div>
