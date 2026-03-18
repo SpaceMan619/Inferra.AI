@@ -99,7 +99,7 @@ export default function SignupPage() {
               <p className="text-[13px] font-light text-white/70 leading-relaxed">
                 We sent a confirmation link to <span className="text-white font-normal">{email}</span>.<br />Click it to activate your account.
               </p>
-              <Link href="/login" className="mt-6 inline-block text-[12px] text-white/60 hover:text-white transition-colors">
+              <Link href="/login" className="mt-6 inline-block text-[12px] text-white/85 hover:text-white transition-colors">
                 Back to sign in →
               </Link>
             </div>
@@ -194,7 +194,7 @@ export default function SignupPage() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] uppercase tracking-widest mb-1.5 text-white/80">Name</label>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" required

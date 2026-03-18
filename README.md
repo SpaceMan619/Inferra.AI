@@ -13,6 +13,7 @@ Compute · Connectivity · Power · Policy — across 30 markets, built for foun
 [![Next.js](https://img.shields.io/badge/Next.js_16-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)](https://supabase.com)
 [![Mapbox](https://img.shields.io/badge/Mapbox-000000?style=flat-square&logo=mapbox)](https://mapbox.com)
 
 <br />
@@ -31,7 +32,7 @@ Inferra AI is the intelligence layer. It maps compute availability, submarine ca
 
 ## Dashboard
 
-The dashboard has five sections:
+The dashboard has six sections:
 
 | Section | What it shows |
 |---|---|
@@ -40,8 +41,9 @@ The dashboard has five sections:
 | **Markets** | Card grid across all 30 markets — tier badges, founder insights, quick stats |
 | **Insights** | Live-computed readiness rankings, dimension leaders, aggregate signals |
 | **Compare** | Side-by-side radar chart overlaying 5 readiness dimensions for any two countries |
+| **Profile** | Account management — name, organisation, role, password |
 
-Switch between **Infrastructure** and **Policy** modes across all sections.
+Switch between **Founder** and **Policy** modes on Overview and Map.
 
 ---
 
@@ -60,7 +62,7 @@ Each country includes:
 - `ai_policy_signal` / `ai_strategy_status` / `data_residency_constraint`
 - `founder_insight` — directional note for builders
 
-Sources cited in `public/data/sources.json`. Data is directional — not a substitute for primary due diligence.
+Sources cited in `public/data/sources.json`. Data is directional — not a substitute for primary due diligence. See `docs/data-methodology.md`.
 
 ---
 
@@ -74,80 +76,86 @@ Sources cited in `public/data/sources.json`. Data is directional — not a subst
 | Animations | GSAP (ScrollTrigger, SplitText), Framer Motion, Lenis |
 | Map / Globe | Mapbox GL via `react-map-gl` — satellite globe projection |
 | Charts | Custom SVG radar chart (no external dependency) |
-| Data | Static JSON, server-rendered via `page.tsx` |
+| Auth | Supabase Auth — email/password + Google + GitHub OAuth |
+| Email | Resend SMTP — branded transactional templates |
+| Data | Static JSON, server-rendered via page.tsx |
 
 ---
 
 ## Getting Started
 
-```bash
+\`\`\`bash
 # Install dependencies
 npm install
 
 # Set up environment variables
 cp .env.example .env.local
-# Add your NEXT_PUBLIC_MAPBOX_TOKEN
+# Fill in the required values (see below)
 
 # Run development server
 npm run dev
-```
+\`\`\`
 
-Landing page → [http://localhost:3000](http://localhost:3000)
-Dashboard → [http://localhost:3000/dashboard](http://localhost:3000/dashboard)
+Landing page → http://localhost:3000
+Dashboard → http://localhost:3000/dashboard *(requires auth)*
 
 ### Environment Variables
 
 | Variable | Description |
 |---|---|
-| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox access token for the satellite globe and map |
+| \`NEXT_PUBLIC_MAPBOX_TOKEN\` | Mapbox access token for the satellite globe and map |
+| \`NEXT_PUBLIC_SUPABASE_URL\` | Supabase project URL |
+| \`NEXT_PUBLIC_SUPABASE_ANON_KEY\` | Supabase anon/public key |
 
 ---
 
 ## Project Structure
 
-```
+\`\`\`
 src/
 ├── app/
-│   ├── page.tsx                 # Landing page (server component)
-│   ├── dashboard/page.tsx       # Dashboard entry (server, loads data)
-│   ├── login/ & signup/         # Auth pages (UI complete)
+│   ├── page.tsx                     # Landing page (server component)
+│   ├── login/ & signup/             # Auth pages
+│   ├── auth/                        # callback/, forgot-password/, reset-password/, error/
+│   ├── dashboard/
+│   │   ├── layout.tsx               # Server-side auth gate
+│   │   └── page.tsx                 # Loads user + data, renders DashboardClient
 ├── components/
-│   ├── landing/
-│   │   ├── Hero.tsx             # GSAP clip-path video hero + scroll scroller
-│   │   ├── WhatWeDo.tsx         # Platform description with TextReveal
-│   │   ├── Pillars.tsx          # Infrastructure / Intelligence / Policy cards
-│   │   ├── About.tsx            # About section
-│   │   ├── FounderNote.tsx      # Founder statement
-│   │   ├── Newsroom.tsx         # Signals / live article links
-│   │   ├── Marquee.tsx          # Scrolling marquee banner
-│   │   ├── Navbar.tsx           # Top navigation
-│   │   └── Footer.tsx
-│   ├── DashboardClient.tsx      # Main shell — routing, layout, state
-│   ├── DashboardSidebar.tsx     # Desktop sidebar nav
-│   ├── GlobeView.tsx            # Mapbox satellite globe (Overview)
-│   ├── MapView.tsx              # Mapbox infrastructure map (Map tab)
-│   ├── CountryPanel.tsx         # Country detail — vertical key-value layout
-│   ├── CountryList.tsx          # Searchable scrollable market list
-│   ├── CountryCombobox.tsx      # Compact desktop country selector (dropdown)
-│   ├── InsightsDashboard.tsx    # Rankings and dimension leaders
-│   ├── CompareClient.tsx        # Side-by-side country comparison
-│   ├── RadarChart.tsx           # SVG radar chart (5 dimensions)
-│   ├── InferenceArcs.tsx        # Animated route arcs on the map
-│   └── ModeToggle.tsx           # Infrastructure / Policy toggle
-├── types/index.ts               # All TypeScript interfaces
-├── hooks/                       # useCountUp, etc.
-└── lib/                         # Route data, map config
+│   ├── landing/                     # Hero, WhatWeDo, About, FounderNote, Newsroom, Navbar, Footer
+│   ├── DashboardClient.tsx          # Main shell — section routing, shared state
+│   ├── DashboardSidebar.tsx         # Desktop sidebar + mobile pill nav
+│   ├── GlobeView.tsx                # Mapbox satellite globe (Overview)
+│   ├── MapView.tsx                  # Mapbox infrastructure map (Map tab)
+│   ├── CountryPanel.tsx             # Country detail — vertical key-value layout
+│   ├── CountryList.tsx              # Searchable scrollable market list
+│   ├── CountryCombobox.tsx          # Compact desktop country selector
+│   ├── InsightsDashboard.tsx        # Rankings and dimension leaders
+│   ├── CompareClient.tsx            # Side-by-side country comparison
+│   ├── RadarChart.tsx               # SVG radar chart (5 dimensions)
+│   ├── ProfileSection.tsx           # Account management (in-page section)
+│   └── ModeToggle.tsx               # Founder / Policy toggle
+├── lib/
+│   ├── supabase/client.ts           # Browser Supabase client
+│   ├── supabase/server.ts           # Server Supabase client (SSR cookies)
+│   └── passwordStrength.ts          # Password strength scoring utility
+├── middleware.ts                    # Route protection — gates /dashboard/*
+└── types/index.ts                   # All TypeScript interfaces
 public/
 └── data/
-    ├── countries.json           # 30-country dataset
-    └── sources.json             # Data citations
-```
+    ├── countries.json               # 30-country dataset
+    └── sources.json                 # Data citations
+\`\`\`
 
 ---
 
-## Status
+## Auth
 
-**Active development.** The dashboard, data layer, and all five tabs are functional. Auth (login/signup) is UI-complete but not yet wired to a backend.
+Full authentication via Supabase:
+- Email/password signup with name, organisation, and role metadata
+- Google and GitHub OAuth
+- Password reset via branded email (Resend SMTP)
+- HTTP-only cookie session storage — server-side auth gate on all dashboard routes
+- Profile section to update details and change password
 
 ---
 

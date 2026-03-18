@@ -10,16 +10,19 @@ import CountryCombobox from "./CountryCombobox";
 import ModeToggle from "./ModeToggle";
 import InsightsDashboard from "./InsightsDashboard";
 import CompareClient from "./CompareClient";
+import ProfileSection from "./ProfileSection";
 
 const GlobeView = dynamic(() => import("./GlobeView"), { ssr: false });
 const MapView   = dynamic(() => import("./MapView"),   { ssr: false });
 import type { CountryData, ViewMode } from "@/types";
+import type { User } from "@supabase/supabase-js";
 
 interface DashboardClientProps {
   countries: CountryData[];
+  user: User | null;
 }
 
-export default function DashboardClient({ countries }: DashboardClientProps) {
+export default function DashboardClient({ countries, user }: DashboardClientProps) {
   const [activeSection, setActiveSection] = useState("overview");
   const [selectedCountry, setSelectedCountry] = useState("South Africa");
   const [mode, setMode] = useState<ViewMode>("founder");
@@ -53,6 +56,11 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
       shortTitle: "Compare",
       sub: "Side-by-side readiness analysis across all dimensions",
     },
+    profile: {
+      title: "Profile",
+      shortTitle: "Profile",
+      sub: "Manage your account and preferences",
+    },
   };
 
   const current = sectionTitles[activeSection] || sectionTitles.overview;
@@ -62,6 +70,7 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
       <DashboardSidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}
+        user={user}
       />
 
       {/* Main content */}
@@ -100,8 +109,10 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
               </p>
             </div>
           </div>
-          <div className="flex-shrink-0">
-            <ModeToggle mode={mode} onModeChange={setMode} />
+          <div className="flex-shrink-0 flex items-center gap-2">
+            {(activeSection === "overview" || activeSection === "map") && (
+              <ModeToggle mode={mode} onModeChange={setMode} />
+            )}
           </div>
         </header>
 
@@ -304,7 +315,26 @@ export default function DashboardClient({ countries }: DashboardClientProps) {
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               >
-                <CompareClient countries={countries} />
+                <CompareClient
+                  countries={countries}
+                  onCountryChange={setSelectedCountry}
+                  onGoToOverview={(name) => {
+                    setSelectedCountry(name);
+                    setActiveSection("overview");
+                  }}
+                />
+              </motion.div>
+            )}
+
+            {activeSection === "profile" && (
+              <motion.div
+                key="profile"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <ProfileSection />
               </motion.div>
             )}
 

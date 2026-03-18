@@ -38,6 +38,7 @@ function getMarkerStyle(c: CountryData, isSelected: boolean) {
 
 export default function GlobeView({ selectedCountry, countries, onSelectCountry }: GlobeViewProps) {
   const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
   const mapRef = useRef<MapRef>(null);
   const rafRef = useRef<number | null>(null);
   const isInteracting = useRef(false);
@@ -124,7 +125,11 @@ export default function GlobeView({ selectedCountry, countries, onSelectCountry 
         ref={mapRef}
         mapboxAccessToken={token}
         mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
-        initialViewState={{ longitude: 20, latitude: 2, zoom: 1.6 }}
+        initialViewState={
+          isMobile
+            ? { longitude: 20, latitude: 2, zoom: 1.6 }
+            : { longitude: 22, latitude: 4, zoom: 2.8 }
+        }
         attributionControl={false}
         scrollZoom={false}
         dragRotate={false}
@@ -147,7 +152,7 @@ export default function GlobeView({ selectedCountry, countries, onSelectCountry 
             "space-color": "rgb(6, 8, 18)",
             "star-intensity": 0.7,
           } as Parameters<typeof map.setFog>[0]);
-          startRotation();
+          setTimeout(() => startRotation(), 2500);
         }}
       >
         {countries?.map((c) => {

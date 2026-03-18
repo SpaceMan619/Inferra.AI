@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import type { User } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
 
 const NAV_ITEMS = [
   {
@@ -57,9 +60,25 @@ const ACCENT = "#22c55e";
 interface DashboardSidebarProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
+  user: User | null;
 }
 
-export default function DashboardSidebar({ activeSection, onSectionChange }: DashboardSidebarProps) {
+export default function DashboardSidebar({ activeSection, onSectionChange, user }: DashboardSidebarProps) {
+  const router = useRouter();
+  const supabase = createClient();
+
+  const displayName =
+    (user?.user_metadata?.name as string | undefined) ||
+    user?.email?.split("@")[0] ||
+    "User";
+
+  const avatarUrl = user?.user_metadata?.avatar_url as string | undefined;
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.push("/login");
+    router.refresh();
+  }
   return (
     <>
       {/* ─── Desktop sidebar ─── */}
@@ -146,14 +165,73 @@ export default function DashboardSidebar({ activeSection, onSectionChange }: Das
           })}
         </nav>
 
-        {/* Bottom */}
+        {/* Bottom — user widget */}
         <div
-          className="px-5 py-4"
+          className="px-3 py-3"
           style={{ borderTop: "1px solid rgba(34, 47, 48, 0.07)" }}
         >
-          <p className="text-[11px] font-light" style={{ color: "rgba(34, 47, 48, 0.35)" }}>
-            A Project Future initiative
-          </p>
+          <div className="flex items-center gap-2">
+            {/* Clickable user row → profile */}
+            <button
+              onClick={() => onSectionChange("profile")}
+              className="flex-1 flex items-center gap-2.5 px-2 py-2 rounded-xl transition-all duration-200 min-w-0 text-left"
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = `${ACCENT}08`; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
+            >
+              {/* Avatar */}
+              <div
+                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
+                style={{ backgroundColor: "rgba(34,47,48,0.08)", color: "#222f30" }}
+              >
+                {avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={avatarUrl} alt={displayName} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                ) : (
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                )}
+              </div>
+              {/* Name + plan */}
+              <div className="flex-1 min-w-0">
+                <p
+                  className="text-[12px] font-medium truncate"
+                  style={{ color: "#222f30" }}
+                >
+                  {displayName}
+                </p>
+                <p
+                  className="text-[10px] font-light"
+                  style={{ color: "rgba(34, 47, 48, 0.45)" }}
+                >
+                  Pro · Beta
+                </p>
+              </div>
+            </button>
+
+            {/* Logout button */}
+            <button
+              onClick={handleLogout}
+              title="Sign out"
+              className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-200"
+              style={{ color: "rgba(34, 47, 48, 0.35)" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(239,68,68,0.08)";
+                e.currentTarget.style.color = "#ef4444";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "transparent";
+                e.currentTarget.style.color = "rgba(34, 47, 48, 0.35)";
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+            </button>
+          </div>
         </div>
       </aside>
 
@@ -236,6 +314,31 @@ export default function DashboardSidebar({ activeSection, onSectionChange }: Das
                 </button>
               );
             })}
+
+            {/* Profile button */}
+            <button
+              onClick={() => onSectionChange("profile")}
+              className="flex items-center justify-center flex-shrink-0 overflow-hidden transition-all duration-200"
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: "50%",
+                backgroundColor: "rgba(34,47,48,0.08)",
+                color: "rgba(34,47,48,0.55)",
+                marginLeft: 2,
+              }}
+              title="Profile"
+            >
+              {avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={avatarUrl} alt={displayName} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              )}
+            </button>
           </nav>
         </div>
       </div>

@@ -41,7 +41,7 @@ const securityHeaders = [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://api.mapbox.com https://events.mapbox.com",
+      "img-src 'self' data: blob: https://api.mapbox.com https://events.mapbox.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com",
       "media-src 'self'",
       "connect-src 'self' https://api.mapbox.com https://events.mapbox.com https://*.supabase.co wss://*.supabase.co",
       "font-src 'self'",

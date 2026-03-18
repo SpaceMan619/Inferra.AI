@@ -306,9 +306,16 @@ function numericCompare(a: unknown, b: unknown): "a" | "b" | null {
 
 // ─── Main ─────────────────────────────────────────────────────────────────
 
-export default function CompareClient({ countries }: { countries: CountryData[] }) {
+export default function CompareClient({ countries, onCountryChange, onGoToOverview }: {
+  countries: CountryData[];
+  onCountryChange?: (name: string) => void;
+  onGoToOverview?: (name: string) => void;
+}) {
   const [nameA, setNameA] = useState(() => countries[0]?.country ?? "");
   const [nameB, setNameB] = useState(() => countries[1]?.country ?? "");
+
+  function pickA(name: string) { setNameA(name); onCountryChange?.(name); }
+  function pickB(name: string) { setNameB(name); onCountryChange?.(name); }
   const [insightExpanded, setInsightExpanded] = useState(false);
 
   const countryA = useMemo(() => countries.find((c) => c.country === nameA) ?? countries[0], [countries, nameA]);
@@ -332,11 +339,11 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
       {/* ── Selectors ────────────────────────────── */}
       <div className="grid gap-3 items-stretch" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
         <CountrySelector countries={countries} selected={countryA}
-          color={COLOR_A} label="Market A" onSelect={setNameA} />
+          color={COLOR_A} label="Market A" onSelect={pickA} />
 
         <div className="flex items-center justify-center pt-6">
           <button
-            onClick={() => { setNameA(nameB); setNameB(nameA); }}
+            onClick={() => { setNameA(nameB); setNameB(nameA); onCountryChange?.(nameB); }}
             className="flex items-center justify-center rounded-xl"
             style={{
               width: 40, height: 40,
@@ -358,7 +365,7 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
         </div>
 
         <CountrySelector countries={countries} selected={countryB}
-          color={COLOR_B} label="Market B" onSelect={setNameB} />
+          color={COLOR_B} label="Market B" onSelect={pickB} />
       </div>
 
       {/* ── Radar + Dimensions ───────────────────── */}
@@ -371,12 +378,22 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLOR_A }} />
-              <span className="text-[12px] font-medium" style={{ color: "#222f30" }}>{countryA.country}</span>
+              <button
+                onClick={() => onGoToOverview?.(countryA.country)}
+                className="text-[12px] font-medium transition-opacity duration-150 hover:opacity-60"
+                style={{ color: "#222f30" }}
+                title={`View ${countryA.country} in Overview`}
+              >{countryA.country}</button>
             </div>
             <span className="text-[11px] font-light" style={{ color: "rgba(34,47,48,0.3)" }}>vs</span>
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLOR_B }} />
-              <span className="text-[12px] font-medium" style={{ color: "#222f30" }}>{countryB.country}</span>
+              <button
+                onClick={() => onGoToOverview?.(countryB.country)}
+                className="text-[12px] font-medium transition-opacity duration-150 hover:opacity-60"
+                style={{ color: "#222f30" }}
+                title={`View ${countryB.country} in Overview`}
+              >{countryB.country}</button>
             </div>
           </div>
 
@@ -431,12 +448,22 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
             <div className="grid gap-2 mb-3" style={{ gridTemplateColumns: "1fr 48px 1fr" }}>
               <div className="flex items-center justify-end gap-1.5">
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: COLOR_A }} />
-                <span className="text-[11px] font-medium truncate pb-0.5" style={{ color: "#222f30" }}>{countryA.country}</span>
+                <button
+                  onClick={() => onGoToOverview?.(countryA.country)}
+                  className="text-[11px] font-medium truncate pb-0.5 transition-opacity duration-150 hover:opacity-60"
+                  style={{ color: "#222f30" }}
+                  title={`View ${countryA.country} in Overview`}
+                >{countryA.country}</button>
               </div>
               <div />
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: COLOR_B }} />
-                <span className="text-[11px] font-medium truncate pb-0.5" style={{ color: "#222f30" }}>{countryB.country}</span>
+                <button
+                  onClick={() => onGoToOverview?.(countryB.country)}
+                  className="text-[11px] font-medium truncate pb-0.5 transition-opacity duration-150 hover:opacity-60"
+                  style={{ color: "#222f30" }}
+                  title={`View ${countryB.country} in Overview`}
+                >{countryB.country}</button>
               </div>
             </div>
 
@@ -459,10 +486,14 @@ export default function CompareClient({ countries }: { countries: CountryData[] 
               {([countryA, countryB] as const).map((c, i) => (
                 <div key={`insight-${i}-${c.country}`} className="comp-insight p-3 rounded-xl"
                   style={{ backgroundColor: "rgba(34,47,48,0.025)" }}>
-                  <p className="text-[10px] uppercase tracking-wider mb-1.5 font-medium"
-                    style={{ color: i === 0 ? COLOR_A : COLOR_B }}>
+                  <button
+                    onClick={() => onGoToOverview?.(c.country)}
+                    className="text-[10px] uppercase tracking-wider mb-1.5 font-medium transition-opacity duration-150 hover:opacity-60"
+                    style={{ color: i === 0 ? COLOR_A : COLOR_B }}
+                    title={`View ${c.country} in Overview`}
+                  >
                     {c.country}
-                  </p>
+                  </button>
                   <p
                     className={`text-[11px] font-light leading-[1.6] pb-1 ${insightExpanded ? "" : "line-clamp-3"}`}
                     style={{ color: "rgba(34,47,48,0.6)" }}>
