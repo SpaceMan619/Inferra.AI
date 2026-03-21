@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { InferraLogoMark } from "@/components/InferraLogo";
 
 const NAV_LINKS = [
   { label: "Features", href: "#features" },
@@ -41,13 +42,10 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 pl-0.5 shrink-0">
           <div
-            className="w-8 h-8 rounded-xl flex items-center justify-center text-white text-[11px] font-bold"
-            style={{
-              background: "linear-gradient(135deg, var(--primary), var(--primary-light))",
-              boxShadow: "0 2px 8px rgba(79,70,229,0.25)",
-            }}
+            className="w-8 h-8 rounded-xl flex items-center justify-center"
+            style={{ backgroundColor: "#222f30" }}
           >
-            iA
+            <InferraLogoMark size={20} color="#fff" />
           </div>
           <span className="text-[15px] font-bold tracking-tight text-[var(--text-primary)]">
             Inferra<span className="text-[var(--primary)]">AI</span>

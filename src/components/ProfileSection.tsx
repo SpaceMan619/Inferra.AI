@@ -13,6 +13,7 @@ const ROLES = [
 ];
 import { motion } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
+import { sanitizeAuthError } from "@/lib/authErrors";
 import { getPasswordStrength, STRENGTH_CONFIG } from "@/lib/passwordStrength";
 
 const LABEL = "block text-[11px] uppercase tracking-widest mb-1.5 font-normal";
@@ -104,7 +105,7 @@ export default function ProfileSection() {
     e.preventDefault();
     setProfileError(""); setProfileSuccess(false); setProfileLoading(true);
     const { error } = await supabase.auth.updateUser({ data: { name, org, role } });
-    if (error) { setProfileError(error.message); }
+    if (error) { setProfileError(sanitizeAuthError(error.message)); }
     else { setProfileSuccess(true); setTimeout(() => setProfileSuccess(false), 3000); }
     setProfileLoading(false);
   }
@@ -116,7 +117,7 @@ export default function ProfileSection() {
     if (newPassword !== confirmPassword) { setPasswordError("Passwords do not match."); return; }
     setPasswordLoading(true);
     const { error } = await supabase.auth.updateUser({ password: newPassword });
-    if (error) { setPasswordError(error.message); }
+    if (error) { setPasswordError(sanitizeAuthError(error.message)); }
     else {
       setPasswordSuccess(true);
       setNewPassword(""); setConfirmPassword("");

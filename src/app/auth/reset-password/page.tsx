@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { sanitizeAuthError } from "@/lib/authErrors";
 import { getPasswordStrength, STRENGTH_CONFIG } from "@/lib/passwordStrength";
 
 export default function ResetPasswordPage() {
@@ -34,7 +35,7 @@ export default function ResetPasswordPage() {
     const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {
-      setError(error.message);
+      setError(sanitizeAuthError(error.message));
       setLoading(false);
       return;
     }

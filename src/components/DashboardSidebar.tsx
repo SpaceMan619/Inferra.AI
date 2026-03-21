@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
+import { InferraLogoMark } from "@/components/InferraLogo";
 
 const NAV_ITEMS = [
   {
@@ -93,10 +94,9 @@ export default function DashboardSidebar({ activeSection, onSectionChange, user 
         <div className="px-5 py-5 flex items-center gap-2.5">
           <Link href="/" className="flex items-center gap-2.5 group">
             <span
-              className="flex h-7 w-7 items-center justify-center rounded-md text-[10px] font-semibold tracking-wide transition-all duration-200 group-hover:scale-95"
+              className="flex h-7 w-7 items-center justify-center rounded-md transition-all duration-200 group-hover:scale-95"
               style={{
                 backgroundColor: "#222f30",
-                color: "#fff",
                 boxShadow: `0 0 0 0 ${ACCENT}40`,
               }}
               onMouseEnter={(e) => {
@@ -106,13 +106,13 @@ export default function DashboardSidebar({ activeSection, onSectionChange, user 
                 (e.currentTarget as HTMLElement).style.boxShadow = `0 0 0 0 ${ACCENT}40`;
               }}
             >
-              iA
+              <InferraLogoMark size={18} color="#fff" />
             </span>
             <span
               className="text-[14px] font-medium tracking-[-0.5px]"
               style={{ color: "#222f30" }}
             >
-              InferraAI
+              Inferra AI
             </span>
           </Link>
         </div>

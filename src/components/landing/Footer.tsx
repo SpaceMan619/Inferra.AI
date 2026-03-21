@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Inview } from "./Reveal";
+import { InferraLogoMark } from "@/components/InferraLogo";
 
 export default function Footer() {
   return (
@@ -149,8 +150,8 @@ export default function Footer() {
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-white text-[#222f30] text-[8px] font-semibold tracking-wide">
-              iA
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-white">
+              <InferraLogoMark size={16} color="#222f30" />
             </span>
           </Link>
 

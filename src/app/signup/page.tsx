@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { createClient, getURL } from "@/lib/supabase/client";
+import { sanitizeAuthError } from "@/lib/authErrors";
+import { InferraLogoMark } from "@/components/InferraLogo";
 import { getPasswordStrength, STRENGTH_CONFIG } from "@/lib/passwordStrength";
 
 const ROLES = [
@@ -51,7 +53,7 @@ export default function SignupPage() {
     });
 
     if (error) {
-      setError(error.message);
+      setError(sanitizeAuthError(error.message));
       setLoading(false);
       return;
     }
@@ -121,10 +123,10 @@ export default function SignupPage() {
         <header className="px-[clamp(20px,4vw,48px)] py-5 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
             <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-[11px] font-bold transition-transform duration-300 group-hover:scale-105"
+              className="w-8 h-8 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
               style={{ backgroundColor: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.15)" }}
             >
-              iA
+              <InferraLogoMark size={20} color="#fff" />
             </div>
             <span className="text-[15px] font-medium tracking-[-0.02em] text-white/80">Inferra AI</span>
           </Link>

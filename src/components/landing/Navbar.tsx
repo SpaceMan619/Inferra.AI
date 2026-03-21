@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { InferraLogoMark } from "@/components/InferraLogo";
 
 const navLinks = [
   { label: "Dashboard", href: "/dashboard" },
@@ -50,19 +51,16 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <span
-              className="flex h-7 w-7 items-center justify-center rounded-md text-[10px] font-semibold tracking-wide transition-transform duration-300 group-hover:scale-95"
-              style={{
-                backgroundColor: scrolled ? "#222f30" : "#fff",
-                color: scrolled ? "#fff" : "#222f30",
-              }}
+              className="flex h-7 w-7 items-center justify-center rounded-md transition-transform duration-300 group-hover:scale-95"
+              style={{ backgroundColor: scrolled ? "#222f30" : "#fff" }}
             >
-              iA
+              <InferraLogoMark size={18} color={scrolled ? "#fff" : "#222f30"} />
             </span>
             <span
               className="text-[14px] font-medium tracking-[-0.5px] transition-colors duration-300"
               style={{ color: scrolled ? "#222f30" : "#fff" }}
             >
-              InferraAI
+              Inferra AI
             </span>
           </Link>
 
