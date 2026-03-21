@@ -5,8 +5,8 @@ interface Props {
 }
 
 export function InferraLogoMark({ size = 32, color = "#222f30", className }: Props) {
-  const s = size / 32; // scale factor
-  const w = 2.2 / s;  // keep stroke weight visually consistent across sizes
+  const s = size / 32;
+  const w = 2.2 / s;
   return (
     <svg
       width={size}

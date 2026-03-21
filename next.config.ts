@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
-// Production CSP: drops 'unsafe-eval' (only needed for dev HMR/webpack)
 const cspDirectives = [
   "default-src 'self'",
   isDev
@@ -48,7 +47,6 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // Apply to all routes
         source: "/(.*)",
         headers: securityHeaders,
       },

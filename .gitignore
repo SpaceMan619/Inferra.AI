@@ -54,3 +54,6 @@ docs/plans/
 docs/superpowers/
 public/data/countries.json.bak
 wordpress-page/
+docs/
+.superpowers/
+public/brand/
