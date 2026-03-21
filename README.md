@@ -35,7 +35,7 @@ Inferra AI is the intelligence layer. It maps compute availability, submarine ca
 The dashboard has six sections:
 
 | Section | What it shows |
-|---|---|
+| --- | --- |
 | **Overview** | Mapbox satellite globe + searchable country selector + full country detail panel |
 | **Map** | Geographic infrastructure view with animated inference route arcs |
 | **Markets** | Card grid across all 30 markets — tier badges, founder insights, quick stats |
@@ -62,14 +62,14 @@ Each country includes:
 - `ai_policy_signal` / `ai_strategy_status` / `data_residency_constraint`
 - `founder_insight` — directional note for builders
 
-Sources cited in `public/data/sources.json`. Data is directional — not a substitute for primary due diligence. See `docs/data-methodology.md`.
+Sources cited in `public/data/sources.json`. Data is directional — not a substitute for primary due diligence.
 
 ---
 
 ## Tech Stack
 
 | Layer | Technology |
-|---|---|
+| --- | --- |
 | Framework | Next.js 16 (App Router, Turbopack) |
 | Frontend | React 19, TypeScript |
 | Styling | Tailwind CSS v4, CSS custom properties |
@@ -84,7 +84,7 @@ Sources cited in `public/data/sources.json`. Data is directional — not a subst
 
 ## Getting Started
 
-\`\`\`bash
+```bash
 # Install dependencies
 npm install
 
@@ -94,7 +94,7 @@ cp .env.example .env.local
 
 # Run development server
 npm run dev
-\`\`\`
+```
 
 Landing page → http://localhost:3000
 Dashboard → http://localhost:3000/dashboard *(requires auth)*
@@ -102,16 +102,16 @@ Dashboard → http://localhost:3000/dashboard *(requires auth)*
 ### Environment Variables
 
 | Variable | Description |
-|---|---|
-| \`NEXT_PUBLIC_MAPBOX_TOKEN\` | Mapbox access token for the satellite globe and map |
-| \`NEXT_PUBLIC_SUPABASE_URL\` | Supabase project URL |
-| \`NEXT_PUBLIC_SUPABASE_ANON_KEY\` | Supabase anon/public key |
+| --- | --- |
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox access token for the satellite globe and map |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
 
 ---
 
 ## Project Structure
 
-\`\`\`
+```
 src/
 ├── app/
 │   ├── page.tsx                     # Landing page (server component)
@@ -133,10 +133,12 @@ src/
 │   ├── CompareClient.tsx            # Side-by-side country comparison
 │   ├── RadarChart.tsx               # SVG radar chart (5 dimensions)
 │   ├── ProfileSection.tsx           # Account management (in-page section)
+│   ├── InferraLogo.tsx              # SVG logo mark component
 │   └── ModeToggle.tsx               # Founder / Policy toggle
 ├── lib/
 │   ├── supabase/client.ts           # Browser Supabase client
 │   ├── supabase/server.ts           # Server Supabase client (SSR cookies)
+│   ├── authErrors.ts                # Auth error sanitization
 │   └── passwordStrength.ts          # Password strength scoring utility
 ├── middleware.ts                    # Route protection — gates /dashboard/*
 └── types/index.ts                   # All TypeScript interfaces
@@ -144,7 +146,7 @@ public/
 └── data/
     ├── countries.json               # 30-country dataset
     └── sources.json                 # Data citations
-\`\`\`
+```
 
 ---
 
