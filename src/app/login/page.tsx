@@ -31,7 +31,7 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/dashboard");
+    router.push("/dashboard?welcome=1");
     router.refresh(); // sync RSC cache after session is established
   }
 

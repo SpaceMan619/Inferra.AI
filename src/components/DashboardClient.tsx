@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import DashboardSidebar from "./DashboardSidebar";
@@ -69,7 +69,7 @@ export default function DashboardClient({ countries, user }: DashboardClientProp
 
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "#f7f7f5" }}>
-      <WelcomeAnimation />
+      <Suspense><WelcomeAnimation /></Suspense>
       <DashboardSidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}

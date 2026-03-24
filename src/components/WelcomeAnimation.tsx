@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const GREEN = "#22c55e";
@@ -14,26 +15,25 @@ const PATHS = [
 const WORDS = ["Africa's", "AI", "Infrastructure", "Intelligence"];
 
 export default function WelcomeAnimation() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!sessionStorage.getItem("inferra-welcomed")) {
-      sessionStorage.setItem("inferra-welcomed", "1");
+    if (searchParams.get("welcome") === "1") {
       setVisible(true);
+      // Strip the param from the URL immediately so refresh doesn't replay
+      router.replace("/dashboard", { scroll: false });
     }
-  }, []);
+  }, [searchParams, router]);
 
-  // Always render AnimatePresence so it can animate the exit
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
           key="welcome"
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-5 px-8"
-          style={{
-            backgroundColor: "#f7f7f5",
-            willChange: "opacity",
-          }}
+          style={{ backgroundColor: "#f7f7f5", willChange: "opacity" }}
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
@@ -61,7 +61,7 @@ export default function WelcomeAnimation() {
             ))}
           </svg>
 
-          {/* Staggered word reveal — fixed px offset, no layout shift */}
+          {/* Staggered word reveal */}
           <motion.div
             className="flex flex-col items-center gap-0.5"
             initial="hidden"
@@ -75,10 +75,7 @@ export default function WelcomeAnimation() {
                   style={{ color: "#222f30", willChange: "transform, opacity" }}
                   variants={{
                     hidden: { opacity: 0, y: 40 },
-                    visible: {
-                      opacity: 1, y: 0,
-                      transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-                    },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
                   }}
                 >
                   {word}

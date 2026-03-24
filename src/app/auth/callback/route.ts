@@ -36,7 +36,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(`${origin}/auth/error?message=${message}`);
     }
 
-    return NextResponse.redirect(`${origin}${safeNext ?? "/dashboard"}`);
+    const destination = safeNext ?? "/dashboard?welcome=1";
+    return NextResponse.redirect(`${origin}${destination}`);
   }
 
   return NextResponse.redirect(
