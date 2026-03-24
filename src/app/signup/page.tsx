@@ -101,7 +101,7 @@ export default function SignupPage() {
               <p className="text-[13px] font-light text-white/70 leading-relaxed">
                 We sent a confirmation link to <span className="text-white font-normal">{email}</span>.<br />Click it to activate your account.
               </p>
-              <Link href="/login" className="mt-6 inline-block text-[12px] text-white/85 hover:text-white transition-colors">
+              <Link href="/login" className="mt-6 inline-block text-[13px] text-white underline underline-offset-2 decoration-white/40 hover:decoration-white transition-colors">
                 Back to sign in →
               </Link>
             </div>

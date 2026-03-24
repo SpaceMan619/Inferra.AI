@@ -78,7 +78,7 @@ export default function ForgotPasswordPage() {
                 <p className="text-[13px] font-light text-white/70 leading-relaxed">
                   Check your inbox for <span className="text-white font-normal">{email}</span>.<br />The link expires in 1 hour.
                 </p>
-                <Link href="/login" className="mt-6 inline-block text-[12px] text-white/60 hover:text-white transition-colors">
+                <Link href="/login" className="mt-6 inline-block text-[13px] text-white underline underline-offset-2 decoration-white/40 hover:decoration-white transition-colors">
                   ← Back to sign in
                 </Link>
               </div>
