@@ -100,7 +100,7 @@ function CountrySelector({
 
   return (
     <div ref={panelRef} className="relative flex flex-col min-w-0">
-      <p className="text-[10px] uppercase tracking-widest mb-2 font-medium"
+      <p className="text-[12px] sm:text-[10px] uppercase tracking-widest mb-2 font-medium"
         style={{ color: "rgba(34,47,48,0.35)" }}>
         {label}
       </p>
@@ -120,7 +120,7 @@ function CountrySelector({
           <div className="min-w-0">
             <div className="flex items-center gap-2 mb-1.5 overflow-hidden">
               <span
-                className="text-[10px] font-normal px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
+                className="text-[12px] sm:text-[10px] font-normal px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
                 style={{
                   backgroundColor: READINESS_BG[selected.ai_inference_readiness] || "rgba(34,47,48,0.06)",
                   color: READINESS_COLORS[selected.ai_inference_readiness] || "rgba(34,47,48,0.5)",
@@ -128,7 +128,7 @@ function CountrySelector({
               >
                 {selected.ai_inference_readiness}
               </span>
-              <span className="text-[10px] truncate" style={{ color: "rgba(34,47,48,0.35)" }}>
+              <span className="text-[12px] sm:text-[10px] truncate" style={{ color: "rgba(34,47,48,0.35)" }}>
                 {selected.region}
               </span>
             </div>
@@ -146,7 +146,7 @@ function CountrySelector({
             >
               {selected.readiness_score}
             </span>
-            <span className="text-[10px]" style={{ color: "rgba(34,47,48,0.3)" }}>/ 100</span>
+            <span className="text-[12px] sm:text-[10px]" style={{ color: "rgba(34,47,48,0.3)" }}>/ 100</span>
           </div>
         </div>
 
@@ -154,7 +154,7 @@ function CountrySelector({
         <div className="flex-1" />
 
         <div className="mt-3 flex items-center justify-between gap-2">
-          <span className="text-[11px] font-light leading-snug line-clamp-2" style={{ color: "rgba(34,47,48,0.45)" }}>
+          <span className="text-[13px] sm:text-[11px] font-light leading-snug line-clamp-2" style={{ color: "rgba(34,47,48,0.45)" }}>
             {selected.connectivity_role}
           </span>
           <svg
@@ -267,7 +267,7 @@ function DimRow({
 
       <div className="flex flex-col items-center justify-center gap-0.5">
         <span className="text-[14px]">{icon}</span>
-        <span className="text-[9px] uppercase tracking-wider text-center leading-tight"
+        <span className="text-[11px] sm:text-[9px] uppercase tracking-wider text-center leading-tight"
           style={{ color: "rgba(34,47,48,0.3)" }}>
           {label}
         </span>
@@ -337,11 +337,11 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
       <style>{COMPARE_STYLES}</style>
 
       {/* ── Selectors ────────────────────────────── */}
-      <div className="grid gap-3 items-stretch" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
+      <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 sm:items-stretch">
         <CountrySelector countries={countries} selected={countryA}
           color={COLOR_A} label="Market A" onSelect={pickA} />
 
-        <div className="flex items-center justify-center pt-6">
+        <div className="flex items-center justify-center sm:pt-6 py-1 sm:py-0">
           <button
             onClick={() => { setNameA(nameB); setNameB(nameA); onCountryChange?.(nameB); }}
             className="flex items-center justify-center rounded-xl"
@@ -397,7 +397,7 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
             </div>
           </div>
 
-          <div key={radarKey} className="comp-radar w-full" style={{ maxWidth: 280 }}>
+          <div key={radarKey} className="comp-radar w-full sm:max-w-[280px]">
             <RadarChart countryA={countryA} countryB={countryB}
               colorA={COLOR_A} colorB={COLOR_B} size={280} />
           </div>
@@ -407,7 +407,7 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
               <div className="text-[32px] font-bold leading-none tabular-nums" style={{ color: COLOR_A }}>
                 {countryA.readiness_score}
               </div>
-              <div className="text-[10px] mt-1 uppercase tracking-wider" style={{ color: "rgba(34,47,48,0.35)" }}>
+              <div className="text-[12px] sm:text-[10px] mt-1 uppercase tracking-wider" style={{ color: "rgba(34,47,48,0.35)" }}>
                 {countryA.country}
               </div>
             </div>
@@ -423,13 +423,13 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
               >
                 {scoreDelta === 0 ? "Tied" : scoreDelta > 0 ? `+${scoreDelta}` : scoreDelta}
               </div>
-              <div className="text-[9px] uppercase tracking-wider" style={{ color: "rgba(34,47,48,0.25)" }}>delta</div>
+              <div className="text-[11px] sm:text-[9px] uppercase tracking-wider" style={{ color: "rgba(34,47,48,0.25)" }}>delta</div>
             </div>
             <div className="text-center">
               <div className="text-[32px] font-bold leading-none tabular-nums" style={{ color: COLOR_B }}>
                 {countryB.readiness_score}
               </div>
-              <div className="text-[10px] mt-1 uppercase tracking-wider" style={{ color: "rgba(34,47,48,0.35)" }}>
+              <div className="text-[12px] sm:text-[10px] mt-1 uppercase tracking-wider" style={{ color: "rgba(34,47,48,0.35)" }}>
                 {countryB.country}
               </div>
             </div>
@@ -440,7 +440,7 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
         <div className="flex-1 rounded-2xl p-6 flex flex-col justify-between gap-5"
           style={{ backgroundColor: "#fff", border: "1px solid rgba(34,47,48,0.08)" }}>
           <div>
-            <h3 className="text-[11px] uppercase tracking-widest font-medium mb-5"
+            <h3 className="text-[13px] sm:text-[11px] uppercase tracking-widest font-medium mb-5"
               style={{ color: "rgba(34,47,48,0.35)" }}>
               Dimension Breakdown
             </h3>
@@ -450,7 +450,7 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: COLOR_A }} />
                 <button
                   onClick={() => onGoToOverview?.(countryA.country)}
-                  className="text-[11px] font-medium truncate pb-0.5 transition-opacity duration-150 hover:opacity-60"
+                  className="text-[13px] sm:text-[11px] font-medium truncate pb-0.5 transition-opacity duration-150 hover:opacity-60"
                   style={{ color: "#222f30" }}
                   title={`View ${countryA.country} in Overview`}
                 >{countryA.country}</button>
@@ -460,7 +460,7 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: COLOR_B }} />
                 <button
                   onClick={() => onGoToOverview?.(countryB.country)}
-                  className="text-[11px] font-medium truncate pb-0.5 transition-opacity duration-150 hover:opacity-60"
+                  className="text-[13px] sm:text-[11px] font-medium truncate pb-0.5 transition-opacity duration-150 hover:opacity-60"
                   style={{ color: "#222f30" }}
                   title={`View ${countryB.country} in Overview`}
                 >{countryB.country}</button>
@@ -488,14 +488,14 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
                   style={{ backgroundColor: "rgba(34,47,48,0.025)" }}>
                   <button
                     onClick={() => onGoToOverview?.(c.country)}
-                    className="text-[10px] uppercase tracking-wider mb-1.5 font-medium transition-opacity duration-150 hover:opacity-60"
+                    className="text-[12px] sm:text-[10px] uppercase tracking-wider mb-1.5 font-medium transition-opacity duration-150 hover:opacity-60"
                     style={{ color: i === 0 ? COLOR_A : COLOR_B }}
                     title={`View ${c.country} in Overview`}
                   >
                     {c.country}
                   </button>
                   <p
-                    className={`text-[11px] font-light leading-[1.6] pb-1 ${insightExpanded ? "" : "line-clamp-3"}`}
+                    className={`text-[13px] sm:text-[11px] font-light leading-[1.6] pb-1 ${insightExpanded ? "" : "line-clamp-3"}`}
                     style={{ color: "rgba(34,47,48,0.6)" }}>
                     {c.founder_insight}
                   </p>
@@ -504,7 +504,7 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
             </div>
             <button
               onClick={() => setInsightExpanded((v) => !v)}
-              className="flex items-center gap-1.5 mx-auto text-[11px] font-medium transition-colors duration-150"
+              className="flex items-center gap-1.5 mx-auto text-[13px] sm:text-[11px] font-medium transition-colors duration-150"
               style={{ color: "rgba(34,47,48,0.4)" }}
               onMouseEnter={(e) => { e.currentTarget.style.color = "#222f30"; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(34,47,48,0.4)"; }}
@@ -526,11 +526,13 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
       <div className="rounded-2xl overflow-hidden"
         style={{ backgroundColor: "#fff", border: "1px solid rgba(34,47,48,0.08)" }}>
         <div className="px-6 py-4 border-b" style={{ borderColor: "rgba(34,47,48,0.06)" }}>
-          <h3 className="text-[11px] uppercase tracking-widest font-medium"
+          <h3 className="text-[13px] sm:text-[11px] uppercase tracking-widest font-medium"
             style={{ color: "rgba(34,47,48,0.35)" }}>Key Metrics</h3>
         </div>
 
-        <div className="grid px-6 py-2.5 text-[10px] uppercase tracking-wider"
+        <div className="overflow-x-auto">
+        <div style={{ minWidth: "480px" }}>
+        <div className="grid px-6 py-2.5 text-[12px] sm:text-[10px] uppercase tracking-wider"
           style={{ gridTemplateColumns: "1fr 1fr 1fr", color: "rgba(34,47,48,0.35)" }}>
           <span>Metric</span>
           <span style={{ color: COLOR_A }}>{countryA.country}</span>
@@ -548,7 +550,7 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
 
           const isText = row.type === "text";
           return (
-            <div key={row.label} className="grid px-6 py-3 text-[13px] items-start"
+            <div key={row.label} className="grid px-6 py-3 text-[13px] sm:text-[13px] items-start"
               style={{
                 gridTemplateColumns: "1fr 1fr 1fr",
                 backgroundColor: idx % 2 === 0 ? "rgba(34,47,48,0.015)" : "transparent",
@@ -568,6 +570,8 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
             </div>
           );
         })}
+        </div>
+        </div>
       </div>
 
       <div className="h-4 lg:h-0" />
