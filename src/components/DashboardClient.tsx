@@ -15,7 +15,7 @@ import { InferraLogoMark } from "./InferraLogo";
 import WelcomeAnimation from "./WelcomeAnimation";
 
 const GlobeView = dynamic(() => import("./GlobeView"), { ssr: false });
-const MapView   = dynamic(() => import("./MapView"),   { ssr: false });
+import DeploymentAdvisor from "./advisor/DeploymentAdvisor";
 import type { CountryData, ViewMode } from "@/types";
 import type { User } from "@supabase/supabase-js";
 
@@ -38,10 +38,10 @@ export default function DashboardClient({ countries, user }: DashboardClientProp
       shortTitle: "Overview",
       sub: `Directional readiness signals across ${countries.length} African markets`,
     },
-    map: {
-      title: "Infrastructure Map",
-      shortTitle: "Map",
-      sub: "Geographic view of data centers, connectivity, and policy signals",
+    advisor: {
+      title: "Deployment Advisor",
+      shortTitle: "Advisor",
+      sub: "Generate a strategic deployment brief tailored to your constraints",
     },
     markets: {
       title: "Markets",
@@ -113,7 +113,7 @@ export default function DashboardClient({ countries, user }: DashboardClientProp
             </div>
           </div>
           <div className="flex-shrink-0 flex items-center gap-2">
-            {(activeSection === "overview" || activeSection === "map") && (
+            {(activeSection === "overview") && (
               <ModeToggle mode={mode} onModeChange={setMode} />
             )}
           </div>
@@ -192,29 +192,19 @@ export default function DashboardClient({ countries, user }: DashboardClientProp
               </motion.div>
             )}
 
-            {activeSection === "map" && (
+            {activeSection === "advisor" && (
               <motion.div
-                key="map"
+                key="advisor"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                className="flex gap-6 flex-col xl:flex-row"
               >
-                <div
-                  className="flex-1 rounded-2xl overflow-hidden"
-                  style={{ minHeight: "min(560px, 55vh)" }}
-                >
-                  <MapView
-                    countries={countries}
-                    mode={mode}
-                    selectedCountry={selectedCountry}
-                    onSelectCountry={setSelectedCountry}
-                  />
-                </div>
-                <div className="w-full xl:w-[380px]">
-                  <CountryPanel country={countryData} mode={mode} />
-                </div>
+                <DeploymentAdvisor
+                  countries={countries}
+                  onGoToOverview={(name) => { setSelectedCountry(name); setActiveSection("overview"); }}
+                  onGoToCompare={() => setActiveSection("compare")}
+                />
               </motion.div>
             )}
 
