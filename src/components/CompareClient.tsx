@@ -118,7 +118,7 @@ function CountrySelector({
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="flex items-center gap-2 mb-1.5 overflow-hidden">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-1.5">
               <span
                 className="text-[12px] sm:text-[10px] font-normal px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
                 style={{
@@ -128,7 +128,7 @@ function CountrySelector({
               >
                 {selected.ai_inference_readiness}
               </span>
-              <span className="text-[12px] sm:text-[10px] truncate" style={{ color: "rgba(34,47,48,0.35)" }}>
+              <span className="text-[12px] sm:text-[10px]" style={{ color: "rgba(34,47,48,0.35)" }}>
                 {selected.region}
               </span>
             </div>
@@ -337,11 +337,11 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
       <style>{COMPARE_STYLES}</style>
 
       {/* ── Selectors ────────────────────────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 sm:items-stretch">
+      <div className="grid gap-3 items-stretch" style={{ gridTemplateColumns: "1fr auto 1fr" }}>
         <CountrySelector countries={countries} selected={countryA}
           color={COLOR_A} label="Market A" onSelect={pickA} />
 
-        <div className="flex items-center justify-center sm:pt-6 py-1 sm:py-0">
+        <div className="flex items-center justify-center pt-6">
           <button
             onClick={() => { setNameA(nameB); setNameB(nameA); onCountryChange?.(nameB); }}
             className="flex items-center justify-center rounded-xl"
