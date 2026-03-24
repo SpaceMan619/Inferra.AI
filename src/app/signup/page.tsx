@@ -136,20 +136,20 @@ export default function SignupPage() {
           </p>
         </header>
 
-        <main className="flex-1 flex items-center justify-center px-4 py-12">
+        <main className="flex-1 flex items-center justify-center px-4 py-6 sm:py-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="w-full max-w-[440px]"
           >
-            <div className="mb-8">
+            <div className="mb-5 sm:mb-8">
               <h1 className="text-[1.75rem] font-medium tracking-[-0.03em] mb-2 text-white">Get early access</h1>
               <p className="text-[14px] font-light text-white/45">African AI infrastructure intelligence, built for builders</p>
             </div>
 
             <div
-              className="rounded-2xl p-7"
+              className="rounded-2xl p-5 sm:p-7"
               style={{ backgroundColor: "rgba(255,255,255,0.06)", backdropFilter: "blur(24px)", border: "1px solid rgba(255,255,255,0.1)" }}
             >
               {/* OAuth */}
@@ -179,7 +179,7 @@ export default function SignupPage() {
                     key={btn.label}
                     type="button"
                     onClick={() => handleOAuth(btn.provider)}
-                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-[12.5px] font-normal text-white/60 transition-all duration-200 cursor-pointer hover:text-white/90"
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-[14px] sm:text-[12.5px] font-normal text-white/70 sm:text-white/60 transition-all duration-200 cursor-pointer hover:text-white/90"
                     style={{ border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.04)" }}
                     onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.09)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.04)"; }}
@@ -191,21 +191,21 @@ export default function SignupPage() {
 
               <div className="flex items-center gap-3 mb-5">
                 <div className="flex-1 h-px bg-white/10" />
-                <span className="text-[11px] font-light uppercase tracking-wider text-white/25">or</span>
+                <span className="text-[13px] sm:text-[11px] font-light uppercase tracking-wider text-white/40 sm:text-white/25">or</span>
                 <div className="flex-1 h-px bg-white/10" />
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] uppercase tracking-widest mb-1.5 text-white/80">Name</label>
+                    <label className="block text-[13px] sm:text-[11px] uppercase tracking-widest mb-1.5 text-white/80">Name</label>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" required
-                      className="w-full px-3.5 py-2.5 rounded-xl text-[13px] text-white placeholder:text-white/35 outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45" />
+                      className="w-full px-3.5 py-2.5 rounded-xl text-[15px] sm:text-[13px] text-white placeholder:text-white/50 sm:placeholder:text-white/35 outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45" />
                   </div>
                   <div>
-                    <label className="block text-[11px] uppercase tracking-widest mb-1.5 text-white/80">Org</label>
+                    <label className="block text-[13px] sm:text-[11px] uppercase tracking-widest mb-1.5 text-white/80">Org</label>
                     <input type="text" value={org} onChange={(e) => setOrg(e.target.value)} placeholder="Company"
-                      className="w-full px-3.5 py-2.5 rounded-xl text-[13px] text-white placeholder:text-white/35 outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45" />
+                      className="w-full px-3.5 py-2.5 rounded-xl text-[15px] sm:text-[13px] text-white placeholder:text-white/50 sm:placeholder:text-white/35 outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45" />
                   </div>
                 </div>
 
@@ -214,7 +214,7 @@ export default function SignupPage() {
                   <select value={role} onChange={(e) => setRole(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl text-[13px] outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45 cursor-pointer appearance-none"
                     style={{
-                      color: role ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.38)",
+                      color: role ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.55)",
                       backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='white' stroke-opacity='0.3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
                       backgroundRepeat: "no-repeat", backgroundPosition: "right 14px center",
                     }}>
@@ -257,7 +257,7 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 rounded-xl text-[13px] font-normal text-white transition-all duration-300 hover:-translate-y-0.5 cursor-pointer mt-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl text-[15px] sm:text-[13px] font-normal text-white transition-all duration-300 hover:-translate-y-0.5 cursor-pointer mt-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center gap-2"
                   style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.18)" }}
                   onMouseEnter={(e) => { if (!loading) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.18)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.12)"; }}

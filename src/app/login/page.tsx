@@ -140,7 +140,7 @@ export default function LoginPage() {
                     key={btn.label}
                     type="button"
                     onClick={() => handleOAuth(btn.provider)}
-                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-[12.5px] font-normal text-white/60 transition-all duration-200 cursor-pointer hover:text-white/90"
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-[14px] sm:text-[12.5px] font-normal text-white/70 sm:text-white/60 transition-all duration-200 cursor-pointer hover:text-white/90"
                     style={{ border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.04)" }}
                     onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.09)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.04)"; }}
@@ -154,14 +154,14 @@ export default function LoginPage() {
               {/* Divider */}
               <div className="flex items-center gap-3 mb-5">
                 <div className="flex-1 h-px bg-white/10" />
-                <span className="text-[11px] font-light uppercase tracking-wider text-white/25">or</span>
+                <span className="text-[13px] sm:text-[11px] font-light uppercase tracking-wider text-white/40 sm:text-white/25">or</span>
                 <div className="flex-1 h-px bg-white/10" />
               </div>
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-[11px] uppercase tracking-widest mb-1.5 font-normal text-white/80">
+                  <label className="block text-[13px] sm:text-[11px] uppercase tracking-widest mb-1.5 font-normal text-white/80">
                     Email
                   </label>
                   <input
@@ -170,16 +170,16 @@ export default function LoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@company.com"
                     required
-                    className="w-full px-3.5 py-2.5 rounded-xl text-[13px] text-white placeholder:text-white/35 outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45"
+                    className="w-full px-3.5 py-2.5 rounded-xl text-[15px] sm:text-[13px] text-white placeholder:text-white/50 sm:placeholder:text-white/35 outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45"
                   />
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-[11px] uppercase tracking-widest font-normal text-white/80">
+                    <label className="text-[13px] sm:text-[11px] uppercase tracking-widest font-normal text-white/80">
                       Password
                     </label>
-                    <Link href="/auth/forgot-password" className="text-[11px] text-white/80 hover:text-white underline underline-offset-2 decoration-white/30 hover:decoration-white/70 transition-colors">
+                    <Link href="/auth/forgot-password" className="text-[13px] sm:text-[11px] text-white/80 hover:text-white underline underline-offset-2 decoration-white/30 hover:decoration-white/70 transition-colors">
                       Forgot password?
                     </Link>
                   </div>
@@ -190,7 +190,7 @@ export default function LoginPage() {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
                       required
-                      className="w-full px-3.5 py-2.5 pr-10 rounded-xl text-[13px] text-white placeholder:text-white/35 outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45"
+                      className="w-full px-3.5 py-2.5 pr-10 rounded-xl text-[15px] sm:text-[13px] text-white placeholder:text-white/50 sm:placeholder:text-white/35 outline-none transition-all duration-200 bg-white/[0.05] border border-white/20 focus:border-white/45"
                     />
                     <button
                       type="button"
@@ -214,13 +214,13 @@ export default function LoginPage() {
 
                 {/* Error */}
                 {error && (
-                  <p className="text-[12px] text-red-400/90 leading-relaxed">{error}</p>
+                  <p className="text-[13px] text-red-400/90 leading-relaxed">{error}</p>
                 )}
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 rounded-xl text-[13px] font-normal text-white transition-all duration-300 hover:-translate-y-0.5 cursor-pointer mt-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl text-[15px] sm:text-[13px] font-normal text-white transition-all duration-300 hover:-translate-y-0.5 cursor-pointer mt-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center gap-2"
                   style={{ backgroundColor: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.18)" }}
                   onMouseEnter={(e) => { if (!loading) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.18)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.12)"; }}
