@@ -118,9 +118,9 @@ function CountrySelector({
       >
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mb-1.5">
+            <div className="flex flex-col gap-0.5 mb-1.5">
               <span
-                className="text-[12px] sm:text-[10px] font-normal px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0"
+                className="text-[12px] sm:text-[10px] font-normal px-2 py-0.5 rounded-full whitespace-nowrap self-start"
                 style={{
                   backgroundColor: READINESS_BG[selected.ai_inference_readiness] || "rgba(34,47,48,0.06)",
                   color: READINESS_COLORS[selected.ai_inference_readiness] || "rgba(34,47,48,0.5)",
@@ -531,7 +531,7 @@ export default function CompareClient({ countries, onCountryChange, onGoToOvervi
         </div>
 
         <div className="overflow-x-auto">
-        <div style={{ minWidth: "480px" }}>
+        <div>
         <div className="grid px-6 py-2.5 text-[12px] sm:text-[10px] uppercase tracking-wider"
           style={{ gridTemplateColumns: "1fr 1fr 1fr", color: "rgba(34,47,48,0.35)" }}>
           <span>Metric</span>
