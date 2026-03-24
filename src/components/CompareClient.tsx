@@ -133,7 +133,7 @@ function CountrySelector({
               </span>
             </div>
             <h3
-              className="text-[18px] font-semibold tracking-[-0.03em] truncate pb-1"
+              className="text-[18px] font-semibold tracking-[-0.03em] pb-1"
               style={{ color: "#222f30", transition: "opacity 0.1s" }}
             >
               {selected.country}
