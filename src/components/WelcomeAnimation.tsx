@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const GREEN = "#22c55e";
@@ -16,16 +16,19 @@ const WORDS = ["Africa's", "AI", "Infrastructure", "Intelligence"];
 
 export default function WelcomeAnimation() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const [visible, setVisible] = useState(false);
+
+  // Synchronous lazy init — visible from the very first render, no flash
+  const [visible, setVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return new URLSearchParams(window.location.search).get("welcome") === "1";
+  });
 
   useEffect(() => {
-    if (searchParams.get("welcome") === "1") {
-      setVisible(true);
-      // Strip the param from the URL immediately so refresh doesn't replay
+    if (visible) {
+      // Strip param immediately so refresh doesn't replay
       router.replace("/dashboard", { scroll: false });
     }
-  }, [searchParams, router]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <AnimatePresence>
