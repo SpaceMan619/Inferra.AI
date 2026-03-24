@@ -143,7 +143,7 @@ export default function SignupPage() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="w-full max-w-[440px]"
           >
-            <div className="mb-5 sm:mb-8">
+            <div className="mb-5 sm:mb-8 text-center">
               <h1 className="text-[1.75rem] font-medium tracking-[-0.03em] mb-2 text-white">Get early access</h1>
               <p className="text-[14px] font-light text-white/45">African AI infrastructure intelligence, built for builders</p>
             </div>

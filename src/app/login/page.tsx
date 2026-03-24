@@ -93,7 +93,7 @@ export default function LoginPage() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="w-full max-w-[400px]"
           >
-            <div className="mb-8">
+            <div className="mb-8 text-center">
               <h1 className="text-[1.75rem] font-medium tracking-[-0.03em] mb-2 text-white">
                 Welcome back
               </h1>
