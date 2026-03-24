@@ -9,8 +9,8 @@ import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const scrollerItems = [
-  "Understanding where AI can be deployed in Africa starts with seeing the full picture — infrastructure, connectivity, policy, and power. We\u2019re building a lens for that.",
-  "By bringing together available data on data centers, submarine cables, and regulatory signals, we aim to surface patterns that help founders and investors think directionally.",
+  "Understanding where AI can be deployed in Africa starts with seeing the full picture — infrastructure, connectivity, policy, and readiness signals. We\u2019re building a lens for that.",
+  "By combining compute availability, cloud maturity, ops friction, and regulatory signals across 30 markets, we surface the patterns that help founders and operators deploy with confidence.",
   "This isn\u2019t a crystal ball. It\u2019s a starting point — a blueprint for African builders trying to understand where inference might realistically happen today.",
 ];
 
@@ -261,9 +261,8 @@ export default function Hero() {
                 opacity: 0,
               } as React.CSSProperties}
             >
-              A directional tool for understanding where data centers,
-              connectivity, and policy signals point — so African builders
-              can start to see where AI deployment might be possible.
+              A directional tool for understanding AI readiness across 30 African markets
+              — so founders and operators can see where deployment is realistic today.
             </h2>
 
             <div ref={buttonRef} style={{ opacity: 0 }}>
@@ -272,7 +271,7 @@ export default function Hero() {
                 className="group inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 font-light hover:bg-white/90 transition-colors duration-300 whitespace-nowrap"
                 style={{ color: "#222f30", fontSize: "clamp(1rem, calc(1rem + 0.002 * (100vw - 27.5rem)), 1.125rem)" }}
               >
-                <span>Explore the Map</span>
+                <span>Explore the Dashboard</span>
                 <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#222f30] text-white transition-transform duration-300 group-hover:scale-110">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="m7 17 9.2-9.2M17 17V7H7" />

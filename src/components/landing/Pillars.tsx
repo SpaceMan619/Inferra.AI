@@ -11,7 +11,7 @@ const pillars = [
     number: "01.",
     title: "Infrastructure",
     description:
-      "We track data centers, submarine cables, and power availability across the continent.",
+      "We track compute availability, cloud maturity, and operational friction across 30 African markets.",
     bg: "#cef79e",
     textDark: true,
     icon: (

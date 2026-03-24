@@ -1,6 +1,15 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+function redirectWithCookies(url: URL, supabaseResponse: NextResponse): NextResponse {
+  const redirect = NextResponse.redirect(url);
+  // Copy refreshed session cookies to the redirect so they aren't lost
+  supabaseResponse.cookies.getAll().forEach((cookie) => {
+    redirect.cookies.set(cookie.name, cookie.value, cookie);
+  });
+  return redirect;
+}
+
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -25,6 +34,7 @@ export async function proxy(request: NextRequest) {
     }
   );
 
+  // getUser() validates the JWT and refreshes the session if needed
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -34,12 +44,12 @@ export async function proxy(request: NextRequest) {
   // Gate dashboard — unauthenticated → login (skip in local dev)
   const isDev = process.env.NODE_ENV === "development";
   if (pathname.startsWith("/dashboard") && !user && !isDev) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return redirectWithCookies(new URL("/login", request.url), supabaseResponse);
   }
 
-  // Reverse redirect — authenticated users don't need auth pages or home
+  // Reverse redirect — authenticated users skip auth pages and home
   if ((pathname === "/login" || pathname === "/signup" || pathname === "/") && user) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return redirectWithCookies(new URL("/dashboard", request.url), supabaseResponse);
   }
 
   return supabaseResponse;

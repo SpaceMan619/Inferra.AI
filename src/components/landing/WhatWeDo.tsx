@@ -62,10 +62,10 @@ export default function WhatWeDo() {
               }}
             >
               AI deployment in Africa is shaped by a web of factors that
-              are hard to see in isolation. We&apos;re building a tool that
-              tries to surface these signals — data centers, submarine cables,
-              power availability, and regulatory patterns — so founders and
-              investors can start to think more clearly about what&apos;s possible.
+              are hard to see in isolation. We surface these signals — compute
+              availability, cloud maturity, ops friction, latency, and regulatory
+              context — across 30 markets, so founders and operators can think
+              more clearly about where to build next.
             </p>
           </Inview>
 

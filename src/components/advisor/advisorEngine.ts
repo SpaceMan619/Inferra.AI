@@ -243,7 +243,7 @@ function deriveWhyNots(
       return {
         country: country.country,
         whatItDoes: `Readiness score ${country.readiness_score}/100 with ${country.ai_inference_readiness.toLowerCase()} inference status.`,
-        whyItLost: `It ${issue}.`,
+        whyItLost: `It has ${issue}.`,
       };
     });
 }

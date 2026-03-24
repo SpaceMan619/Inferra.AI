@@ -45,33 +45,31 @@ export default function AdvisorLanding({ savedBriefs, onStart, onDeleteBrief, on
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="mb-10"
+        className="mb-10 text-center sm:text-left"
       >
-        <div className="flex items-start justify-between gap-4 flex-wrap">
-          <div>
-            <h2
-              className="text-[13px] uppercase tracking-widest font-medium mb-3"
-              style={{ color: ACCENT }}
-            >
-              New Feature
-            </h2>
-            <p
-              className="text-[28px] sm:text-[32px] font-bold tracking-[-0.03em] mb-3 leading-tight"
-              style={{ color: "#222f30" }}
-            >
-              Deployment Advisor
-            </p>
-            <p
-              className="text-[15px] font-light leading-relaxed max-w-[540px]"
-              style={{ color: "rgba(34,47,48,0.6)" }}
-            >
-              Answer 7 questions about your constraints, priorities, and workload.
-              Get a strategic deployment brief with ranked markets, route recommendations, and tradeoffs — built from Inferra&apos;s infrastructure data.
-            </p>
-          </div>
+        <div className="flex flex-col items-center sm:items-start">
+          <span
+            className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest font-semibold px-2.5 py-1 rounded-full mb-3"
+            style={{ backgroundColor: `${ACCENT}15`, color: ACCENT, border: `1px solid ${ACCENT}30` }}
+          >
+            ✦ Pro
+          </span>
+          <p
+            className="text-[28px] sm:text-[32px] font-bold tracking-[-0.03em] mb-3 leading-tight"
+            style={{ color: "#222f30" }}
+          >
+            Deployment Advisor
+          </p>
+          <p
+            className="text-[15px] font-light leading-relaxed max-w-[540px]"
+            style={{ color: "rgba(34,47,48,0.6)" }}
+          >
+            Answer 6 questions about your constraints, priorities, and workload.
+            Get a strategic deployment brief with ranked markets, route recommendations, and tradeoffs — built from Inferra&apos;s readiness data.
+          </p>
         </div>
 
-        <div className="flex items-center gap-3 mt-7 flex-wrap">
+        <div className="flex items-center justify-center sm:justify-start gap-3 mt-7 flex-wrap">
           <button
             onClick={onStart}
             className="flex items-center gap-2 px-6 py-3 rounded-xl text-[14px] font-medium text-white transition-all duration-200 hover:-translate-y-0.5"

@@ -246,16 +246,21 @@ export default function ProfileSection() {
             Access to all markets and features
           </p>
         </div>
-        <span
-          className="text-[11px] font-medium px-3 py-1 rounded-full"
-          style={{
-            backgroundColor: "rgba(34,197,94,0.09)",
-            color: "#16a34a",
-            border: "1px solid rgba(34,197,94,0.2)",
-          }}
-        >
-          Pro · Beta
-        </span>
+        <div className="flex flex-col items-end gap-1">
+          <span
+            className="text-[11px] font-medium px-3 py-1 rounded-full"
+            style={{
+              backgroundColor: "rgba(34,197,94,0.09)",
+              color: "#16a34a",
+              border: "1px solid rgba(34,197,94,0.2)",
+            }}
+          >
+            Pro · Beta
+          </span>
+          <span className="text-[10px] font-light" style={{ color: "rgba(34,47,48,0.3)" }}>
+            v1.1
+          </span>
+        </div>
       </div>
 
       {/* ── Sign out (mobile only) ── */}

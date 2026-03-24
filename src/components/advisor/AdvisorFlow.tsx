@@ -15,7 +15,7 @@ import type {
 import { BLANK_INPUTS } from "./advisorTypes";
 
 const ACCENT = "#22c55e";
-const TOTAL_STEPS = 8;
+const TOTAL_STEPS = 7;
 
 interface Props {
   onComplete: (inputs: BriefInputs) => void;
@@ -84,7 +84,6 @@ const STEP_META = [
   { title: "Who are you?", sub: "Choose the role that best describes your perspective." },
   { title: "What are you deploying?", sub: "Select the workload type closest to your use case." },
   { title: "Which regions matter?", sub: "Select all target regions. Leave blank for pan-African." },
-  { title: "Describe your project", sub: "Optional — helps personalise the strategy summary." },
   { title: "Your top priorities", sub: "Click to rank up to 3 priorities in order of importance." },
   { title: "Hard constraints", sub: "Select any dealbreakers or must-haves for your deployment." },
   { title: "Data routing preference", sub: "Is it acceptable for inference to happen outside your target country?" },
@@ -458,7 +457,6 @@ function ReviewStep({ inputs }: { inputs: BriefInputs }) {
         <ReviewRow label="Persona" value={PERSONA_LABELS[inputs.persona ?? ""] ?? "—"} />
         <ReviewRow label="Workload" value={WORKLOAD_LABELS[inputs.workload ?? ""] ?? "—"} />
         <ReviewRow label="Regions" value={regions} />
-        {inputs.projectDescription && <ReviewRow label="Project" value={inputs.projectDescription.slice(0, 80) + (inputs.projectDescription.length > 80 ? "…" : "")} />}
         <ReviewRow label="Priorities" value={priorities} />
         <ReviewRow label="Constraints" value={constraints} />
         <ReviewRow label="Route tolerance" value={inputs.routeTolerance ?? "—"} />
@@ -565,11 +563,10 @@ export default function AdvisorFlow({ onComplete, onCancel }: Props) {
             {step === 0 && <Step1 inputs={inputs} setInputs={setInputs} />}
             {step === 1 && <Step2 inputs={inputs} setInputs={setInputs} />}
             {step === 2 && <Step3 inputs={inputs} setInputs={setInputs} />}
-            {step === 3 && <Step4 inputs={inputs} setInputs={setInputs} />}
-            {step === 4 && <Step5 inputs={inputs} setInputs={setInputs} />}
-            {step === 5 && <Step6 inputs={inputs} setInputs={setInputs} />}
-            {step === 6 && <Step7 inputs={inputs} setInputs={setInputs} />}
-            {step === 7 && <ReviewStep inputs={inputs} />}
+            {step === 3 && <Step5 inputs={inputs} setInputs={setInputs} />}
+            {step === 4 && <Step6 inputs={inputs} setInputs={setInputs} />}
+            {step === 5 && <Step7 inputs={inputs} setInputs={setInputs} />}
+            {step === 6 && <ReviewStep inputs={inputs} />}
           </motion.div>
         </AnimatePresence>
       </div>

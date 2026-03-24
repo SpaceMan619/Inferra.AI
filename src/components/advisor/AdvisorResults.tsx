@@ -173,21 +173,25 @@ export default function AdvisorResults({
                     <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: "rgba(34,47,48,0.06)", color: "rgba(34,47,48,0.55)" }}>
                       Route: {m.routeAlignment}
                     </span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: "rgba(239,68,68,0.07)", color: "#b91c1c" }}>
-                      ⚠ {m.majorTradeoff}
-                    </span>
+                    {m.majorTradeoff.includes("No single dominant") ? (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: "rgba(5,150,105,0.08)", color: "#065f46" }}>
+                        ✓ {m.majorTradeoff}
+                      </span>
+                    ) : (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ backgroundColor: "rgba(239,68,68,0.07)", color: "#b91c1c" }}>
+                        ⚠ {m.majorTradeoff}
+                      </span>
+                    )}
                   </div>
-                  {i === 0 && (
-                    <button
-                      onClick={() => onGoToOverview(m.country)}
-                      className="mt-2 text-[11px] font-medium flex items-center gap-1 transition-colors"
-                      style={{ color: ACCENT }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = "#16a34a"; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = ACCENT; }}
-                    >
-                      Open in Overview →
-                    </button>
-                  )}
+                  <button
+                    onClick={() => onGoToOverview(m.country)}
+                    className="mt-2 text-[11px] font-medium flex items-center gap-1 transition-colors"
+                    style={{ color: ACCENT }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = "#16a34a"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = ACCENT; }}
+                  >
+                    Open in Overview →
+                  </button>
                 </div>
               </div>
             </Card>
