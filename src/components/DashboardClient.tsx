@@ -12,6 +12,7 @@ import InsightsDashboard from "./InsightsDashboard";
 import CompareClient from "./CompareClient";
 import ProfileSection from "./ProfileSection";
 import { InferraLogoMark } from "./InferraLogo";
+import WelcomeAnimation from "./WelcomeAnimation";
 
 const GlobeView = dynamic(() => import("./GlobeView"), { ssr: false });
 const MapView   = dynamic(() => import("./MapView"),   { ssr: false });
@@ -68,6 +69,7 @@ export default function DashboardClient({ countries, user }: DashboardClientProp
 
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: "#f7f7f5" }}>
+      <WelcomeAnimation />
       <DashboardSidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}
