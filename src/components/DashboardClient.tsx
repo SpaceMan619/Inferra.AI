@@ -11,6 +11,7 @@ import ModeToggle from "./ModeToggle";
 import InsightsDashboard from "./InsightsDashboard";
 import CompareClient from "./CompareClient";
 import ProfileSection from "./ProfileSection";
+import { InferraLogoMark } from "./InferraLogo";
 
 const GlobeView = dynamic(() => import("./GlobeView"), { ssr: false });
 const MapView   = dynamic(() => import("./MapView"),   { ssr: false });
@@ -88,10 +89,10 @@ export default function DashboardClient({ countries, user }: DashboardClientProp
           <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-3">
             {/* Mobile logo */}
             <span
-              className="flex lg:hidden h-6 w-6 items-center justify-center rounded-md text-[9px] font-semibold tracking-wide flex-shrink-0"
-              style={{ backgroundColor: "#222f30", color: "#fff" }}
+              className="flex lg:hidden h-6 w-6 items-center justify-center rounded-md flex-shrink-0"
+              style={{ backgroundColor: "#222f30" }}
             >
-              iA
+              <InferraLogoMark size={16} color="#fff" />
             </span>
             <div className="min-w-0">
               <h1
