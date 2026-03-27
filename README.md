@@ -32,12 +32,13 @@ Inferra AI is the intelligence layer. It maps compute availability, submarine ca
 
 ## Dashboard
 
-The dashboard has six sections:
+The dashboard has seven sections:
 
 | Section | What it shows |
 | --- | --- |
 | **Overview** | Mapbox satellite globe + searchable country selector + full country detail panel |
 | **Map** | Geographic infrastructure view with animated inference route arcs |
+| **Advisor** | 6-question deployment questionnaire — generates a ranked strategic brief with trade-offs |
 | **Markets** | Card grid across all 30 markets — tier badges, founder insights, quick stats |
 | **Insights** | Live-computed readiness rankings, dimension leaders, aggregate signals |
 | **Compare** | Side-by-side radar chart overlaying 5 readiness dimensions for any two countries |
@@ -84,6 +85,8 @@ Sources cited in `public/data/sources.json`. Data is directional — not a subst
 
 ## Getting Started
 
+**Requires Node.js 22+**
+
 ```bash
 # Install dependencies
 npm install
@@ -103,9 +106,20 @@ Dashboard → http://localhost:3000/dashboard *(requires auth)*
 
 | Variable | Description |
 | --- | --- |
-| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox access token for the satellite globe and map |
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox access token for the satellite globe and map — free tier at mapbox.com |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
+| `NEXT_PUBLIC_SITE_URL` | Your local origin — set to `http://localhost:3000` for local dev |
+
+All credentials can be obtained on free tiers — no paid accounts required.
+
+### Running Locally — Auth Note
+
+**Email/password auth works out of the box locally.**
+
+**Google and GitHub OAuth will not work locally** unless you add `http://localhost:3000/auth/callback` as an allowed redirect URL in your Supabase project (Authentication → URL Configuration → Redirect URLs). The OAuth providers are configured to redirect to the production domain by default.
+
+For a quick local demo, use email/password signup instead.
 
 ---
 
