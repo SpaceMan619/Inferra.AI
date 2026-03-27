@@ -87,13 +87,18 @@ Sources cited in `public/data/sources.json`. Data is directional — not a subst
 
 **Requires Node.js 22+**
 
+`.env.example` includes working credentials — no sign-ups or API keys required to run the project locally.
+
 ```bash
+# Clone the repo
+git clone https://github.com/SpaceMan619/Inferra.AI.git
+cd Inferra.AI
+
 # Install dependencies
 npm install
 
-# Set up environment variables
+# Copy the pre-filled environment file
 cp .env.example .env.local
-# Fill in the required values (see below)
 
 # Run development server
 npm run dev
@@ -106,12 +111,10 @@ Dashboard → http://localhost:3000/dashboard *(requires auth)*
 
 | Variable | Description |
 | --- | --- |
-| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox access token for the satellite globe and map — free tier at mapbox.com |
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox access token for the satellite globe and map |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
-| `NEXT_PUBLIC_SITE_URL` | Your local origin — set to `http://localhost:3000` for local dev |
-
-All credentials can be obtained on free tiers — no paid accounts required.
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key (public by design — safe to commit) |
+| `NEXT_PUBLIC_SITE_URL` | Local origin — `http://localhost:3000` for local dev |
 
 ### Running Locally — Auth Note
 
