@@ -87,8 +87,6 @@ Sources cited in `public/data/sources.json`. Data is directional — not a subst
 
 **Requires Node.js 22+**
 
-`.env.example` includes working credentials — no sign-ups or API keys required to run the project locally.
-
 ```bash
 # Clone the repo
 git clone https://github.com/SpaceMan619/Inferra.AI.git
@@ -97,12 +95,14 @@ cd Inferra.AI
 # Install dependencies
 npm install
 
-# Copy the pre-filled environment file
+# Copy the environment file and fill in your keys (see below)
 cp .env.example .env.local
 
 # Run development server
 npm run dev
 ```
+
+> **Need credentials for local setup?** Email [r.jolly@alustudent.com](mailto:r.jolly@alustudent.com) to request a pre-filled `.env.local` file.
 
 Landing page → http://localhost:3000
 Dashboard → http://localhost:3000/dashboard *(requires auth)*
