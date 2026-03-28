@@ -37,10 +37,11 @@ const securityHeaders = [
     key: "Strict-Transport-Security",
     value: "max-age=31536000; includeSubDomains",
   },
-  {
-    key: "Content-Security-Policy",
-    value: cspDirectives,
-  },
+  // CSP temporarily disabled for debugging
+  // {
+  //   key: "Content-Security-Policy",
+  //   value: cspDirectives,
+  // },
 ];
 
 const nextConfig: NextConfig = {
