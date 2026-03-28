@@ -52,6 +52,7 @@ export default function LoginPage() {
         muted
         loop
         playsInline
+        preload="auto"
       >
         <source src="/auth-bg.mp4" type="video/mp4" />
       </video>

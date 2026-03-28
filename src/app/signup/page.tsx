@@ -74,7 +74,7 @@ export default function SignupPage() {
   if (confirmed) {
     return (
       <div className="relative min-h-screen flex flex-col overflow-hidden">
-        <video className="absolute inset-0 w-full h-full object-cover" autoPlay muted loop playsInline>
+        <video className="absolute inset-0 w-full h-full object-cover" autoPlay muted loop playsInline preload="auto">
           <source src="/auth-bg.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0" style={{ backgroundColor: "rgba(20, 32, 28, 0.72)" }} />
@@ -114,7 +114,7 @@ export default function SignupPage() {
   // ── Signup form ─────────────────────────────────────────────────
   return (
     <div className="relative min-h-screen flex flex-col overflow-hidden">
-      <video className="absolute inset-0 w-full h-full object-cover" autoPlay muted loop playsInline>
+      <video className="absolute inset-0 w-full h-full object-cover" autoPlay muted loop playsInline preload="auto">
         <source src="/auth-bg.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0" style={{ backgroundColor: "rgba(20, 32, 28, 0.72)" }} />
