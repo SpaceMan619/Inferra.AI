@@ -248,7 +248,7 @@ export default function CountryPanel({ country, mode, sources }: CountryPanelPro
         border: "1px solid rgba(34, 47, 48, 0.08)",
       }}
     >
-      <div className="p-6 h-full overflow-y-auto">
+      <div className="p-6 h-full overflow-y-auto overflow-x-hidden" style={{ wordBreak: "break-word" }}>
         {/* Header */}
         <div className="flex items-start justify-between mb-1">
           <div>

@@ -190,7 +190,7 @@ export default function DashboardClient({ countries, sourcesData, user }: Dashbo
                 </div>
 
                 {/* Detail panel — on desktop gets the combobox selector above it */}
-                <div className="w-full xl:w-[360px] flex-shrink-0 h-[75vh] xl:h-auto">
+                <div className="w-full xl:w-[360px] flex-shrink-0">
                   <div className="hidden xl:block">
                     <CountryCombobox
                       countries={countries}
