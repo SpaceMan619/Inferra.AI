@@ -8,10 +8,10 @@ const cspDirectives = [
     ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
     : "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://api.mapbox.com https://events.mapbox.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com",
+  "img-src 'self' data: blob: https://*.mapbox.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com",
   "media-src 'self'",
-  "connect-src 'self' https://api.mapbox.com https://events.mapbox.com https://*.supabase.co wss://*.supabase.co",
-  "font-src 'self'",
+  "connect-src 'self' https://*.mapbox.com wss://*.mapbox.com blob: https://*.supabase.co wss://*.supabase.co",
+  "font-src 'self' https://*.mapbox.com",
   "worker-src blob:",
   "frame-ancestors 'none'",
 ].join("; ");
