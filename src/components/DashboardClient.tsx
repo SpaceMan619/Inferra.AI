@@ -19,12 +19,23 @@ import DeploymentAdvisor from "./advisor/DeploymentAdvisor";
 import type { CountryData, ViewMode } from "@/types";
 import type { User } from "@supabase/supabase-js";
 
+interface SourceEntry {
+  primary_sources: string[];
+  confidence: string;
+  confidence_note: string;
+}
+
+interface SourcesData {
+  countries: { [key: string]: SourceEntry };
+}
+
 interface DashboardClientProps {
   countries: CountryData[];
+  sourcesData: SourcesData;
   user: User | null;
 }
 
-export default function DashboardClient({ countries, user }: DashboardClientProps) {
+export default function DashboardClient({ countries, sourcesData, user }: DashboardClientProps) {
   const [activeSection, setActiveSection] = useState("overview");
   const [selectedCountry, setSelectedCountry] = useState("South Africa");
   const [mode, setMode] = useState<ViewMode>("founder");
@@ -187,7 +198,7 @@ export default function DashboardClient({ countries, user }: DashboardClientProp
                       onSelect={setSelectedCountry}
                     />
                   </div>
-                  <CountryPanel country={countryData} mode={mode} />
+                  <CountryPanel country={countryData} mode={mode} sources={sourcesData?.countries?.[countryData?.country ?? ""] ?? null} />
                 </div>
               </motion.div>
             )}

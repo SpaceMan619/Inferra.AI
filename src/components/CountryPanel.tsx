@@ -1,11 +1,19 @@
 "use client";
 
+import { useState, useRef } from "react";
 import type { CountryData, ViewMode } from "@/types";
 import ReadinessBadge from "./ReadinessBadge";
+
+interface SourceEntry {
+  primary_sources: string[];
+  confidence: string;
+  confidence_note: string;
+}
 
 interface CountryPanelProps {
   country: CountryData | null;
   mode: ViewMode;
+  sources?: SourceEntry | null;
 }
 
 interface MetricProps {
@@ -55,7 +63,127 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function CountryPanel({ country, mode }: CountryPanelProps) {
+const confidenceColors: Record<string, { bg: string; text: string; dot: string }> = {
+  high:   { bg: "rgba(16,185,129,0.08)", text: "#059669", dot: "#10b981" },
+  medium: { bg: "rgba(245,158,11,0.08)", text: "#b45309", dot: "#f59e0b" },
+  low:    { bg: "rgba(239,68,68,0.08)",  text: "#dc2626", dot: "#ef4444" },
+};
+
+function SourcesSection({ sources }: { sources: SourceEntry }) {
+  const [open, setOpen] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const colors = confidenceColors[sources.confidence] ?? confidenceColors.medium;
+
+  function toggle() {
+    const next = !open;
+    setOpen(next);
+    if (next) {
+      setTimeout(() => sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 120);
+    }
+  }
+
+  return (
+    <div ref={sectionRef} className="mt-5">
+      {/* Header row */}
+      <button
+        onClick={toggle}
+        className="w-full flex items-center justify-between group"
+        style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+      >
+        <p
+          className="text-[10px] uppercase tracking-widest font-normal"
+          style={{ color: "rgba(34,47,48,0.4)" }}
+        >
+          Sources
+        </p>
+        <div className="flex items-center gap-2">
+          {/* Confidence badge */}
+          <span
+            className="text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full font-medium flex items-center gap-1"
+            style={{ backgroundColor: colors.bg, color: colors.text }}
+          >
+            <span
+              className="inline-block w-1.5 h-1.5 rounded-full"
+              style={{ backgroundColor: colors.dot }}
+            />
+            {sources.confidence}
+          </span>
+          {/* Chevron */}
+          <svg
+            width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="rgba(34,47,48,0.35)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease" }}
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+      </button>
+
+      {/* Collapsible body */}
+      <div
+        style={{
+          overflow: "hidden",
+          maxHeight: open ? "600px" : "0px",
+          transition: "max-height 0.3s ease",
+        }}
+      >
+        <div className="mt-3 space-y-1.5">
+          {sources.primary_sources.map((src, i) => {
+            // Split "Label: url" format into display + href
+            const colonIdx = src.lastIndexOf(": ");
+            const label = colonIdx > -1 ? src.slice(0, colonIdx) : src;
+            const rawUrl = colonIdx > -1 ? src.slice(colonIdx + 2).trim() : "";
+            const href = rawUrl ? (rawUrl.startsWith("http") ? rawUrl : `https://${rawUrl}`) : null;
+
+            return (
+              <div
+                key={i}
+                className="flex items-start gap-2 py-2 border-b"
+                style={{ borderColor: "rgba(34,47,48,0.06)" }}
+              >
+                <span
+                  className="text-[10px] mt-0.5 shrink-0 font-mono"
+                  style={{ color: "rgba(34,47,48,0.3)" }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="min-w-0">
+                  <p
+                    className="text-[12px] leading-snug"
+                    style={{ color: "#222f30" }}
+                  >
+                    {label}
+                  </p>
+                  {href && (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] break-all hover:underline"
+                      style={{ color: "#4f46e5" }}
+                    >
+                      {rawUrl}
+                    </a>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Confidence note */}
+        <p
+          className="text-[11px] leading-[1.6] mt-3 pb-2"
+          style={{ color: "rgba(34,47,48,0.45)" }}
+        >
+          {sources.confidence_note}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function CountryPanel({ country, mode, sources }: CountryPanelProps) {
   if (!country) {
     return (
       <div
@@ -184,6 +312,9 @@ export default function CountryPanel({ country, mode }: CountryPanelProps) {
             {country.founder_insight}
           </p>
         </div>
+
+        {/* Sources */}
+        {sources && <SourcesSection sources={sources} />}
       </div>
     </div>
   );
