@@ -258,7 +258,7 @@ export default function ProfileSection() {
             Pro · Beta
           </span>
           <span className="text-[10px] font-light" style={{ color: "rgba(34,47,48,0.3)" }}>
-            v1.1
+            v1.5
           </span>
         </div>
       </div>

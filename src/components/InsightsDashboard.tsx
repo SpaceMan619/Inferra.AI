@@ -95,6 +95,14 @@ export default function InsightsDashboard({ countries }: Props) {
 
   return (
     <div className="space-y-8">
+      {/* Disclaimer */}
+      <p
+        className="text-[11px] leading-relaxed"
+        style={{ color: "rgba(34,47,48,0.35)" }}
+      >
+        Scores and rankings are directional signals compiled from public sources — not investment-grade data. Treat as a starting point for research, not a definitive assessment.
+      </p>
+
       {/* Key stats */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {statCards.map((s, i) => (

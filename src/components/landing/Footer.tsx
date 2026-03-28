@@ -143,6 +143,14 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Disclaimer */}
+        <p
+          className="text-center text-[11px] pb-6"
+          style={{ color: "rgba(255,255,255,0.25)" }}
+        >
+          Inferra AI provides directional intelligence for research and planning purposes only. Data is aggregated from public sources and should not be treated as investment-grade or legally binding. Always verify with primary sources before making deployment decisions.
+        </p>
+
         {/* Bottom bar */}
         <div
           className="pt-6 flex items-center justify-between"
