@@ -53,6 +53,7 @@ export default function LoginPage() {
         loop
         playsInline
         preload="auto"
+        poster="/auth-bg-poster.jpg"
       >
         <source src="/auth-bg.mp4" type="video/mp4" />
       </video>
