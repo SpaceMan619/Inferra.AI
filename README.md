@@ -88,41 +88,41 @@ Sources cited in `public/data/sources.json`. Data is directional — not a subst
 **Requires Node.js 22+**
 
 ```bash
-# Clone the repo
+# 1. Clone the repo
 git clone https://github.com/SpaceMan619/Inferra.AI.git
 cd Inferra.AI
 
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Copy the environment file and fill in your keys (see below)
+# 3. Set up environment variables
 cp .env.example .env.local
 
-# Run development server
+# 4. Run the development server
 npm run dev
 ```
 
-> **Need credentials for local setup?** Email [r.jolly@alustudent.com](mailto:r.jolly@alustudent.com) to request a pre-filled `.env.local` file.
+That's it. The `.env.example` file contains working credentials — no additional setup needed.
 
-Landing page → http://localhost:3000
-Dashboard → http://localhost:3000/dashboard *(requires auth)*
+- Landing page → http://localhost:3000
+- Dashboard → http://localhost:3000/dashboard *(requires sign-up or login)*
 
 ### Environment Variables
+
+All variables are public-facing by design (prefixed `NEXT_PUBLIC_`) and safe to commit.
 
 | Variable | Description |
 | --- | --- |
 | `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox access token for the satellite globe and map |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key (public by design — safe to commit) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
 | `NEXT_PUBLIC_SITE_URL` | Local origin — `http://localhost:3000` for local dev |
 
-### Running Locally — Auth Note
+### Auth Note
 
-**Email/password auth works out of the box locally.**
+**Email/password signup works out of the box.** Create an account at http://localhost:3000/signup to access the dashboard.
 
-**Google and GitHub OAuth will not work locally** unless you add `http://localhost:3000/auth/callback` as an allowed redirect URL in your Supabase project (Authentication → URL Configuration → Redirect URLs). The OAuth providers are configured to redirect to the production domain by default.
-
-For a quick local demo, use email/password signup instead.
+Google and GitHub OAuth are configured for the production domain and will not work locally without additional Supabase redirect URL configuration.
 
 ---
 
