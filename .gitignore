@@ -59,3 +59,10 @@ docs/
 .superpowers/
 public/brand/
 .claude/
+
+# data-refresh/ is deliberately TRACKED — the per-country files are the
+# provenance record for the public dataset. Anyone cloning the repo can run
+# `node data-refresh/verify.mjs <pass>` and re-check every sourced quote.
+# See DATA-PROTOCOL.md. Only local scratch is excluded:
+data-refresh/**/*.tmp
+data-refresh/_selftest/
