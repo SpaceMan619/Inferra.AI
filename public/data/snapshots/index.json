@@ -1,14 +1,22 @@
 {
   "_description": "Dated, read-only freezes of countries.json. Never edit a snapshot in place — trend history cannot be backfilled.",
   "_live_dataset": "/data/countries.json",
+  "_date_semantics": {
+    "frozen_at": "When this snapshot file was written. Says nothing about how current the data is.",
+    "data_collected": "When the research pass that produced these values was carried out.",
+    "reporting_period": "The period the underlying indicators actually describe. This is the date that matters for accuracy claims."
+  },
   "snapshots": [
     {
       "id": "2026-08",
       "file": "/data/snapshots/2026-08.json",
-      "captured": "2026-08-04",
+      "frozen_at": "2026-08-04",
+      "data_collected": "2026-03",
+      "reporting_period": "2024-2025",
       "dataset_version": "1.5",
       "country_count": 30,
-      "note": "First snapshot. Values unchanged since the March 2026 data collection — this freezes the v1 baseline before any Horizon 2 data refresh."
+      "status": "stale",
+      "note": "Freezes the v1 baseline before the 2026-08 data refresh. Values are NOT current as of frozen_at — they come from the March 2026 collection, and most underlying indicators (data-centre capacity, load-shedding stages, penetration rates) describe 2024-2025 reporting periods. Do not present these figures as today's state of the market."
     }
   ]
 }

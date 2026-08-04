@@ -85,6 +85,18 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
+                    href="/methodology"
+                    className="text-white font-light transition-opacity duration-300 hover:opacity-60"
+                    style={{
+                      fontSize: "clamp(1rem, calc(1rem + 0.15vw), 1.125rem)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    Methodology
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/login"
                     className="text-white font-light transition-opacity duration-300 hover:opacity-60"
                     style={{
