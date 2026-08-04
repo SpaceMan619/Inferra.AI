@@ -4,6 +4,11 @@ import type { ReactNode } from "react";
  * Line icons matching the dashboard sidebar: 24-unit grid, 1.5 stroke,
  * round caps, no fill. Size is set by the caller so the same glyph can run
  * small beside a heading or larger inside a panel.
+ *
+ * `shrink-0` is load-bearing. These sit in flex rows beside labels of varying
+ * length, and without it a longer label squeezes the icon narrower while
+ * leaving its height alone, so one glyph renders visibly thinner than its
+ * neighbours.
  */
 function Glyph({ size = 22, children }: { size?: number; children: ReactNode }) {
   return (
@@ -17,6 +22,7 @@ function Glyph({ size = 22, children }: { size?: number; children: ReactNode }) 
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
+      className="shrink-0"
     >
       {children}
     </svg>
@@ -27,17 +33,17 @@ function Glyph({ size = 22, children }: { size?: number; children: ReactNode }) 
 
 export const ComputeIcon = ({ size }: { size?: number }) => (
   <Glyph size={size}>
-    <rect x="4" y="4" width="16" height="16" rx="2" />
-    <rect x="9" y="9" width="6" height="6" rx="1" />
-    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3" />
+    <rect x="5" y="5" width="14" height="14" rx="2" />
+    <rect x="9.5" y="9.5" width="5" height="5" rx="1" />
+    <path d="M9 2.5v2.5M15 2.5v2.5M9 19v2.5M15 19v2.5M2.5 9h2.5M2.5 15h2.5M19 9h2.5M19 15h2.5" />
   </Glyph>
 );
 
 export const ConnectivityIcon = ({ size }: { size?: number }) => (
   <Glyph size={size}>
-    <circle cx="12" cy="12" r="9" />
-    <path d="M3 12h18" />
-    <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z" />
+    <circle cx="12" cy="12" r="9.5" />
+    <path d="M2.5 12h19" />
+    <path d="M12 2.5c2.6 2.6 4 5.9 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-5.9-4-9.5s1.4-6.9 4-9.5z" />
   </Glyph>
 );
 

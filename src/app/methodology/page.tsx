@@ -24,6 +24,19 @@ export const metadata: Metadata = {
     "How Inferra AI scores AI infrastructure readiness across Africa: what we measure, where every number comes from, and how each one is verified.",
 };
 
+/* Tiers are a progression, so colour carries the meaning: full lime for a
+   market you can deploy in today, a paler wash for one on its way, an outline
+   for one that isn't there yet. */
+const TIER_TONE: Record<string, { box: string; meta: string; body: string }> = {
+  Viable: { box: "bg-[#cef79e]", meta: "text-[#3f5730]", body: "text-[#3f5730]" },
+  Emerging: { box: "bg-[#e2ecdd]", meta: "text-[#4a6050]", body: "text-[#42574a]" },
+  "Emerging (Early)": {
+    box: "border border-[#222f30]/18 bg-transparent",
+    meta: "text-[#445e5f]",
+    body: "text-[#445e5f]",
+  },
+};
+
 const GITHUB_PROTOCOL =
   "https://github.com/SpaceMan619/Inferra.AI/blob/main/DATA-PROTOCOL.md";
 
@@ -270,14 +283,14 @@ export default function MethodologyPage() {
         <Reveal stagger>
           <div className="mt-12 grid gap-4 sm:grid-cols-3">
             {READINESS_TIERS.map((t) => (
-              <div key={t.label} className="bg-[#e7e8e1] p-7">
-                <span className="font-mono text-[12px] tabular-nums text-[#445e5f]">
+              <div key={t.label} className={`p-7 ${TIER_TONE[t.label].box}`}>
+                <span className={`font-mono text-[12px] tabular-nums ${TIER_TONE[t.label].meta}`}>
                   {t.min}–{t.max}
                 </span>
                 <h3 className="mt-3 text-[20px] font-medium tracking-[-0.01em]">
                   {t.label}
                 </h3>
-                <p className="mt-3 text-[14.5px] leading-[1.6] text-[#445e5f]">
+                <p className={`mt-3 text-[14.5px] leading-[1.6] ${TIER_TONE[t.label].body}`}>
                   {t.meaning}
                 </p>
               </div>
@@ -367,8 +380,8 @@ export default function MethodologyPage() {
 
         <Reveal stagger>
           <div className="mt-12 grid gap-4 lg:grid-cols-2">
-            <div className="bg-[#e7e8e1] p-8 sm:p-10">
-              <span className="font-mono text-[11px] tracking-[0.14em] text-[#445e5f]">
+            <div className="bg-[#445e5f] p-8 text-[#f7f7f5] sm:p-10">
+              <span className="font-mono text-[11px] tracking-[0.14em] text-[#cef79e]">
                 GATE ONE / MECHANICAL
               </span>
               <h3 className="mt-4 text-[20px] font-medium tracking-[-0.01em]">
@@ -381,8 +394,8 @@ export default function MethodologyPage() {
               </p>
             </div>
   
-            <div className="bg-[#e7e8e1] p-8 sm:p-10">
-              <span className="font-mono text-[11px] tracking-[0.14em] text-[#445e5f]">
+            <div className="bg-[#445e5f] p-8 text-[#f7f7f5] sm:p-10">
+              <span className="font-mono text-[11px] tracking-[0.14em] text-[#cef79e]">
                 GATE TWO / INDEPENDENT REVIEW
               </span>
               <h3 className="mt-4 text-[20px] font-medium tracking-[-0.01em]">
