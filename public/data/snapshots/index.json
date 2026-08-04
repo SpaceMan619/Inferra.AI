@@ -1,0 +1,14 @@
+{
+  "_description": "Dated, read-only freezes of countries.json. Never edit a snapshot in place — trend history cannot be backfilled.",
+  "_live_dataset": "/data/countries.json",
+  "snapshots": [
+    {
+      "id": "2026-08",
+      "file": "/data/snapshots/2026-08.json",
+      "captured": "2026-08-04",
+      "dataset_version": "1.5",
+      "country_count": 30,
+      "note": "First snapshot. Values unchanged since the March 2026 data collection — this freezes the v1 baseline before any Horizon 2 data refresh."
+    }
+  ]
+}
