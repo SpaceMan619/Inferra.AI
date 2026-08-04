@@ -720,7 +720,7 @@
       "Digital Algeria 2030 Strategy",
       "AI data center construction launched March 2025"
     ],
-    "readiness_score": 58,
+    "readiness_score": 60,
     "scores": {
       "compute": 50,
       "connectivity": 75,
@@ -728,7 +728,7 @@
       "policy": 70,
       "ecosystem": 45
     },
-    "ai_inference_readiness": "Emerging",
+    "ai_inference_readiness": "Viable",
     "active_data_centers": "8 total, 2 AI-capable",
     "dc_pipeline": "Government AI data center under construction in Oran (March 2025); Huawei government DC agreement",
     "ai_compute_availability": "Limited local GPU infrastructure; state-controlled telecom environment restricts foreign cloud; AI DC planned for researchers/startups",
@@ -1221,7 +1221,7 @@
       "Togo Digital 2025 Strategy",
       "National Cybersecurity Strategy"
     ],
-    "readiness_score": 45,
+    "readiness_score": 48,
     "scores": {
       "compute": 45,
       "connectivity": 60,
@@ -1409,7 +1409,7 @@
       "Personal Data Protection Act amended 2023 (Law 025/2023) - includes AI definitions",
       "National Technical Committee for AI (CTN-IA) established December 2023"
     ],
-    "readiness_score": 42,
+    "readiness_score": 44,
     "scores": {
       "compute": 40,
       "connectivity": 60,
@@ -1522,7 +1522,7 @@
       "National AI and Big Data Strategy (SNIAM 2023-2027)",
       "Data Protection Authority (APDP) established"
     ],
-    "readiness_score": 38,
+    "readiness_score": 40,
     "scores": {
       "compute": 20,
       "connectivity": 50,
@@ -1530,7 +1530,7 @@
       "policy": 70,
       "ecosystem": 30
     },
-    "ai_inference_readiness": "Emerging (Early)",
+    "ai_inference_readiness": "Emerging",
     "active_data_centers": "2 total, 0 AI-capable",
     "dc_pipeline": "No major AI-capable DC investments announced; government digital infrastructure focus",
     "ai_compute_availability": "No local GPU infrastructure; dependent on Nigeria (Lagos) or Ghana cloud regions; proximity to Lagos hub beneficial",
@@ -1702,7 +1702,7 @@
       "Digital Code 2023 (data protection foundation)",
       "Criminal Code (privacy provisions)"
     ],
-    "readiness_score": 28,
+    "readiness_score": 26,
     "scores": {
       "compute": 35,
       "connectivity": 30,
@@ -1817,7 +1817,7 @@
       "Law 2014-038 Data Protection (2015)",
       "Law 2024-004 Malabo Convention ratification (pending publication)"
     ],
-    "readiness_score": 22,
+    "readiness_score": 24,
     "scores": {
       "compute": 15,
       "connectivity": 45,
