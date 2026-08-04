@@ -10,6 +10,7 @@ import CountryCombobox from "./CountryCombobox";
 import ModeToggle from "./ModeToggle";
 import InsightsDashboard from "./InsightsDashboard";
 import CompareClient from "./CompareClient";
+import MarketsDirectory from "./MarketsDirectory";
 import ProfileSection from "./ProfileSection";
 import { InferraLogoMark } from "./InferraLogo";
 import WelcomeAnimation from "./WelcomeAnimation";
@@ -226,76 +227,14 @@ export default function DashboardClient({ countries, sourcesData, user }: Dashbo
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
               >
-                {countries.map((c, i) => (
-                  <motion.button
-                    key={c.country}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.18, delay: i * 0.03, ease: "easeOut" }}
-                    onClick={() => {
-                      setSelectedCountry(c.country);
-                      setActiveSection("overview");
-                    }}
-                    className="text-left p-6 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md group"
-                    style={{
-                      backgroundColor: "#fff",
-                      border: "1px solid rgba(34, 47, 48, 0.08)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.18)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(34, 47, 48, 0.08)";
-                    }}
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <h3
-                        className="text-[15px] font-medium tracking-[-0.02em] group-hover:underline underline-offset-2"
-                        style={{ color: "#222f30" }}
-                      >
-                        {c.country}
-                      </h3>
-                      <span
-                        className="text-[11px] font-normal px-2.5 py-0.5 rounded-full"
-                        style={{
-                          backgroundColor:
-                            c.ai_inference_readiness === "Viable"
-                              ? "rgba(16,185,129,0.12)"
-                              : c.ai_inference_readiness === "Emerging"
-                              ? "rgba(245,158,11,0.12)"
-                              : "rgba(239,68,68,0.1)",
-                          color:
-                            c.ai_inference_readiness === "Viable"
-                              ? "#047857"
-                              : c.ai_inference_readiness === "Emerging"
-                              ? "#b45309"
-                              : "#b91c1c",
-                        }}
-                      >
-                        {c.ai_inference_readiness}
-                      </span>
-                    </div>
-                    <p
-                      className="text-[13px] font-light mb-3 leading-[1.5] line-clamp-3 pb-1"
-                      style={{ color: "rgba(34, 47, 48, 0.65)" }}
-                    >
-                      {c.founder_insight}
-                    </p>
-                    <div
-                      className="h-px w-full mb-3"
-                      style={{ backgroundColor: "rgba(34, 47, 48, 0.06)" }}
-                    />
-                    <div
-                      className="flex gap-4 text-[11px]"
-                      style={{ color: "rgba(34, 47, 48, 0.55)" }}
-                    >
-                      <span>GPU: {c.ai_compute_availability}</span>
-                      <span>Latency: {c.est_rtt_to_europe_ms}</span>
-                    </div>
-                  </motion.button>
-                ))}
+                <MarketsDirectory
+                  countries={countries}
+                  onOpenOverview={(name) => {
+                    setSelectedCountry(name);
+                    setActiveSection("overview");
+                  }}
+                />
               </motion.div>
             )}
 
