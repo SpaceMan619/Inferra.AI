@@ -12,6 +12,7 @@ import InsightsDashboard from "./InsightsDashboard";
 import CompareClient from "./CompareClient";
 import MarketsDirectory from "./MarketsDirectory";
 import ProfileSection from "./ProfileSection";
+import MethodologyContent from "./methodology/MethodologyContent";
 import { InferraLogoMark } from "./InferraLogo";
 import WelcomeAnimation from "./WelcomeAnimation";
 
@@ -69,6 +70,11 @@ export default function DashboardClient({ countries, sourcesData, user }: Dashbo
       title: "Compare Markets",
       shortTitle: "Compare",
       sub: "Side-by-side readiness analysis across all dimensions",
+    },
+    methodology: {
+      title: "Methodology",
+      shortTitle: "Methodology",
+      sub: "How every score is built, sourced, and checked",
     },
     profile: {
       title: "Profile",
@@ -266,6 +272,18 @@ export default function DashboardClient({ countries, sourcesData, user }: Dashbo
                     setActiveSection("overview");
                   }}
                 />
+              </motion.div>
+            )}
+
+            {activeSection === "methodology" && (
+              <motion.div
+                key="methodology"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <MethodologyContent chrome="panel" />
               </motion.div>
             )}
 

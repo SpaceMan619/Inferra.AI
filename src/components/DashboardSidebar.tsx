@@ -44,6 +44,15 @@ const NAV_ITEMS = [
     ),
   },
   {
+    id: "methodology",
+    label: "Methodology",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /><path d="m8.5 11 2 2 4-4" />
+      </svg>
+    ),
+  },
+  {
     id: "compare",
     label: "Compare",
     icon: (
@@ -164,29 +173,6 @@ export default function DashboardSidebar({ activeSection, onSectionChange, user 
             );
           })}
 
-          {/* Methodology is a real route, not an in-page section, so it sits
-              below a divider and navigates away rather than switching tabs. */}
-          <span className="mx-3 my-3 h-px" style={{ backgroundColor: "rgba(34,47,48,0.08)" }} />
-          <Link
-            href="/methodology"
-            className="relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-200"
-            style={{ color: "rgba(34, 47, 48, 0.55)" }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = `${ACCENT}08`;
-              e.currentTarget.style.color = "#222f30";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "transparent";
-              e.currentTarget.style.color = "rgba(34, 47, 48, 0.55)";
-            }}
-          >
-            <span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /><path d="m8.5 11 2 2 4-4" />
-              </svg>
-            </span>
-            <span>Methodology</span>
-          </Link>
         </nav>
 
         {/* Bottom — user widget */}
