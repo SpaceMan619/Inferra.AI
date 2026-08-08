@@ -4,11 +4,35 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { CountryData } from "@/types";
 
 const ROUTES = ["Local-Native", "Hybrid-Edge", "Regional-Tethered"] as const;
+type SortColumn = "score" | "route" | "latency";
+type SortDirection = "asc" | "desc";
+
+const DEFAULT_SORT: Record<SortColumn, SortDirection> = {
+  score: "desc",
+  route: "asc",
+  latency: "asc",
+};
 
 function readinessStyle(label: string) {
   if (label === "Viable") return { color: "#047857", backgroundColor: "rgba(16,185,129,0.1)" };
   if (label === "Emerging") return { color: "#b45309", backgroundColor: "rgba(245,158,11,0.1)" };
   return { color: "#c2410c", backgroundColor: "rgba(239,68,68,0.08)" };
+}
+
+function scoreStyle(score: number) {
+  if (score >= 60) return readinessStyle("Viable");
+  if (score >= 40) return readinessStyle("Emerging");
+  return readinessStyle("Emerging (Early)");
+}
+
+function latencyValue(value: string) {
+  const match = value.match(/(\d+)(?:[–-](\d+))?/);
+  return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+}
+
+function routeValue(value: string) {
+  const index = ROUTES.indexOf(value as (typeof ROUTES)[number]);
+  return index === -1 ? ROUTES.length : index;
 }
 
 function firstSentence(value: string) {
@@ -27,6 +51,7 @@ export default function MarketsDirectory({ countries, onOpenOverview }: MarketsD
   const [route, setRoute] = useState("all");
   const [selectedName, setSelectedName] = useState(countries[0]?.country ?? "");
   const [thesisOpen, setThesisOpen] = useState(false);
+  const [sort, setSort] = useState<{ column: SortColumn; direction: SortDirection }>({ column: "score", direction: "desc" });
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -52,13 +77,24 @@ export default function MarketsDirectory({ countries, onOpenOverview }: MarketsD
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    return countries.filter((country) => {
+    const matches = countries.filter((country) => {
       const matchesRoute = route === "all" || country.primary_inference_route === route;
       const matchesRegion = region === "all" || country.region === region;
       const matchesQuery = !needle || `${country.country} ${country.region} ${country.connectivity_role} ${country.primary_inference_route}`.toLowerCase().includes(needle);
       return matchesRoute && matchesRegion && matchesQuery;
     });
-  }, [countries, query, region, route]);
+
+    return matches.sort((a, b) => {
+      const direction = sort.direction === "asc" ? 1 : -1;
+      let comparison = 0;
+
+      if (sort.column === "score") comparison = a.readiness_score - b.readiness_score;
+      if (sort.column === "route") comparison = routeValue(a.primary_inference_route) - routeValue(b.primary_inference_route);
+      if (sort.column === "latency") comparison = latencyValue(a.est_rtt_to_europe_ms) - latencyValue(b.est_rtt_to_europe_ms);
+
+      return comparison === 0 ? a.country.localeCompare(b.country) : comparison * direction;
+    });
+  }, [countries, query, region, route, sort]);
 
   const selected = countries.find((country) => country.country === selectedName) ?? countries[0];
 
@@ -66,6 +102,25 @@ export default function MarketsDirectory({ countries, onOpenOverview }: MarketsD
     setQuery("");
     setRegion("all");
     setRoute("all");
+  }
+
+  function toggleSort(column: SortColumn) {
+    setSort((current) => ({
+      column,
+      direction: current.column === column
+        ? current.direction === "asc" ? "desc" : "asc"
+        : DEFAULT_SORT[column],
+    }));
+  }
+
+  function sortIndicator(column: SortColumn) {
+    if (sort.column !== column) return "↕";
+    return sort.direction === "asc" ? "↑" : "↓";
+  }
+
+  function sortLabel(column: SortColumn, label: string) {
+    if (sort.column !== column) return `Sort by ${label}`;
+    return `Sort by ${label}, ${sort.direction === "asc" ? "ascending" : "descending"}`;
   }
 
   if (!selected) return null;
@@ -158,7 +213,27 @@ export default function MarketsDirectory({ countries, onOpenOverview }: MarketsD
             className="hidden sm:grid px-5 h-10 items-center gap-3 text-[10px] uppercase tracking-wider"
             style={{ gridTemplateColumns: "minmax(170px,1.35fr) 62px minmax(130px,1fr) 108px 18px", color: "rgba(34,47,48,0.38)", backgroundColor: "rgba(34,47,48,0.018)", borderBottom: "1px solid rgba(34,47,48,0.06)" }}
           >
-            <span>Market</span><span>Score</span><span>Route</span><span>EU latency</span><span />
+            <span>Market</span>
+            {[
+              ["score", "Score"],
+              ["route", "Route"],
+              ["latency", "EU latency"],
+            ].map(([column, label]) => (
+              <button
+                key={column}
+                type="button"
+                onClick={() => toggleSort(column as SortColumn)}
+                aria-pressed={sort.column === column}
+                aria-label={sortLabel(column as SortColumn, label)}
+                title={sortLabel(column as SortColumn, label)}
+                className="flex items-center gap-1 p-0 bg-transparent border-0 text-left uppercase tracking-wider transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22c55e]/50 rounded"
+                style={{ color: sort.column === column ? "#222f30" : "rgba(34,47,48,0.38)" }}
+              >
+                <span>{label}</span>
+                <span className="text-[12px] leading-none" aria-hidden="true">{sortIndicator(column as SortColumn)}</span>
+              </button>
+            ))}
+            <span />
           </div>
 
           <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 290px)", minHeight: 440 }}>
@@ -169,6 +244,7 @@ export default function MarketsDirectory({ countries, onOpenOverview }: MarketsD
               </div>
             ) : filtered.map((country) => {
               const active = country.country === selected.country;
+              const scoreTone = scoreStyle(country.readiness_score);
               return (
                 <button
                   key={country.country}
@@ -184,7 +260,7 @@ export default function MarketsDirectory({ countries, onOpenOverview }: MarketsD
                     <strong className="block text-[14px] font-medium truncate" style={{ color: "#222f30" }}>{country.country}</strong>
                     <small className="block text-[11px] mt-0.5 truncate" style={{ color: "rgba(34,47,48,0.42)" }}>{country.region}</small>
                   </span>
-                  <span className="text-[14px] tabular-nums font-medium" style={{ color: active ? "#047857" : "#222f30" }}>{country.readiness_score}</span>
+                  <span className="inline-flex min-w-[34px] justify-center rounded-md px-1.5 py-1 text-[13px] tabular-nums font-medium" style={{ color: scoreTone.color, backgroundColor: scoreTone.backgroundColor }}>{country.readiness_score}</span>
                   <span className="hidden sm:block text-[12px] truncate" style={{ color: "rgba(34,47,48,0.6)" }}>{country.primary_inference_route}</span>
                   <span className="hidden sm:block text-[12px] tabular-nums" style={{ color: "#222f30" }}>{country.est_rtt_to_europe_ms.match(/~?\d+[–-]\d+ms|~?\d+ms/)?.[0] ?? country.est_rtt_to_europe_ms}</span>
                   <span className="text-[18px]" style={{ color: active ? "#047857" : "rgba(34,47,48,0.24)" }}>›</span>
@@ -202,7 +278,7 @@ export default function MarketsDirectory({ countries, onOpenOverview }: MarketsD
                 <h2 className="text-[28px] font-medium tracking-[-0.04em] leading-tight" style={{ color: "#222f30" }}>{selected.country}</h2>
               </div>
               <div className="text-right flex-shrink-0">
-                <span className="block text-[26px] font-semibold tabular-nums leading-none" style={{ color: "#222f30" }}>{selected.readiness_score}</span>
+                <span className="block text-[26px] font-semibold tabular-nums leading-none" style={{ color: scoreStyle(selected.readiness_score).color }}>{selected.readiness_score}</span>
                 <span className="text-[10px]" style={{ color: "rgba(34,47,48,0.38)" }}>/ 100</span>
               </div>
             </div>
